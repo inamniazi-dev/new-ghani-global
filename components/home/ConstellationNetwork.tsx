@@ -12,7 +12,7 @@ const ASSOC = [
   { id:"ag",   name:"Air Ghani (Pvt) Limited",             sector:"Aviation & Gases"  },
   { id:"gl",   name:"Ghani Logistics (Pvt) Limited",       sector:"Logistics"         },
   { id:"ge",   name:"Ghani Energies Limited",              sector:"Energy"            },
-  { id:"gg",   name:"Ghani Gases (Private) Limited",       sector:"Industrial Gases"  },
+  { id:"gg",   name:"Ghani Gases (Pvt) Limited",       sector:"Industrial Gases"  },
   { id:"g3",   name:"G3 Properties (Pvt) Limited",         sector:"Real Estate"       },
   { id:"geng", name:"Ghani Engineering (Pvt) Limited",     sector:"Engineering"       },
   { id:"gf",   name:"Ghani Global Foods (Pvt) Limited",    sector:"Food & Agriculture"},

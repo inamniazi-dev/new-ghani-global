@@ -4,7 +4,7 @@ import { useState, useEffect } from "react";
 const socials = [
   {
     id:"linkedin", label:"LinkedIn",
-    href:"https://linkedin.com/company/ghani-global-group",
+    href:"https://www.linkedin.com/company/ghaniglobalgroup",
     color:"#0077B5",
     icon:(
       <svg width="15" height="15" viewBox="0 0 24 24" fill="currentColor">
@@ -14,7 +14,7 @@ const socials = [
   },
   {
     id:"facebook", label:"Facebook",
-    href:"https://facebook.com/ghaniglobalgroup",
+    href:"https://www.facebook.com/profile.php?id=61578499738385",
     color:"#1877F2",
     icon:(
       <svg width="15" height="15" viewBox="0 0 24 24" fill="currentColor">
@@ -24,7 +24,7 @@ const socials = [
   },
   {
     id:"instagram", label:"Instagram",
-    href:"https://instagram.com/ghaniglobalgroup",
+    href:"hthttps://www.instagram.com/ghaniglobalgroup/",
     color:"#E1306C",
     icon:(
       <svg width="15" height="15" viewBox="0 0 24 24" fill="currentColor">

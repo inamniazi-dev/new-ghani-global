@@ -36,8 +36,12 @@ export default function Footer() {
             {/* Logos side by side */}
             <div style={{ marginTop:"28px" }}>
               <div style={{ display:"flex", flexDirection:"row", alignItems:"center", gap:"20px" }}>
-                <img src="/secp-logo-1.png" alt="SECP" style={{ height:"64px", width:"auto", objectFit:"contain", display:"block" }}/>
-                <img src="/jama-punji-logo.png" alt="Jama Punji" style={{ height:"64px", width:"auto", objectFit:"contain", display:"block" }}/>
+               <a href="https://sdms.secp.gov.pk/" target="_blank" rel="noopener noreferrer">
+  <img src="/secp-logo-1.png" alt="SECP" style={{ height:"64px", width:"auto", objectFit:"contain", display:"block" }}/>
+</a>
+                <a href="https://www.jamapunji.pk/" target="_blank" rel="noopener noreferrer">
+  <img src="/jama-punji-logo.png" alt="Jama Punji" style={{ height:"64px", width:"auto", objectFit:"contain", display:"block" }}/>
+</a>
               </div>
             </div>
           </div>

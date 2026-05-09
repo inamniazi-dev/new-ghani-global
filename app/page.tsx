@@ -1,4 +1,3 @@
-
 "use client";
 import { useEffect, useRef, useState } from "react";
 import Link from "next/link";
@@ -39,7 +38,7 @@ const industries = [
   { id:"holdings", tab:"Ghani Global Holdings Limited",     title:"Strategic Investment Holdings", desc:"The principal holding company of the group, managing strategic investments in subsidiary and associated companies — driving long-term value creation for stakeholders across Pakistan's industrial landscape.", img:"/ghani-global-holdings.jpg",     link:"/about", ext:false },
   { id:"chemical", tab:"Ghani Chemical Industries Limited", title:"Medical & Industrial Gases",    desc:"Pakistan's leading manufacturer of industrial and medical gases, serving hospitals, industries, and research institutes nationwide, while also providing medical gas equipment and pipeline solutions to healthcare facilities across the country.", img:"/chemical-banner.jpeg", link:"https://ghaniglobal.com/ghanichemicals/", ext:true },
   { id:"glass",    tab:"Ghani Global Glass Limited",        title:"Precision Glass Products",      desc:"We take pride in being the sole manufacturer of borosilicate glass tubes (USP Type I – \"Neutral Glass\") in Pakistan. We are also the market leader in the manufacturing of vials and ampoules across the country.", img:"/glass-banner.jpeg",        link:"https://www.ghaniglobalglass.com", ext:true },
-  { id:"chemworld",tab:"Ghani ChemWorld Limited",           title:"Specialty Chemicals",           desc:"Utilizing modern electric arc furnaces, Carbonation towers and Hydro cyclones, Ghani ChemWorld Limited produces Calcium Carbide, Lime and Precipitated Calcium Carbonate — reflecting a continuous pursuit of cutting-edge solutions in the chemical industry.", img:"/Chemworld-banner.jpeg",           link:"/about", ext:false },
+  { id:"chemworld",tab:"Ghani ChemWorld Limited",           title:"Specialty Chemicals",           desc:"Utilizing modern electric arc furnaces, Carbonation towers and Hydro cyclones, Ghani ChemWorld Limited produces Calcium Carbide, Lime and Precipitated Calcium Carbonate — reflecting a continuous pursuit of cutting-edge solutions in the chemical industry.", img:"/Chemworld-banner.jpeg",           link:"https://ghanichemworld.com/", ext:false },
 ];
 
 const milestones = [
@@ -47,7 +46,7 @@ const milestones = [
   { year:"2010", label:"PSX Listing",    tag:"Capital Markets", desc:"Listed on Pakistan Stock Exchange" },
   { year:"2019", label:"Restructured",   tag:"Corporate",      desc:"Became Ghani Global Holdings Limited" },
   { year:"2024", label:"ChemWorld",      tag:"New Venture",    desc:"New subsidiary for Hattar SEZ" },
-  { year:"2025", label:"Joint Ventures", tag:"Milestone",      desc:"Strategic Engro contract — expanding into new industrial frontiers. (Content to be updated.)" },
+  { year:"2025", label:"Joint Ventures", tag:"Milestone",      desc:"Strategic Engro contract — expanding into new industrial frontiers." },
 ];
 
 const newsItems = [
@@ -84,7 +83,6 @@ const psxTicker = [
   "Ghani ChemWorld Limited · GCWL",
 ];
 
-
 const tickerItems = ["Ghani Global Holdings Limited · GGHL","Ghani Global Glass Limited · PSX Listed","Ghani Chemical Industries Limited · PSX Listed","Ghani ChemWorld Limited · Est. 2024","Ghani Industrial Complex","Lahore · Pakistan · Est. 2007"];
 
 const visionItems = [
@@ -102,7 +100,7 @@ export default function HomePage() {
     <div style={{ background:"var(--bg)" }}>
 
       {/* ── HERO — full viewport minus header bars ── */}
-      <section className="relative" style={{ height:"calc(100vh - 100px)", minHeight:"500px" }}>
+      <section className="relative" style={{ height:"calc(100vh - 62px)", minHeight:"580px" }}>
         <div className="absolute inset-0 overflow-hidden">
           <HeroSlider/>
         </div>
@@ -157,91 +155,27 @@ export default function HomePage() {
 
           {/* Right: Image with geometric angular background */}
           <div className="reveal-left" style={{ position:"relative", padding:"24px" }}>
-            {/* Geometric background panels — inspired by reference */}
             <div style={{ position:"absolute", inset:0, overflow:"hidden", pointerEvents:"none" }}>
-              {/* Large navy panel — top right */}
-              <div style={{
-                position:"absolute", top:"-10%", right:"-5%",
-                width:"55%", height:"60%",
-                background:"var(--navy)",
-                clipPath:"polygon(20% 0%, 100% 0%, 100% 85%, 0% 100%)",
-                opacity:0.07
-              }}/>
-              {/* Gold accent panel — bottom left */}
-              <div style={{
-                position:"absolute", bottom:"-5%", left:"-5%",
-                width:"45%", height:"50%",
-                background:"var(--gold)",
-                clipPath:"polygon(0% 15%, 100% 0%, 80% 100%, 0% 100%)",
-                opacity:0.08
-              }}/>
-              {/* Green thin panel — top left */}
-              <div style={{
-                position:"absolute", top:"5%", left:"0%",
-                width:"30%", height:"35%",
-                background:"var(--green)",
-                clipPath:"polygon(0% 0%, 100% 10%, 75% 100%, 0% 90%)",
-                opacity:0.06
-              }}/>
-              {/* Gold border line — diagonal accent top-right */}
-              <div style={{
-                position:"absolute", top:"0", right:"8%",
-                width:"2px", height:"40%",
-                background:"linear-gradient(180deg, var(--gold) 0%, transparent 100%)",
-                transform:"rotate(15deg)",
-                transformOrigin:"top center",
-                opacity:0.4
-              }}/>
-              {/* Green border line — diagonal accent bottom-left */}
-              <div style={{
-                position:"absolute", bottom:"0", left:"8%",
-                width:"2px", height:"35%",
-                background:"linear-gradient(0deg, var(--green) 0%, transparent 100%)",
-                transform:"rotate(-12deg)",
-                transformOrigin:"bottom center",
-                opacity:0.4
-              }}/>
-              {/* Corner bracket — top right */}
-              <div style={{
-                position:"absolute", top:"12px", right:"12px",
-                width:"32px", height:"32px",
-                borderTop:"2px solid var(--gold)",
-                borderRight:"2px solid var(--gold)",
-                opacity:0.5
-              }}/>
-              {/* Corner bracket — bottom left */}
-              <div style={{
-                position:"absolute", bottom:"12px", left:"12px",
-                width:"32px", height:"32px",
-                borderBottom:"2px solid var(--green)",
-                borderLeft:"2px solid var(--green)",
-                opacity:0.5
-              }}/>
+              <div style={{ position:"absolute", top:"-10%", right:"-5%", width:"55%", height:"60%", background:"var(--navy)", clipPath:"polygon(20% 0%, 100% 0%, 100% 85%, 0% 100%)", opacity:0.07 }}/>
+              <div style={{ position:"absolute", bottom:"-5%", left:"-5%", width:"45%", height:"50%", background:"var(--gold)", clipPath:"polygon(0% 15%, 100% 0%, 80% 100%, 0% 100%)", opacity:0.08 }}/>
+              <div style={{ position:"absolute", top:"5%", left:"0%", width:"30%", height:"35%", background:"var(--green)", clipPath:"polygon(0% 0%, 100% 10%, 75% 100%, 0% 90%)", opacity:0.06 }}/>
+              <div style={{ position:"absolute", top:"0", right:"8%", width:"2px", height:"40%", background:"linear-gradient(180deg, var(--gold) 0%, transparent 100%)", transform:"rotate(15deg)", transformOrigin:"top center", opacity:0.4 }}/>
+              <div style={{ position:"absolute", bottom:"0", left:"8%", width:"2px", height:"35%", background:"linear-gradient(0deg, var(--green) 0%, transparent 100%)", transform:"rotate(-12deg)", transformOrigin:"bottom center", opacity:0.4 }}/>
+              <div style={{ position:"absolute", top:"12px", right:"12px", width:"32px", height:"32px", borderTop:"2px solid var(--gold)", borderRight:"2px solid var(--gold)", opacity:0.5 }}/>
+              <div style={{ position:"absolute", bottom:"12px", left:"12px", width:"32px", height:"32px", borderBottom:"2px solid var(--green)", borderLeft:"2px solid var(--green)", opacity:0.5 }}/>
             </div>
-
-            {/* Actual image */}
             <div style={{ position:"relative", zIndex:2 }}>
-              <img
-                src="/legacy-trust-innovation.png"
-                alt="Ghani Global Group — Trust and Innovation"
-                style={{ width:"100%", height:"auto", objectFit:"contain", display:"block" }}
-              />
+              <img src="/legacy-trust-innovation.png" alt="Ghani Global Group — Trust and Innovation" style={{ width:"100%", height:"auto", objectFit:"contain", display:"block" }}/>
             </div>
           </div>
         </div>
       </section>
 
-
-
       {/* ── MESSAGE FROM THE FOUNDERS ── */}
       <section style={{ background:"#F0F7EE", padding:"64px clamp(32px,6vw,96px)", overflow:"hidden", minHeight:"100vh", display:"flex", alignItems:"center" }}>
         <div className="max-w-7xl mx-auto w-full">
           <div className="grid lg:grid-cols-5 gap-16 items-center">
-
-            {/* LEFT — 40%: 3 founder images with geometric decorations */}
             <div className="lg:col-span-2 reveal" style={{ position:"relative" }}>
-
-              {/* Geometric decoration layer */}
               <div style={{ position:"absolute", inset:0, pointerEvents:"none", zIndex:0 }}>
                 <div style={{ position:"absolute", top:"-24px", left:"-24px", width:"160px", height:"200px", background:"var(--navy)", clipPath:"polygon(0% 0%, 85% 0%, 100% 80%, 0% 100%)", opacity:0.06 }}/>
                 <div style={{ position:"absolute", bottom:"-20px", right:"-20px", width:"140px", height:"180px", background:"var(--gold)", clipPath:"polygon(15% 0%, 100% 20%, 100% 100%, 0% 100%)", opacity:0.08 }}/>
@@ -251,8 +185,6 @@ export default function HomePage() {
                 <div style={{ position:"absolute", bottom:"8px", left:"8px", width:"28px", height:"28px", borderBottom:"2px solid var(--green)", borderLeft:"2px solid var(--green)", opacity:0.5 }}/>
                 <div style={{ position:"absolute", top:0, right:"18%", width:"2px", height:"30%", background:"linear-gradient(180deg, var(--gold) 0%, transparent 100%)", transform:"rotate(12deg)", transformOrigin:"top center", opacity:0.35 }}/>
               </div>
-
-              {/* 3 founder images */}
               <div className="grid grid-cols-3 gap-3" style={{ position:"relative", zIndex:1 }}>
                 {[
                   { name:"Masroor Ahmad Khan", img:"/masroor-ahmad-khan-white.png" },
@@ -275,8 +207,6 @@ export default function HomePage() {
                 ))}
               </div>
             </div>
-
-            {/* RIGHT — 60%: all content */}
             <div className="lg:col-span-3 reveal d1">
               <div className="eyebrow-dark mb-5">Leadership</div>
               <h2 className="font-display" style={{ fontSize:"clamp(28px,3.5vw,44px)", fontWeight:300, color:"var(--navy)", lineHeight:1.1, marginBottom:"8px" }}>
@@ -292,15 +222,12 @@ export default function HomePage() {
                 <p>As we move forward, our focus remains on sustainable growth, strategic diversification, and contributing meaningfully to Pakistan&apos;s industrial development. We are proud of what we have built &mdash; and more excited about what lies ahead.</p>
               </div>
             </div>
-
           </div>
         </div>
       </section>
 
-
-            {/* ── WHAT WE DO — Sticky Scroll Story ── */}
+      {/* ── WHAT WE DO — Sticky Scroll Story ── */}
       <WhatWeDoStory industries={industries}/>
-
 
       {/* ── CONSTELLATION NETWORK — Particle Animation (Option 3) ── */}
       <ConstellationNetwork/>
@@ -347,20 +274,23 @@ export default function HomePage() {
             {/* ROW 1 — all content (year + label) in fixed height boxes */}
             <div style={{ display:"flex", flexDirection:"row" }}>
               {[...milestones, ...milestones].map((m, i) => (
-                <div key={i} style={{ width:"clamp(220px, 22vw, 320px)", flexShrink:0, padding:"0 clamp(24px,3vw,48px)", height:"160px" }}>
-                  <div className="font-display" style={{ fontSize:"clamp(48px,5vw,80px)", fontWeight:700, color:"var(--green)", lineHeight:1, marginBottom:"12px", letterSpacing:"-0.02em" }}>{m.year}</div>
+                <div key={i} style={{ width:"clamp(220px, 22vw, 320px)", flexShrink:0, padding:"0 clamp(24px,3vw,48px)", height:"200px" }}>
+                  <div className="font-display" style={{ fontSize:"clamp(48px,5vw,80px)", fontWeight:700, color:"var(--green)", lineHeight:1, marginBottom:"16px", letterSpacing:"-0.02em" }}>{m.year}</div>
                   <p style={{ fontSize:"clamp(13px,1.1vw,16px)", color:"var(--navy)", fontWeight:400, lineHeight:1.4 }}>{m.desc}</p>
                 </div>
               ))}
             </div>
 
+            {/* GAP between content and dots */}
+            <div style={{ height:"32px" }}/>
+
             {/* ROW 2 — line with dots, always same height, perfectly aligned */}
-            <div style={{ display:"flex", flexDirection:"row", alignItems:"center", position:"relative", height:"20px" }}>
+            <div style={{ display:"flex", flexDirection:"row", alignItems:"center", position:"relative", height:"28px" }}>
               {/* The continuous line behind all dots */}
               <div style={{ position:"absolute", top:"50%", left:0, right:0, height:"1px", background:"rgba(1,8,44,0.2)", transform:"translateY(-50%)", zIndex:0 }}/>
               {[...milestones, ...milestones].map((m, i) => (
                 <div key={i} style={{ width:"clamp(220px, 22vw, 320px)", flexShrink:0, padding:"0 clamp(24px,3vw,48px)", display:"flex", alignItems:"center" }}>
-                  <div style={{ width:"20px", height:"20px", borderRadius:"50%", background:"var(--green)", boxShadow:"0 0 0 5px rgba(164,199,61,0.2), 0 0 14px rgba(164,199,61,0.6)", zIndex:2, flexShrink:0 }}/>
+                  <div style={{ width:"24px", height:"24px", borderRadius:"50%", background:"var(--green)", boxShadow:"0 0 0 6px rgba(164,199,61,0.2), 0 0 16px rgba(164,199,61,0.6)", zIndex:2, flexShrink:0 }}/>
                 </div>
               ))}
             </div>
@@ -409,16 +339,12 @@ export default function HomePage() {
 
       {/* ── SUSTAINABILITY SECTION ── */}
       <section style={{ background:"var(--navy)", padding:"96px clamp(32px,6vw,96px)", position:"relative", overflow:"hidden" }}>
-        {/* Background accents */}
         <div style={{ position:"absolute", top:"-120px", right:"-120px", width:"600px", height:"600px", borderRadius:"50%", background:"radial-gradient(circle, rgba(164,199,61,0.06) 0%, transparent 70%)", pointerEvents:"none" }}/>
         <div style={{ position:"absolute", bottom:"-100px", left:"-100px", width:"500px", height:"500px", borderRadius:"50%", background:"radial-gradient(circle, rgba(211,184,59,0.05) 0%, transparent 70%)", pointerEvents:"none" }}/>
-        {/* Top gold line */}
         <div style={{ position:"absolute", top:0, left:0, right:0, height:"3px", background:"linear-gradient(90deg, transparent 0%, var(--green) 30%, var(--gold) 70%, transparent 100%)" }}/>
-
         <div className="max-w-7xl mx-auto relative z-10">
-          {/* Centered header */}
           <div style={{ textAlign:"center", marginBottom:"72px" }} className="reveal">
-            <div className="eyebrow mb-4" style={{ color:"rgba(255,255,255,0.5)" }}>Sustainability</div>
+            <div className="eyebrow mb-4" style={{ color:"rgba(255,255,255,0.5)" }}>Sustainability & HSE</div>
             <h2 className="font-display" style={{ fontSize:"clamp(32px,4vw,56px)", fontWeight:300, color:"white", lineHeight:1.1, marginBottom:"20px" }}>
               Building a <em style={{ fontStyle:"italic", color:"var(--green)" }}>Greener Tomorrow</em>
             </h2>
@@ -426,8 +352,6 @@ export default function HomePage() {
               Sustainability is not just a commitment — it is embedded in how we operate. From harnessing solar energy to achieving carbon-free operations, we are proud to lead Pakistan&apos;s industrial sector toward a cleaner, greener future.
             </p>
           </div>
-
-          {/* 3 cards */}
           <div className="grid grid-cols-1 sm:grid-cols-3 gap-6">
             {[
               { icon:"☀️", label:"Solar Energy",          text:"We have installed solar power plants across our facilities, generating clean renewable energy and significantly reducing our dependence on fossil fuels.", accent:"var(--gold)" },
@@ -474,8 +398,6 @@ export default function HomePage() {
           ))}
         </div>
       </section>
-
-
 
     </div>
   );

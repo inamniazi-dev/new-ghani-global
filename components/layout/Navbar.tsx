@@ -6,7 +6,7 @@ import { usePathname } from "next/navigation";
 
 const nav: any[] = [
   { label:"About Us",           href:"/about" },
-  { label:"Core Business", children:[
+  { label:"Core Businesses", children:[
     { label:"Ghani Global Holdings Limited",     href:"https://ghaniglobal.com",                 ext:true },
     { label:"Ghani Chemical Industries Limited", href:"https://ghaniglobal.com/ghanichemicals/", ext:true },
     { label:"Ghani Global Glass Limited",        href:"https://www.ghaniglobalglass.com",         ext:true },
@@ -48,12 +48,10 @@ export default function Navbar() {
   const [activeMenu,  setActiveMenu]  = useState<string|null>(null);
   const [mobileSub,   setMobileSub]   = useState<string|null>(null);
   const [scrolled,    setScrolled]    = useState(false);
-  const [visible,     setVisible]     = useState(true);
   const [searchOpen,  setSearchOpen]  = useState(false);
   const [searchQuery, setSearchQuery] = useState("");
   const [langOpen,    setLangOpen]    = useState(false);
   const [lang,        setLang]        = useState("en");
-  const lastScrollY = useRef(0);
   const searchRef   = useRef<HTMLInputElement>(null);
   const pathname    = usePathname();
 
@@ -108,9 +106,12 @@ export default function Navbar() {
       <div id="google_translate_element" style={{ display:"none" }}/>
       <header
         style={{
-          position:"relative", zIndex:50, width:"100%",
+          position:"fixed", top:"0", left:0, right:0, zIndex:50, width:"100%",
           background:"linear-gradient(135deg, rgba(1,8,44,0.97) 0%, rgba(2,14,60,0.95) 100%)",
+          backdropFilter:"blur(20px)",
           padding: "12px clamp(16px,3vw,48px)",
+          transition:"box-shadow 0.3s ease",
+          boxShadow: scrolled ? "0 4px 24px rgba(1,8,44,0.4)" : "none",
         }}
       >
         <div style={{ display:"grid", gridTemplateColumns:"1fr auto 1fr", alignItems:"center", gap:"12px", position:"relative" }}>
@@ -121,7 +122,7 @@ export default function Navbar() {
               position:"absolute", top:"50%", left:0, right:0,
               transform:"translateY(-50%)",
               display:"flex", alignItems:"center", gap:"12px",
-              background: scrolled ? "rgba(1,8,44,0.95)" : "rgba(1,8,44,0.82)",
+              background:"rgba(1,8,44,0.97)",
               backdropFilter:"blur(24px) saturate(1.8)",
               WebkitBackdropFilter:"blur(24px) saturate(1.8)",
               border:"1px solid rgba(211,184,59,0.3)",

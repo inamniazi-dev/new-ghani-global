@@ -15,8 +15,8 @@ const heroSlides = [
   { src:"/hero-banner-3-new.jpeg", position:"center 40%", ...SLIDE_CONTENT },
   { src:"/hero-banner-2.jpeg",     position:"center 40%", ...SLIDE_CONTENT },
   { src:"/hero-banner-3.jpeg",     position:"center 30%", ...SLIDE_CONTENT },
-  { src:"/hero-banner-new-1.jpeg",     position:"center 35%", ...SLIDE_CONTENT },
-  { src:"/hero-banner-new-2.jpeg",     position:"center 30%", ...SLIDE_CONTENT },
+  { src:"/hero-banner-new-1.jpeg", position:"center 35%", ...SLIDE_CONTENT },
+  { src:"/hero-banner-new-2.jpeg", position:"center 30%", ...SLIDE_CONTENT },
 ];
 
 export default function HeroSlider() {
@@ -110,7 +110,6 @@ export default function HeroSlider() {
           {slide.description}
         </p>
 
-
       </div>
 
       {/* Dots */}
@@ -133,13 +132,6 @@ export default function HeroSlider() {
           ))}
         </div>
       )}
-
-      {/* Counter */}
-      <div className="absolute top-24 right-8 z-30" style={{ display:"flex", alignItems:"center", gap:"6px" }}>
-        <span style={{ fontSize:"13px", fontWeight:700, color:"var(--gold)" }}>{String(current+1).padStart(2,"0")}</span>
-        <span style={{ width:"32px", height:"1px", background:"rgba(255,255,255,0.3)", display:"inline-block" }}/>
-        <span style={{ fontSize:"11px", color:"rgba(255,255,255,0.4)" }}>{String(n).padStart(2,"0")}</span>
-      </div>
     </>
   );
 }
