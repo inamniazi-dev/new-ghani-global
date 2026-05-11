@@ -35,10 +35,10 @@ function Counter({ target, suffix="+" }: { target:number; suffix?:string }) {
 }
 
 const industries = [
-  { id:"holdings", tab:"Ghani Global Holdings Limited",     title:"Strategic Investment Holdings", desc:"The principal holding company of the group, managing strategic investments in subsidiaries and associated companies — driving long-term value creation for stakeholders across Pakistan's industrial landscape.", img:"/ghani-global-holdings.jpg",     link:"/about", ext:false },
-  { id:"chemical", tab:"Ghani Chemical Industries Limited", title:"Industrial & Medical Gases",    desc:"Pakistan's leading manufacturer of industrial and medical gases, serving hospitals, industries, and research institutes nationwide, while also providing medical gas equipment and pipeline solutions to healthcare facilities across the country.", img:"/chemical-banner.jpeg", link:"https://ghaniglobal.com/ghanichemicals/", ext:true },
+  { id:"holdings", tab:"Ghani Global Holdings Limited",     title:"Strategic Investment Holdings", desc:"The principal holding company of the group, managing strategic investments in subsidiary and associated companies — driving long-term value creation for stakeholders across Pakistan's industrial landscape.", img:"/ghani-global-holdings.jpg",     link:"/about", ext:false },
+  { id:"chemical", tab:"Ghani Chemical Industries Limited", title:"Medical & Industrial Gases",    desc:"Pakistan's leading manufacturer of industrial and medical gases, serving hospitals, industries, and research institutes nationwide, while also providing medical gas equipment and pipeline solutions to healthcare facilities across the country.", img:"/chemical-banner.jpeg", link:"https://ghaniglobal.com/ghanichemicals/", ext:true },
   { id:"glass",    tab:"Ghani Global Glass Limited",        title:"Precision Glass Products",      desc:"We take pride in being the sole manufacturer of borosilicate glass tubes (USP Type I – \"Neutral Glass\") in Pakistan. We are also the market leader in the manufacturing of vials and ampoules across the country.", img:"/glass-banner.jpeg",        link:"https://www.ghaniglobalglass.com", ext:true },
-  { id:"chemworld",tab:"Ghani ChemWorld Limited",           title:"Chemicals",           desc:"Utilizing modern electric arc furnaces, Carbonation towers and Hydro cyclones, Ghani ChemWorld Limited produces Calcium Carbide, Lime and Precipitated Calcium Carbonate — reflecting a continuous pursuit of cutting-edge solutions in the chemical industry.", img:"/Chemworld-banner.jpeg",           link:"https://ghanichemworld.com/", ext:false },
+  { id:"chemworld",tab:"Ghani ChemWorld Limited",           title:"Specialty Chemicals",           desc:"Utilizing modern electric arc furnaces, Carbonation towers and Hydro cyclones, Ghani ChemWorld Limited produces Calcium Carbide, Lime and Precipitated Calcium Carbonate — reflecting a continuous pursuit of cutting-edge solutions in the chemical industry.", img:"/Chemworld-banner.jpeg",           link:"https://ghanichemworld.com/", ext:false },
 ];
 
 const milestones = [
@@ -46,7 +46,7 @@ const milestones = [
   { year:"2010", label:"PSX Listing",    tag:"Capital Markets", desc:"Listed on Pakistan Stock Exchange" },
   { year:"2019", label:"Restructured",   tag:"Corporate",      desc:"Became Ghani Global Holdings Limited" },
   { year:"2024", label:"ChemWorld",      tag:"New Venture",    desc:"New subsidiary for Hattar SEZ" },
-  { year:"2025", label:"Joint Ventures", tag:"Milestone",      desc:"Strategic Engro contract — expanding into new industrial frontiers." },
+  { year:"2025", label:"Joint Ventures", tag:"Milestone",      desc:"Strategic Engro contract — expanding into new industrial frontiers. (Content to be updated.)" },
 ];
 
 const newsItems = [
@@ -172,7 +172,7 @@ export default function HomePage() {
       </section>
 
       {/* ── MESSAGE FROM THE FOUNDERS ── */}
-      <section style={{ background:"#F0F7EE", padding:"64px clamp(32px,6vw,96px)", overflow:"hidden", minHeight:"100vh", display:"flex", alignItems:"center" }}>
+      <section id="founders" style={{ background:"#F0F7EE", padding:"64px clamp(32px,6vw,96px)", overflow:"hidden", minHeight:"100vh", display:"flex", alignItems:"center" }}>
         <div className="max-w-7xl mx-auto w-full">
           <div className="grid lg:grid-cols-5 gap-16 items-center">
             <div className="lg:col-span-2 reveal" style={{ position:"relative" }}>
@@ -233,7 +233,7 @@ export default function HomePage() {
       <ConstellationNetwork/>
 
       {/* ── OUR JOURNEY — Horizontal Auto-scroll Timeline ── */}
-      <section style={{ background:"#F0F7EE", padding:"96px clamp(32px,6vw,96px)", overflow:"hidden" }}>
+      <section id="journey" style={{ background:"#F0F7EE", padding:"96px clamp(32px,6vw,96px)", overflow:"hidden" }}>
         <div className="max-w-6xl mx-auto">
           <div className="grid lg:grid-cols-2 gap-12 items-end mb-16 reveal">
             <div>
@@ -245,7 +245,7 @@ export default function HomePage() {
             </div>
             <div>
               <p style={{ fontSize:"16px", lineHeight:1.85, color:"var(--text2)", fontWeight:300 }}>
-                From a single industrial gas company founded by three brothers in 2007 to a diversified conglomerate operating across multiple sectors of Pakistan’s economy.
+                From a single industrial gas company founded by three brothers in 2007 to a diversified conglomerate spanning multiple sectors of Pakistan&apos;s economy.
               </p>
             </div>
           </div>
@@ -300,7 +300,7 @@ export default function HomePage() {
       </section>
 
       {/* ── CSR SECTION ── */}
-      <section style={{ background:"#f8fdf4", padding:"96px clamp(32px,6vw,96px)", position:"relative", overflow:"hidden" }}>
+      <section id="csr" style={{ background:"#f8fdf4", padding:"96px clamp(32px,6vw,96px)", position:"relative", overflow:"hidden" }}>
         <div style={{ position:"absolute", top:"-100px", right:"-100px", width:"500px", height:"500px", borderRadius:"50%", background:"radial-gradient(circle, rgba(164,199,61,0.08) 0%, transparent 70%)", pointerEvents:"none" }}/>
         <div style={{ position:"absolute", bottom:"-80px", left:"-80px", width:"400px", height:"400px", borderRadius:"50%", background:"radial-gradient(circle, rgba(211,184,59,0.06) 0%, transparent 70%)", pointerEvents:"none" }}/>
         <div className="max-w-7xl mx-auto relative z-10">
@@ -338,13 +338,13 @@ export default function HomePage() {
       </section>
 
       {/* ── SUSTAINABILITY SECTION ── */}
-      <section style={{ background:"var(--navy)", padding:"96px clamp(32px,6vw,96px)", position:"relative", overflow:"hidden" }}>
+      <section id="sustainability" style={{ background:"var(--navy)", padding:"96px clamp(32px,6vw,96px)", position:"relative", overflow:"hidden" }}>
         <div style={{ position:"absolute", top:"-120px", right:"-120px", width:"600px", height:"600px", borderRadius:"50%", background:"radial-gradient(circle, rgba(164,199,61,0.06) 0%, transparent 70%)", pointerEvents:"none" }}/>
         <div style={{ position:"absolute", bottom:"-100px", left:"-100px", width:"500px", height:"500px", borderRadius:"50%", background:"radial-gradient(circle, rgba(211,184,59,0.05) 0%, transparent 70%)", pointerEvents:"none" }}/>
         <div style={{ position:"absolute", top:0, left:0, right:0, height:"3px", background:"linear-gradient(90deg, transparent 0%, var(--green) 30%, var(--gold) 70%, transparent 100%)" }}/>
         <div className="max-w-7xl mx-auto relative z-10">
           <div style={{ textAlign:"center", marginBottom:"72px" }} className="reveal">
-            <div className="eyebrow mb-4" style={{ color:"rgba(255,255,255,0.5)" }}>Sustainability & HSE</div>
+            <div className="eyebrow mb-4" style={{ color:"rgba(255,255,255,0.5)" }}>Sustainability</div>
             <h2 className="font-display" style={{ fontSize:"clamp(32px,4vw,56px)", fontWeight:300, color:"white", lineHeight:1.1, marginBottom:"20px" }}>
               Building a <em style={{ fontStyle:"italic", color:"var(--green)" }}>Greener Tomorrow</em>
             </h2>
@@ -355,8 +355,8 @@ export default function HomePage() {
           <div className="grid grid-cols-1 sm:grid-cols-3 gap-6">
             {[
               { icon:"☀️", label:"Solar Energy",          text:"We have installed solar power plants across our facilities, generating clean renewable energy and significantly reducing our dependence on fossil fuels.", accent:"var(--gold)" },
-              { icon:"🌱", label:"Zero Carbon Emissions", text:"Our operations are designed to be free from carbon emissions, reflecting our unwavering commitment to environmental responsibility and a cleaner Pakistan. We also strive to contribute towards improved air quality by adopting sustainable and environmentally responsible operational practices.", accent:"var(--green)" },
-              { icon:"🤝", label:"HSE Commitment",       text:"Health, Safety, and Environment (HSE) remain integral to every aspect of our operations. We are committed to maintaining the highest safety standards through continuous training, risk management, compliance monitoring, and responsible operational practices. By fostering a strong culture of safety and environmental awareness, we aim to protect our workforce, enhance operational reliability, and contribute to a safer and healthier future for Pakistan.", accent:"var(--gold)" },
+              { icon:"🌱", label:"Zero Carbon Emissions", text:"Our operations are designed to be free from carbon emissions, reflecting our unwavering commitment to environmental responsibility and a cleaner Pakistan.", accent:"var(--green)" },
+              { icon:"🤝", label:"Community First",       text:"We actively invest in the communities around us — supporting local livelihoods, infrastructure, and social development programs that create lasting impact.", accent:"var(--gold)" },
             ].map((c,i)=>(
               <div key={c.label} className="reveal" style={{ animationDelay:`${i*0.12}s`, padding:"40px 32px", background:"rgba(255,255,255,0.04)", border:"1px solid rgba(255,255,255,0.08)", borderTop:`3px solid ${c.accent}`, backdropFilter:"blur(8px)" }}>
                 <div style={{ fontSize:"40px", marginBottom:"20px" }}>{c.icon}</div>

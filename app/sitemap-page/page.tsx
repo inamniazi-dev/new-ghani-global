@@ -5,11 +5,11 @@ const sections = [
   {
     heading: "About Us",
     links: [
-      { label:"About Ghani Global Group",  href:"/about",        ext:false },
-      { label:"Message from the Founders", href:"/about",        ext:false },
-      { label:"Our Vision",                href:"/about",        ext:false },
-      { label:"Core Principles",           href:"/about",        ext:false },
-      { label:"Our Journey",               href:"/",             ext:false },
+      { label:"About Ghani Global Group",  href:"/about",     ext:false },
+      { label:"Message from the Founders", href:"/#founders", ext:false },
+      { label:"Our Vision",                href:"/about",     ext:false },
+      { label:"Core Principles",           href:"/about",     ext:false },
+      { label:"Our Journey",               href:"/#journey",  ext:false },
     ],
   },
   {
@@ -42,10 +42,10 @@ const sections = [
   {
     heading: "Sustainability",
     links: [
-      { label:"Solar Energy",          href:"/", ext:false },
-      { label:"Zero Carbon Emissions", href:"/", ext:false },
-      { label:"Community First",       href:"/", ext:false },
-      { label:"CSR",                   href:"/", ext:false },
+      { label:"Solar Energy",          href:"/#sustainability", ext:false },
+      { label:"Zero Carbon Emissions", href:"/#sustainability", ext:false },
+      { label:"HSE Commitment",        href:"/#sustainability", ext:false },
+      { label:"CSR",                   href:"/#csr",            ext:false },
     ],
   },
   {
