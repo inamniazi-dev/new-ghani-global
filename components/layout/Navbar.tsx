@@ -106,7 +106,6 @@ export default function Navbar() {
 
   return (
     <>
-      <div id="google_translate_element" style={{ display:"none" }}/>
       <header
         style={{
           position:"fixed", top:"0", left:0, right:0, zIndex:50, width:"100%",

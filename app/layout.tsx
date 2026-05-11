@@ -13,10 +13,27 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
   return (
     <html lang="en">
       <body>
+        {/* Google Translate element — must be in body before scripts */}
+        <div id="google_translate_element" style={{ display:"none" }}/>
         <LoadingScreen />
         <ConditionalLayout>{children}</ConditionalLayout>
-        <Script id="google-translate-init" strategy="afterInteractive" dangerouslySetInnerHTML={{ __html:`function googleTranslateElementInit(){new google.translate.TranslateElement({pageLanguage:'en',includedLanguages:'ur,en,ar,zh-CN,nl,fr,de,it,pt,ru,es,tr',autoDisplay:false},'google_translate_element');}` }}/>
-        <Script src="//translate.google.com/translate_a/element.js?cb=googleTranslateElementInit" strategy="afterInteractive"/>
+        <Script
+          id="google-translate-init"
+          strategy="afterInteractive"
+          dangerouslySetInnerHTML={{ __html:`
+            function googleTranslateElementInit() {
+              new google.translate.TranslateElement({
+                pageLanguage: 'en',
+                includedLanguages: 'ur,en,ar,zh-CN,nl,fr,de,it,pt,ru,es,tr',
+                autoDisplay: false
+              }, 'google_translate_element');
+            }
+          `}}
+        />
+        <Script
+          src="//translate.google.com/translate_a/element.js?cb=googleTranslateElementInit"
+          strategy="afterInteractive"
+        />
       </body>
     </html>
   );
