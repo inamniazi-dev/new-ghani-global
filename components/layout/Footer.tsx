@@ -47,7 +47,7 @@ export default function Footer() {
           {/* Col 2: Corporate Office */}
           <div>
             <p style={{ fontSize:"11px", letterSpacing:"0.25em", textTransform:"uppercase", fontWeight:700, color:"var(--gold)", marginBottom:"20px" }}>Corporate Office</p>
-            <div style={{ fontSize:"15px", color:"rgba(255,255,255,0.75)", lineHeight:1.8, marginBottom:"16px" }}>
+            <div style={{ fontSize:"15px", color:"rgba(255,255,255,0.75)", lineHeight:1.4, marginBottom:"16px" }}>
               <p>10-N, Model Town Extension</p>
               <p>Lahore 54000, Pakistan</p>
             </div>
@@ -93,9 +93,15 @@ export default function Footer() {
             © {new Date().getFullYear()} Ghani Global Group · All rights reserved
           </p>
           <div style={{ display:"flex", alignItems:"center", gap:"20px", flexWrap:"wrap" }}>
+            <a href="/sitemap.xml" target="_blank" rel="noopener noreferrer"
+            style={{ fontSize:"13px", color:"rgba(255,255,255,0.75)", letterSpacing:"0.04em", textDecoration:"none", transition:"color 0.2s" }}
+            onMouseEnter={e=>(e.currentTarget.style.color="var(--gold)")}
+            onMouseLeave={e=>(e.currentTarget.style.color="rgba(255,255,255,0.75)")}>
+            Sitemap
+              </a>
             <p style={{ fontSize:"13px", letterSpacing:"0.04em" }}>
-              <span style={{ color:"rgba(255,255,255,0.75)" }}>Last Updated: </span>
-              <span style={{ color:"var(--gold)", fontWeight:700 }}>{LAST_UPDATED}</span>
+            <span style={{ color:"rgba(255,255,255,0.75)" }}>Last Updated: </span>
+            <span style={{ color:"var(--gold)", fontWeight:700 }}>{LAST_UPDATED}</span>
             </p>
           </div>
         </div>
