@@ -12,13 +12,14 @@ const ASSOC = [
   { id:"ag",   name:"Air Ghani (Pvt) Limited",             sector:"Aviation & Gases"  },
   { id:"gl",   name:"Ghani Logistics (Pvt) Limited",       sector:"Logistics"         },
   { id:"ge",   name:"Ghani Energies Limited",              sector:"Energy"            },
-  { id:"gg",   name:"Ghani Gases (Pvt) Limited",       sector:"Industrial Gases"  },
+  { id:"gg",   name:"Ghani Gases (Pvt) Limited",           sector:"Industrial Gases"  },
   { id:"g3",   name:"G3 Properties (Pvt) Limited",         sector:"Real Estate"       },
   { id:"geng", name:"Ghani Engineering (Pvt) Limited",     sector:"Engineering"       },
   { id:"gf",   name:"Ghani Global Foods (Pvt) Limited",    sector:"Food & Agriculture"},
   { id:"gi",   name:"Ghani Industrial Complex (Pvt) Ltd",  sector:"Infrastructure"    },
   { id:"kp",   name:"Kaya Projects (Pvt) Limited",         sector:"Projects"          },
-  { id:"kl",   name:"Killowatt Labs Technologies Limited", sector:"Technology"        },
+  { id:"kl",   name:"Killowatt Labs Technologies Limited",  sector:"Technology"        },
+  { id:"rl",   name:"Reit Limited",                        sector:"Real Estate"       },
 ];
 
 const GOLD  = "#d3b83b";
@@ -52,7 +53,6 @@ export default function ConstellationNetwork() {
       const H = canvas.height = rect.height;
       const cx = W / 2;
       const cy = H / 2;
-      // Make wheel as large as possible while fitting in viewport
       const base = Math.min(W * 0.46, H * 0.46);
       dimsRef.current = {
         W, H, cx, cy,
@@ -64,7 +64,6 @@ export default function ConstellationNetwork() {
       };
     }
 
-    // Word-wrap text into lines that fit maxWidth
     function wrapText(text: string, maxWidth: number, fontSize: number): string[] {
       ctx.font = `600 ${fontSize}px Maven Pro, sans-serif`;
       const words = text.split(" ");
@@ -83,7 +82,6 @@ export default function ConstellationNetwork() {
       return lines;
     }
 
-    // Draw horizontally centered multiline text at position (tx, ty)
     function drawLines(lines: string[], tx: number, ty: number, fontSize: number, color: string, bold = false) {
       ctx.font = `${bold ? "700" : "600"} ${fontSize}px Maven Pro, sans-serif`;
       ctx.fillStyle = color;
@@ -112,28 +110,23 @@ export default function ConstellationNetwork() {
       ctx.fillStyle = NAVY;
       ctx.fillRect(0, 0, W, H);
 
-      // Subtle dot grid
       ctx.fillStyle = "rgba(164,199,61,0.04)";
       for (let gx = 0; gx < W; gx += 60)
         for (let gy = 0; gy < H; gy += 60) {
           ctx.beginPath(); ctx.arc(gx, gy, 0.8, 0, Math.PI * 2); ctx.fill();
         }
 
-      // Slow rotation
       if (!pauseRef.current) rotRef.current += 0.0008;
       const rot = rotRef.current;
 
       const hov = hovRef.current;
       const psxArc   = (Math.PI * 2) / 4;
-      const assocArc = (Math.PI * 2) / 10;
+      const assocArc = (Math.PI * 2) / 11;  // Updated to 11
 
-      // Scale font sizes with wheel — min 8px, max 13px for PSX, min 7px max 11px for assoc
       const psxFontSize   = Math.max(8,  Math.min(13, (psxOuter - psxInner) * 0.13));
       const assocFontSize = Math.max(7,  Math.min(11, (assocOuter - assocInner) * 0.11));
 
-      // PSX band width — scale with ring size
       const psxBandW   = (psxOuter - psxInner) * 0.75;
-      // Assoc band width — scale with ring size
       const assocBandW = (assocOuter - assocInner) * 0.72;
 
       // ── PSX RING ──
@@ -156,7 +149,6 @@ export default function ConstellationNetwork() {
           ctx.lineWidth = 3; ctx.stroke();
         }
 
-        // Place label at radial midpoint of band
         const labelR = psxInner + (psxOuter - psxInner) * 0.5;
         const lx = cx + labelR * Math.cos(mid);
         const ly = cy + labelR * Math.sin(mid);
@@ -164,8 +156,6 @@ export default function ConstellationNetwork() {
         const fontSize = psxFontSize;
         const lines = wrapText(p.name, psxBandW, fontSize);
         drawLines(lines, lx, ly, fontSize, isHov ? "white" : "rgba(255,255,255,0.88)", true);
-
-
       });
 
       // ── ASSOC RING ──
@@ -190,7 +180,6 @@ export default function ConstellationNetwork() {
         drawLines(lines, lx, ly, fontSize, isHov ? "white" : "rgba(164,199,61,0.88)");
       });
 
-      // Ring borders
       [
         [psxInner,   "rgba(211,184,59,0.18)"],
         [psxOuter,   "rgba(211,184,59,0.35)"],
@@ -201,25 +190,21 @@ export default function ConstellationNetwork() {
         ctx.strokeStyle = color as string; ctx.lineWidth = 1; ctx.stroke();
       });
 
-      // Dark gap between PSX and ASSOC
       const gapMid = (psxOuter + assocInner) / 2;
       const gapW   = assocInner - psxOuter;
       ctx.beginPath(); ctx.arc(cx, cy, gapMid, 0, Math.PI * 2);
       ctx.strokeStyle = NAVY; ctx.lineWidth = gapW - 2; ctx.stroke();
 
-      // Center glow
       const glow = ctx.createRadialGradient(cx, cy, 0, cx, cy, coreR * 2.2);
       glow.addColorStop(0, "rgba(211,184,59,0.18)");
       glow.addColorStop(1, "rgba(0,0,0,0)");
       ctx.beginPath(); ctx.arc(cx, cy, coreR * 2.2, 0, Math.PI * 2);
       ctx.fillStyle = glow; ctx.fill();
 
-      // Center fill
       ctx.beginPath(); ctx.arc(cx, cy, coreR, 0, Math.PI * 2);
       ctx.fillStyle = "rgba(1,8,44,0.97)"; ctx.fill();
       ctx.strokeStyle = GOLD; ctx.lineWidth = 2.5; ctx.stroke();
 
-      // Logo
       const logo = logoRef.current;
       if (logo && logo.complete) {
         const ls = coreR * 1.65;
@@ -260,7 +245,7 @@ export default function ConstellationNetwork() {
       canvasRef.current!.style.cursor = "pointer";
     } else if (dist >= d.assocInner && dist <= d.assocOuter) {
       const norm = ((angle - rotRef.current) % (Math.PI*2) + Math.PI*2) % (Math.PI*2);
-      const idx = Math.floor(norm / ((Math.PI * 2) / 10)) % 10;
+      const idx = Math.floor(norm / ((Math.PI * 2) / 11)) % 11;  // Updated to 11
       hovRef.current = { ring:"assoc", idx };
       setHovered({ name:ASSOC[idx].name, sector:ASSOC[idx].sector, isPsx:false });
       setTipPos({ x:mx, y:my });
@@ -297,7 +282,6 @@ export default function ConstellationNetwork() {
               <span style={{ width:"10px", height:"10px", borderRadius:"50%", background:GREEN, display:"inline-block", boxShadow:`0 0 8px ${GREEN}` }}/>
               <span style={{ fontSize:"10px", letterSpacing:"0.12em", textTransform:"uppercase", color:"rgba(255,255,255,0.45)", fontWeight:600 }}>Associated</span>
             </div>
-            
           </div>
         </div>
       </div>
@@ -320,7 +304,6 @@ export default function ConstellationNetwork() {
             border:`1px solid ${hovered.isPsx ? "rgba(211,184,59,0.5)" : "rgba(164,199,61,0.4)"}`,
             padding:"14px 18px", pointerEvents:"none", zIndex:20, minWidth:"210px", borderRadius:"8px", backdropFilter:"blur(12px)",
           }}>
-            
             <p style={{ fontSize:"14px", fontWeight:700, color:"white", lineHeight:1.35, marginBottom:"3px" }}>{hovered.name}</p>
             <p style={{ fontSize:"11px", letterSpacing:"0.1em", textTransform:"uppercase", color:"rgba(255,255,255,0.4)", fontWeight:600 }}>{hovered.sector}</p>
           </div>

@@ -28,7 +28,7 @@ const statsMap: Record<string, { num: string; lbl: string }[]> = {
   chemworld: [
     { num:"2024",      lbl:"Year Incorporated" },
     { num:"GCWL",      lbl:"PSX Symbol" },
-    { num:"Specialty Chemicals", lbl:"Core Business" },
+    { num:"Chemicals", lbl:"Core Business" },
   ],
 };
 
