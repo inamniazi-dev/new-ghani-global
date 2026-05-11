@@ -18,7 +18,7 @@ const statsMap: Record<string, { num: string; lbl: string }[]> = {
   glass: [
     { num:"2007",      lbl:"Year Incorporated" },
     { num:"GGGL",      lbl:"PSX Symbol" },
-    { num:"Pharma",    lbl:"Core Business" },
+    { num:"Glass Tubes",    lbl:"Core Business" },
   ],
   chemical: [
     { num:"2007",      lbl:"Year Incorporated" },

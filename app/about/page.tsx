@@ -59,13 +59,10 @@ export default function AboutPage() {
         <div className="max-w-7xl mx-auto relative z-10">
           <div className="grid lg:grid-cols-2 gap-16 items-end">
             <div>
-              <div style={{ fontSize:"9px", letterSpacing:"0.28em", textTransform:"uppercase", fontWeight:700, color:"var(--gold)", marginBottom:"20px", display:"flex", alignItems:"center", gap:"10px" }}>
-                <span style={{ width:"24px", height:"1px", background:"var(--gold)", display:"inline-block" }}/>
-                Who We Are
-              </div>
+              
               <h1 className="font-display" style={{ fontSize:"clamp(40px,6vw,72px)", fontWeight:300, color:"white", lineHeight:1.0, letterSpacing:"-0.02em", marginBottom:"24px" }}>
-                About<br/>
-                <em style={{ fontStyle:"italic", color:"var(--gold)" }}>Ghani Global Group</em>
+                Ghani Global Group<br/>
+                <em style={{ fontStyle:"italic", color:"var(--gold)" }}>Shariah Compliant</em>
               </h1>
               <div style={{ width:"56px", height:"3px", background:"var(--green)" }}/>
             </div>

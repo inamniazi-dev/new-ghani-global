@@ -66,10 +66,7 @@ export default function InvestorRelationsPage() {
           <div style={{ position:"absolute", inset:0, background:"rgba(1,8,44,0.85)" }}/>
         </div>
         <div className="max-w-7xl mx-auto relative z-10">
-          <div style={{ fontSize:"9px", letterSpacing:"0.28em", textTransform:"uppercase", fontWeight:700, color:"var(--gold)", marginBottom:"20px", display:"flex", alignItems:"center", gap:"10px" }}>
-            <span style={{ width:"24px", height:"1px", background:"var(--gold)", display:"inline-block" }}/>
-            PSX Listed Companies
-          </div>
+          
           <h1 className="font-display" style={{ fontSize:"clamp(40px,6vw,72px)", fontWeight:300, color:"white", lineHeight:1.0, letterSpacing:"-0.02em", marginBottom:"16px" }}>
             Investor<br/>
             <em style={{ fontStyle:"italic", color:"var(--gold)" }}>Relations</em>

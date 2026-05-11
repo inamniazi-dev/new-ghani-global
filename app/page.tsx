@@ -35,8 +35,8 @@ function Counter({ target, suffix="+" }: { target:number; suffix?:string }) {
 }
 
 const industries = [
-  { id:"holdings", tab:"Ghani Global Holdings Limited",     title:"Strategic Investment Holdings", desc:"The principal holding company of the group, managing strategic investments in subsidiary and associated companies — driving long-term value creation for stakeholders across Pakistan's industrial landscape.", img:"/ghani-global-holdings.jpg",     link:"/about", ext:false },
-  { id:"chemical", tab:"Ghani Chemical Industries Limited", title:"Medical & Industrial Gases",    desc:"Pakistan's leading manufacturer of industrial and medical gases, serving hospitals, industries, and research institutes nationwide, while also providing medical gas equipment and pipeline solutions to healthcare facilities across the country.", img:"/chemical-banner.jpeg", link:"https://ghaniglobal.com/ghanichemicals/", ext:true },
+  { id:"holdings", tab:"Ghani Global Holdings Limited",     title:"Strategic Investment Holdings", desc:"The principal holding company of the group, managing strategic investments in subsidiaries and associated companies — driving long-term value creation for stakeholders across Pakistan's industrial landscape.", img:"/ghani-global-holdings.jpg",     link:"/about", ext:false },
+  { id:"chemical", tab:"Ghani Chemical Industries Limited", title:"Industrial & Medical Gases",    desc:"Pakistan's leading manufacturer of industrial and medical gases, serving hospitals, industries, and research institutes nationwide, while also providing medical gas equipment and pipeline solutions to healthcare facilities across the country.", img:"/chemical-banner.jpeg", link:"https://ghaniglobal.com/ghanichemicals/", ext:true },
   { id:"glass",    tab:"Ghani Global Glass Limited",        title:"Precision Glass Products",      desc:"We take pride in being the sole manufacturer of borosilicate glass tubes (USP Type I – \"Neutral Glass\") in Pakistan. We are also the market leader in the manufacturing of vials and ampoules across the country.", img:"/glass-banner.jpeg",        link:"https://www.ghaniglobalglass.com", ext:true },
   { id:"chemworld",tab:"Ghani ChemWorld Limited",           title:"Specialty Chemicals",           desc:"Utilizing modern electric arc furnaces, Carbonation towers and Hydro cyclones, Ghani ChemWorld Limited produces Calcium Carbide, Lime and Precipitated Calcium Carbonate — reflecting a continuous pursuit of cutting-edge solutions in the chemical industry.", img:"/Chemworld-banner.jpeg",           link:"https://ghanichemworld.com/", ext:false },
 ];
@@ -245,7 +245,7 @@ export default function HomePage() {
             </div>
             <div>
               <p style={{ fontSize:"16px", lineHeight:1.85, color:"var(--text2)", fontWeight:300 }}>
-                From a single industrial gas company founded by three brothers in 2007 to a diversified conglomerate spanning multiple sectors of Pakistan&apos;s economy.
+                From a single industrial gas company founded by three brothers in 2007 to a diversified conglomerate operating across multiple sectors of Pakistan’s economy.
               </p>
             </div>
           </div>
@@ -355,8 +355,8 @@ export default function HomePage() {
           <div className="grid grid-cols-1 sm:grid-cols-3 gap-6">
             {[
               { icon:"☀️", label:"Solar Energy",          text:"We have installed solar power plants across our facilities, generating clean renewable energy and significantly reducing our dependence on fossil fuels.", accent:"var(--gold)" },
-              { icon:"🌱", label:"Zero Carbon Emissions", text:"Our operations are designed to be free from carbon emissions, reflecting our unwavering commitment to environmental responsibility and a cleaner Pakistan.", accent:"var(--green)" },
-              { icon:"🤝", label:"Community First",       text:"We actively invest in the communities around us — supporting local livelihoods, infrastructure, and social development programs that create lasting impact.", accent:"var(--gold)" },
+              { icon:"🌱", label:"Zero Carbon Emissions", text:"Our operations are designed to be free from carbon emissions, reflecting our unwavering commitment to environmental responsibility and a cleaner Pakistan. We also strive to contribute towards improved air quality by adopting sustainable and environmentally responsible operational practices.", accent:"var(--green)" },
+              { icon:"🤝", label:"HSE Commitment",       text:"Health, Safety, and Environment (HSE) remain integral to every aspect of our operations. We are committed to maintaining the highest safety standards through continuous training, risk management, compliance monitoring, and responsible operational practices. By fostering a strong culture of safety and environmental awareness, we aim to protect our workforce, enhance operational reliability, and contribute to a safer and healthier future for Pakistan.", accent:"var(--gold)" },
             ].map((c,i)=>(
               <div key={c.label} className="reveal" style={{ animationDelay:`${i*0.12}s`, padding:"40px 32px", background:"rgba(255,255,255,0.04)", border:"1px solid rgba(255,255,255,0.08)", borderTop:`3px solid ${c.accent}`, backdropFilter:"blur(8px)" }}>
                 <div style={{ fontSize:"40px", marginBottom:"20px" }}>{c.icon}</div>
