@@ -86,18 +86,10 @@ export default function Navbar() {
       return;
     }
     // Set translation cookie
-    document.cookie = `googtrans=/en/${l}; path=/`;
-    document.cookie = `googtrans=/en/${l}; path=/; domain=` + window.location.hostname;
-    document.cookie = `googtrans=/en/${l}; path=/; domain=.` + window.location.hostname;
-    // Try to trigger via combo select
-    const sel = document.querySelector(".goog-te-combo") as HTMLSelectElement;
-    if (sel) {
-      sel.value = l;
-      sel.dispatchEvent(new Event("change"));
-    } else {
-      // Fallback — reload with cookie set
-      window.location.reload();
-    }
+    document.cookie = `googtrans=/auto/${l}; path=/`;
+    document.cookie = `googtrans=/auto/${l}; path=/; domain=` + window.location.hostname;
+    document.cookie = `googtrans=/auto/${l}; path=/; domain=.` + window.location.hostname;
+    window.location.reload();
   }
 
   const filtered = searchQuery.length > 1
