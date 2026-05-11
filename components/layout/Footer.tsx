@@ -46,7 +46,7 @@ export default function Footer() {
 
           {/* Col 2: Corporate Office */}
           <div>
-            <p style={{ fontSize:"11px", letterSpacing:"0.25em", textTransform:"uppercase", fontWeight:700, color:"var(--gold)", marginBottom:"20px" }}>Corporate Office</p>
+            <p style={{ fontSize:"11px", letterSpacing:"0.15em", textTransform:"uppercase", fontWeight:700, color:"var(--gold)", marginBottom:"20px" }}>Corporate Office</p>
             <div style={{ fontSize:"15px", color:"rgba(255,255,255,0.75)", lineHeight:1.4, marginBottom:"16px" }}>
               <p>10-N, Model Town Extension</p>
               <p>Lahore 54000, Pakistan</p>
