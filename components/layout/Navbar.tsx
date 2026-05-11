@@ -197,11 +197,11 @@ export default function Navbar() {
                     {activeMenu===item.label && (
                       <div style={{ position:"absolute", top:"100%", left:"50%", transform:"translateX(-50%)", zIndex:50, minWidth:"270px", paddingTop:"10px" }}>
                         <div style={{
-                          background:"rgba(255,255,255,0.08)",
+                          background:"rgba(1,8,44,0.95)",
                           backdropFilter:"blur(40px) saturate(2)",
                           WebkitBackdropFilter:"blur(40px) saturate(2)",
-                          border:"1px solid rgba(255,255,255,0.18)",
-                          boxShadow:"0 24px 64px rgba(1,8,44,0.35)",
+                          border:"1px solid rgba(255,255,255,0.12)",
+                          boxShadow:"0 24px 64px rgba(1,8,44,0.6)",
                           borderRadius:"16px", overflow:"hidden", padding:"6px",
                         }}>
                           {item.children.map((c:any)=>(
@@ -209,7 +209,7 @@ export default function Navbar() {
                               target={c.ext ? "_blank" : undefined}
                               rel={c.ext ? "noopener noreferrer" : undefined}
                               style={{ display:"block", padding:"10px 14px", borderRadius:"8px", fontSize:"12px", color:"rgba(255,255,255,0.88)", fontWeight:500, transition:"all 0.2s", marginBottom:"2px", textDecoration:"none" }}
-                              onMouseEnter={e=>{ const el=e.currentTarget as HTMLElement; el.style.background="rgba(255,255,255,0.12)"; el.style.color="white"; }}
+                              onMouseEnter={e=>{ const el=e.currentTarget as HTMLElement; el.style.background="rgba(255,255,255,0.1)"; el.style.color="white"; }}
                               onMouseLeave={e=>{ const el=e.currentTarget as HTMLElement; el.style.background="transparent"; el.style.color="rgba(255,255,255,0.88)"; }}>
                               {c.label}
                             </a>
@@ -256,7 +256,7 @@ export default function Navbar() {
                 <ChevronDown size={10} style={{ opacity:0.6, transform:langOpen?"rotate(180deg)":"rotate(0deg)", transition:"transform 0.2s" }}/>
               </button>
               {langOpen && (
-                <div style={{ position:"absolute", top:"calc(100% + 8px)", right:0, background:"rgba(255,255,255,0.08)", backdropFilter:"blur(40px) saturate(2)", WebkitBackdropFilter:"blur(40px) saturate(2)", border:"1px solid rgba(255,255,255,0.18)", boxShadow:"0 24px 64px rgba(1,8,44,0.35)", borderRadius:"16px", overflow:"hidden", minWidth:"160px", zIndex:100, padding:"6px" }}>
+                <div style={{ position:"absolute", top:"calc(100% + 8px)", right:0, background:"rgba(1,8,44,0.95)", backdropFilter:"blur(40px) saturate(2)", WebkitBackdropFilter:"blur(40px) saturate(2)", border:"1px solid rgba(255,255,255,0.12)", boxShadow:"0 24px 64px rgba(1,8,44,0.6)", borderRadius:"16px", overflow:"hidden", minWidth:"160px", zIndex:100, padding:"6px" }}>
                   {LANGUAGES.map(l => (
                     <button key={l.code} onClick={()=>{ switchLanguage(l.code); setLangOpen(false); }}
                       style={{ display:"flex", alignItems:"center", gap:"8px", width:"100%", padding:"8px 12px", borderRadius:"10px", background: lang===l.code ? "rgba(211,184,59,0.15)" : "transparent", border:"none", color: lang===l.code ? "var(--gold)" : "rgba(255,255,255,0.8)", fontSize:"12px", cursor:"pointer", fontFamily:"Maven Pro, sans-serif", textAlign:"left", transition:"background 0.2s", marginBottom:"2px" }}
@@ -286,7 +286,7 @@ export default function Navbar() {
         </div>
 
         {/* Mobile slide-down */}
-        <div style={{ overflow:"hidden", maxHeight:mobileOpen?"600px":"0", transition:"max-height 0.4s cubic-bezier(0.22,1,0.36,1)", background:"rgba(255,255,255,0.08)", backdropFilter:"blur(40px) saturate(2)", WebkitBackdropFilter:"blur(40px) saturate(2)", border:mobileOpen?"1px solid rgba(255,255,255,0.15)":"none", borderRadius:"16px", marginTop:mobileOpen?"10px":"0" }}>
+        <div style={{ overflow:"hidden", maxHeight:mobileOpen?"600px":"0", transition:"max-height 0.4s cubic-bezier(0.22,1,0.36,1)", background:"rgba(1,8,44,0.95)", backdropFilter:"blur(40px) saturate(2)", WebkitBackdropFilter:"blur(40px) saturate(2)", border:mobileOpen?"1px solid rgba(255,255,255,0.12)":"none", borderRadius:"16px", marginTop:mobileOpen?"10px":"0" }}>
           <div style={{ padding:"16px 20px 20px" }}>
             {nav.map((item:any) => {
               if (item.children) {
@@ -302,7 +302,7 @@ export default function Navbar() {
                       <div style={{ paddingLeft:"12px", paddingTop:"6px", paddingBottom:"6px" }}>
                         {item.children.map((c:any)=>(
                           <a key={c.label} href={c.href} onClick={()=>setMobileOpen(false)}
-                            style={{ display:"block", padding:"8px 0", fontSize:"11px", color:"rgba(255,255,255,0.6)", borderBottom:"1px solid rgba(255,255,255,0.06)", textDecoration:"none" }}>
+                            style={{ display:"block", padding:"8px 0", fontSize:"11px", color:"rgba(255,255,255,0.75)", borderBottom:"1px solid rgba(255,255,255,0.06)", textDecoration:"none" }}>
                             {c.label}
                           </a>
                         ))}
