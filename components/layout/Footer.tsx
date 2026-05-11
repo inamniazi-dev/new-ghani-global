@@ -27,7 +27,7 @@ export default function Footer() {
           <div>
             <img src="/logo-header.png" alt="Ghani Global Group"
               style={{ height:"42px", width:"auto", display:"block", marginBottom:"20px" }}/>
-            <p style={{ fontSize:"14px", lineHeight:1.8, color:"rgba(255,255,255,0.75)", marginBottom:"20px" }}>
+            <p style={{ fontSize:"15px", lineHeight:1.8, color:"rgba(255,255,255,0.75)", marginBottom:"20px" }}>
               A diversified conglomerate engaged in the manufacturing of industrial, medical, and specialty gases, along with pharmaceutical-grade glass tube production and chemical manufacturing.
             </p>
 
@@ -46,20 +46,20 @@ export default function Footer() {
 
           {/* Col 2: Corporate Office */}
           <div>
-            <p style={{ fontSize:"10px", letterSpacing:"0.25em", textTransform:"uppercase", fontWeight:700, color:"var(--gold)", marginBottom:"20px" }}>Corporate Office</p>
-            <div style={{ fontSize:"14px", color:"rgba(255,255,255,0.75)", lineHeight:1.8, marginBottom:"16px" }}>
+            <p style={{ fontSize:"11px", letterSpacing:"0.25em", textTransform:"uppercase", fontWeight:700, color:"var(--gold)", marginBottom:"20px" }}>Corporate Office</p>
+            <div style={{ fontSize:"15px", color:"rgba(255,255,255,0.75)", lineHeight:1.8, marginBottom:"16px" }}>
               <p>10-N, Model Town Extension</p>
               <p>Lahore 54000, Pakistan</p>
             </div>
             <div style={{ marginBottom:"12px" }}>
-              <p style={{ fontSize:"10px", letterSpacing:"0.15em", textTransform:"uppercase", color:"var(--gold)", marginBottom:"3px", fontWeight:700 }}>Phone</p>
-              <p style={{ fontSize:"13px", color:"rgba(255,255,255,0.75)" }}>+92 42 35161424-5</p>
-              <p style={{ fontSize:"12px", color:"rgba(255,255,255,0.75)" }}>UAN: 111-GHANI-1</p>
+              <p style={{ fontSize:"11px", letterSpacing:"0.15em", textTransform:"uppercase", color:"var(--gold)", marginBottom:"3px", fontWeight:700 }}>Phone</p>
+              <p style={{ fontSize:"15px", color:"rgba(255,255,255,0.75)" }}>+92 42 35161424-5</p>
+              <p style={{ fontSize:"14px", color:"rgba(255,255,255,0.75)" }}>UAN: 111-GHANI-1</p>
             </div>
             <div>
-              <p style={{ fontSize:"10px", letterSpacing:"0.15em", textTransform:"uppercase", color:"var(--gold)", marginBottom:"3px", fontWeight:700 }}>Email</p>
+              <p style={{ fontSize:"11px", letterSpacing:"0.15em", textTransform:"uppercase", color:"var(--gold)", marginBottom:"3px", fontWeight:700 }}>Email</p>
               <a href="mailto:corporate@ghaniglobal.com"
-                style={{ fontSize:"13px", color:"rgba(255,255,255,0.75)", transition:"color 0.2s" }}
+                style={{ fontSize:"14px", color:"rgba(255,255,255,0.75)", transition:"color 0.2s" }}
                 onMouseEnter={e => (e.currentTarget.style.color = "var(--gold)")}
                 onMouseLeave={e => (e.currentTarget.style.color = "rgba(255,255,255,0.75)")}>
                 corporate@ghaniglobal.com
@@ -69,7 +69,7 @@ export default function Footer() {
 
           {/* Col 3: Google Map */}
           <div>
-            <p style={{ fontSize:"10px", letterSpacing:"0.25em", textTransform:"uppercase", fontWeight:700, color:"var(--gold)", marginBottom:"20px" }}>Find Us</p>
+            <p style={{ fontSize:"11px", letterSpacing:"0.25em", textTransform:"uppercase", fontWeight:700, color:"var(--gold)", marginBottom:"20px" }}>Find Us</p>
             <div style={{ width:"100%", height:"260px", borderRadius:"6px", overflow:"hidden", border:"1px solid rgba(211,184,59,0.2)" }}>
               <iframe
                 src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3401.1!2d74.3436!3d31.5204!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x0%3A0x0!2s10-N%20Model%20Town%20Extension%2C%20Lahore%2C%20Pakistan!5e0!3m2!1sen!2s!4v1"
@@ -89,11 +89,11 @@ export default function Footer() {
       {/* ── Bottom bar ── */}
       <div style={{ borderTop:"1px solid rgba(211,184,59,0.15)", marginTop:"40px" }}>
         <div style={{ padding:"20px clamp(32px,6vw,96px)", display:"flex", flexWrap:"wrap", justifyContent:"space-between", alignItems:"center", gap:"12px" }}>
-          <p style={{ fontSize:"12px", color:"rgba(255,255,255,0.75)", letterSpacing:"0.04em" }}>
+          <p style={{ fontSize:"13px", color:"rgba(255,255,255,0.75)", letterSpacing:"0.04em" }}>
             © {new Date().getFullYear()} Ghani Global Group · All rights reserved
           </p>
           <div style={{ display:"flex", alignItems:"center", gap:"20px", flexWrap:"wrap" }}>
-            <p style={{ fontSize:"12px", letterSpacing:"0.04em" }}>
+            <p style={{ fontSize:"13px", letterSpacing:"0.04em" }}>
               <span style={{ color:"rgba(255,255,255,0.75)" }}>Last Updated: </span>
               <span style={{ color:"var(--gold)", fontWeight:700 }}>{LAST_UPDATED}</span>
             </p>
