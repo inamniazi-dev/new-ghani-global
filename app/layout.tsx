@@ -12,8 +12,23 @@ export const metadata: Metadata = {
 export default function RootLayout({ children }: { children: React.ReactNode }) {
   return (
     <html lang="en">
+      <head>
+        {/* Apply saved language cookie BEFORE page renders — runs synchronously */}
+        <script dangerouslySetInnerHTML={{ __html: `
+          (function() {
+            try {
+              var lang = localStorage.getItem('ghani_lang');
+              if (lang && lang !== 'en') {
+                var cookie = 'googtrans=/auto/' + lang;
+                document.cookie = cookie + '; path=/';
+                document.cookie = cookie + '; path=/; domain=' + window.location.hostname;
+                document.cookie = cookie + '; path=/; domain=.' + window.location.hostname;
+              }
+            } catch(e) {}
+          })();
+        `}}/>
+      </head>
       <body>
-        {/* Google Translate element — must be in body before scripts */}
         <div id="google_translate_element" style={{ display:"none" }}/>
         <LoadingScreen />
         <ConditionalLayout>{children}</ConditionalLayout>
