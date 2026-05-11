@@ -100,7 +100,7 @@ export default function HomePage() {
     <div style={{ background:"var(--bg)" }}>
 
       {/* ── HERO — full viewport minus header bars ── */}
-      <section className="relative" style={{ height:"calc(100vh - 62px)", minHeight:"580px" }}>
+      <section className="relative" style={{ height:"100vh", minHeight:"580px" }}>
         <div className="absolute inset-0 overflow-hidden">
           <HeroSlider/>
         </div>
