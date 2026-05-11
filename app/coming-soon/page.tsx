@@ -1,10 +1,13 @@
 "use client";
 import Link from "next/link";
-import { useEffect, useState } from "react";
+import { useEffect, useState, Suspense } from "react";
+import { useSearchParams } from "next/navigation";
 
-export default function ComingSoonPage() {
+function ComingSoonContent() {
   const [mounted, setMounted] = useState(false);
   const [mousePos, setMousePos] = useState({ x: 0, y: 0 });
+  const searchParams = useSearchParams();
+  const pageLabel = searchParams.get("page") || "Work In Progress";
 
   useEffect(() => {
     setMounted(true);
@@ -78,14 +81,14 @@ export default function ComingSoonPage() {
         margin:"0 auto",
       }}>
 
-        {/* Eyebrow */}
+        {/* Eyebrow — shows page name */}
         <div style={{
           display:"inline-flex", alignItems:"center", gap:"12px",
           fontSize:"9px", letterSpacing:"0.35em", textTransform:"uppercase",
           fontWeight:700, color:"var(--gold)", marginBottom:"32px",
         }}>
           <span style={{ width:"32px", height:"1px", background:"var(--gold)", display:"inline-block" }}/>
-          Work In Progress
+          {pageLabel}
           <span style={{ width:"32px", height:"1px", background:"var(--gold)", display:"inline-block" }}/>
         </div>
 
@@ -121,39 +124,6 @@ export default function ComingSoonPage() {
           We are working hard to bring you something exceptional. This section of our website is currently under development and will be available very soon.
         </p>
 
-        {/* Buttons */}
-        <div style={{ display:"flex", gap:"16px", justifyContent:"center", flexWrap:"wrap" }}>
-          <Link href="/"
-            style={{
-              display:"inline-flex", alignItems:"center", gap:"10px",
-              padding:"15px 32px",
-              background:"var(--gold)",
-              color:"var(--navy)",
-              fontSize:"11px", letterSpacing:"0.18em", textTransform:"uppercase", fontWeight:700,
-              textDecoration:"none", transition:"all 0.3s ease",
-              borderRadius:"4px",
-            }}
-            onMouseEnter={e=>{ const el=e.currentTarget as HTMLElement; el.style.background="var(--green)"; el.style.color="white"; el.style.transform="translateY(-2px)"; el.style.boxShadow="0 8px 24px rgba(164,199,61,0.3)"; }}
-            onMouseLeave={e=>{ const el=e.currentTarget as HTMLElement; el.style.background="var(--gold)"; el.style.color="var(--navy)"; el.style.transform="translateY(0)"; el.style.boxShadow="none"; }}>
-            ← Back to Home
-          </Link>
-          <Link href="/contact"
-            style={{
-              display:"inline-flex", alignItems:"center", gap:"10px",
-              padding:"15px 32px",
-              background:"transparent",
-              border:"1px solid rgba(211,184,59,0.4)",
-              color:"var(--gold)",
-              fontSize:"11px", letterSpacing:"0.18em", textTransform:"uppercase", fontWeight:700,
-              textDecoration:"none", transition:"all 0.3s ease",
-              borderRadius:"4px",
-            }}
-            onMouseEnter={e=>{ const el=e.currentTarget as HTMLElement; el.style.background="rgba(211,184,59,0.08)"; el.style.borderColor="var(--gold)"; el.style.transform="translateY(-2px)"; }}
-            onMouseLeave={e=>{ const el=e.currentTarget as HTMLElement; el.style.background="transparent"; el.style.borderColor="rgba(211,184,59,0.4)"; el.style.transform="translateY(0)"; }}>
-            Contact Us
-          </Link>
-        </div>
-
         {/* Bottom company name */}
         <p style={{
           marginTop:"64px",
@@ -168,15 +138,14 @@ export default function ComingSoonPage() {
       {/* Bottom gold line */}
       <div style={{ position:"absolute", bottom:0, left:0, right:0, height:"3px", background:"linear-gradient(90deg, transparent 0%, var(--gold) 30%, var(--green) 70%, transparent 100%)" }}/>
 
-      <style>{`
-        @keyframes fadeUp {
-          from { opacity:0; transform:translateY(30px); }
-          to   { opacity:1; transform:translateY(0); }
-        }
-        .coming-soon-content > * {
-          animation: fadeUp 0.8s ease forwards;
-        }
-      `}</style>
     </div>
+  );
+}
+
+export default function ComingSoonPage() {
+  return (
+    <Suspense fallback={<div style={{ background:"var(--navy)", minHeight:"100vh" }}/>}>
+      <ComingSoonContent />
+    </Suspense>
   );
 }
