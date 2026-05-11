@@ -78,23 +78,26 @@ export default function Navbar() {
   function switchLanguage(l: string) {
     setLang(l);
     if (l === "en") {
-      const cookies = document.cookie.split(";");
-      for (const c of cookies) {
-        const name = c.trim().split("=")[0];
-        if (name.includes("googtrans")) {
-          document.cookie = name + "=; expires=Thu, 01 Jan 1970 00:00:00 UTC; path=/;";
-          document.cookie = name + "=; expires=Thu, 01 Jan 1970 00:00:00 UTC; path=/; domain=" + window.location.hostname;
-          document.cookie = name + "=; expires=Thu, 01 Jan 1970 00:00:00 UTC; path=/; domain=." + window.location.hostname;
-        }
-      }
+      // Reset to English — clear cookies and reload
+      document.cookie = "googtrans=; expires=Thu, 01 Jan 1970 00:00:00 UTC; path=/;";
+      document.cookie = "googtrans=; expires=Thu, 01 Jan 1970 00:00:00 UTC; path=/; domain=" + window.location.hostname;
+      document.cookie = "googtrans=; expires=Thu, 01 Jan 1970 00:00:00 UTC; path=/; domain=." + window.location.hostname;
       window.location.reload();
       return;
     }
-    document.cookie = "googtrans=/en/" + l + "; path=/";
-    document.cookie = "googtrans=/en/" + l + "; path=/; domain=" + window.location.hostname;
+    // Set translation cookie
+    document.cookie = `googtrans=/en/${l}; path=/`;
+    document.cookie = `googtrans=/en/${l}; path=/; domain=` + window.location.hostname;
+    document.cookie = `googtrans=/en/${l}; path=/; domain=.` + window.location.hostname;
+    // Try to trigger via combo select
     const sel = document.querySelector(".goog-te-combo") as HTMLSelectElement;
-    if (sel) { sel.value = l; sel.dispatchEvent(new Event("change")); }
-    else window.location.reload();
+    if (sel) {
+      sel.value = l;
+      sel.dispatchEvent(new Event("change"));
+    } else {
+      // Fallback — reload with cookie set
+      window.location.reload();
+    }
   }
 
   const filtered = searchQuery.length > 1
