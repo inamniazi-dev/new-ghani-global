@@ -61,6 +61,17 @@ export default function Navbar() {
     return () => window.removeEventListener("scroll", fn);
   }, []);
 
+  // Read saved language from localStorage and re-apply cookie on every page load
+  useEffect(() => {
+    const saved = localStorage.getItem("ghani_lang");
+    if (saved && saved !== "en") {
+      setLang(saved);
+      document.cookie = `googtrans=/auto/${saved}; path=/`;
+      document.cookie = `googtrans=/auto/${saved}; path=/; domain=` + window.location.hostname;
+      document.cookie = `googtrans=/auto/${saved}; path=/; domain=.` + window.location.hostname;
+    }
+  }, []);
+
   useEffect(() => {
     if (searchOpen) setTimeout(() => searchRef.current?.focus(), 50);
   }, [searchOpen]);
@@ -77,15 +88,15 @@ export default function Navbar() {
 
   function switchLanguage(l: string) {
     setLang(l);
+    localStorage.setItem("ghani_lang", l);
     if (l === "en") {
-      // Reset to English — clear cookies and reload
+      localStorage.removeItem("ghani_lang");
       document.cookie = "googtrans=; expires=Thu, 01 Jan 1970 00:00:00 UTC; path=/;";
       document.cookie = "googtrans=; expires=Thu, 01 Jan 1970 00:00:00 UTC; path=/; domain=" + window.location.hostname;
       document.cookie = "googtrans=; expires=Thu, 01 Jan 1970 00:00:00 UTC; path=/; domain=." + window.location.hostname;
       window.location.reload();
       return;
     }
-    // Set translation cookie
     document.cookie = `googtrans=/auto/${l}; path=/`;
     document.cookie = `googtrans=/auto/${l}; path=/; domain=` + window.location.hostname;
     document.cookie = `googtrans=/auto/${l}; path=/; domain=.` + window.location.hostname;
