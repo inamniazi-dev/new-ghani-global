@@ -14,7 +14,7 @@ const nav: any[] = [
   ]},
   { label:"Investor Relations", href:"/investor-relations" },
   { label:"News & Media",       href:"/news" },
-  { label:"Careers",            href:"/coming-soon" },
+  { label:"Careers",            href:"/coming-soon?page=Careers" },
 ];
 
 const pages = [
@@ -61,7 +61,6 @@ export default function Navbar() {
     return () => window.removeEventListener("scroll", fn);
   }, []);
 
-  // Read saved language from localStorage and re-apply cookie on every page load
   useEffect(() => {
     const saved = localStorage.getItem("ghani_lang");
     if (saved && saved !== "en") {
