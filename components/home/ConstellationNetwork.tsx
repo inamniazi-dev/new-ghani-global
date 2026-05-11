@@ -285,7 +285,7 @@ export default function ConstellationNetwork() {
           <div>
             <div className="eyebrow mb-2">Group Ecosystem</div>
             <h2 className="font-display" style={{ fontSize:"clamp(18px,2vw,30px)", fontWeight:300, color:"white", lineHeight:1.05 }}>
-              Our Companies, <em style={{ fontStyle:"italic", color:GOLD }}>Explored</em>
+              Our Companies, <em style={{ fontStyle:"italic", color:GOLD }}>at a Glance</em>
             </h2>
           </div>
           <div className="hidden md:flex items-center gap-6">

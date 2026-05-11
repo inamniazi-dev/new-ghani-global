@@ -11,10 +11,10 @@ const SLIDE_CONTENT = {
 
 const heroSlides = [
   { src:"/hero-banner.jpg",        position:"center 25%", ...SLIDE_CONTENT },
-  { src:"/hero-banner-2-new.jpeg", position:"center 40%", ...SLIDE_CONTENT },
   { src:"/hero-banner-3-new.jpeg", position:"center 40%", ...SLIDE_CONTENT },
+  { src:"/hero-banner-2-new.jpeg", position:"center 40%", ...SLIDE_CONTENT },
   { src:"/hero-banner-2.jpeg",     position:"center 40%", ...SLIDE_CONTENT },
-  { src:"/hero-banner-3.jpeg",     position:"center 30%", ...SLIDE_CONTENT },
+  { src:"/hero-banner-4.jpeg",     position:"center 40%", ...SLIDE_CONTENT },
   { src:"/hero-banner-new-1.jpeg", position:"center 35%", ...SLIDE_CONTENT },
   { src:"/hero-banner-new-2.jpeg", position:"center 30%", ...SLIDE_CONTENT },
 ];
