@@ -11,7 +11,6 @@ const footerLinks = [
   { label:"Sitemap",              href:"/sitemap" },
 ];
 
-// Auto-generates the current date on every build/deploy
 const LAST_UPDATED = new Date().toLocaleDateString("en-GB", { day:"numeric", month:"long", year:"numeric" });
 
 export default function Footer() {
@@ -28,20 +27,19 @@ export default function Footer() {
           <div>
             <img src="/logo-header.png" alt="Ghani Global Group"
               style={{ height:"42px", width:"auto", display:"block", marginBottom:"20px" }}/>
-            <p style={{ fontSize:"14px", lineHeight:1.8, color:"rgba(255,255,255,0.45)", marginBottom:"20px" }}>
+            <p style={{ fontSize:"14px", lineHeight:1.8, color:"rgba(255,255,255,0.75)", marginBottom:"20px" }}>
               A diversified conglomerate engaged in the manufacturing of industrial, medical, and specialty gases, along with pharmaceutical-grade glass tube production and chemical manufacturing.
             </p>
-            
 
             {/* Logos side by side */}
             <div style={{ marginTop:"28px" }}>
               <div style={{ display:"flex", flexDirection:"row", alignItems:"center", gap:"20px" }}>
-               <a href="https://sdms.secp.gov.pk/" target="_blank" rel="noopener noreferrer">
-  <img src="/secp-logo-1.png" alt="SECP" style={{ height:"64px", width:"auto", objectFit:"contain", display:"block" }}/>
-</a>
+                <a href="https://sdms.secp.gov.pk/" target="_blank" rel="noopener noreferrer">
+                  <img src="/secp-logo-1.png" alt="SECP" style={{ height:"64px", width:"auto", objectFit:"contain", display:"block" }}/>
+                </a>
                 <a href="https://www.jamapunji.pk/" target="_blank" rel="noopener noreferrer">
-  <img src="/jama-punji-logo.png" alt="Jama Punji" style={{ height:"64px", width:"auto", objectFit:"contain", display:"block" }}/>
-</a>
+                  <img src="/jama-punji-logo.png" alt="Jama Punji" style={{ height:"64px", width:"auto", objectFit:"contain", display:"block" }}/>
+                </a>
               </div>
             </div>
           </div>
@@ -49,21 +47,21 @@ export default function Footer() {
           {/* Col 2: Corporate Office */}
           <div>
             <p style={{ fontSize:"10px", letterSpacing:"0.25em", textTransform:"uppercase", fontWeight:700, color:"var(--gold)", marginBottom:"20px" }}>Corporate Office</p>
-            <div style={{ fontSize:"14px", color:"rgba(255,255,255,0.5)", lineHeight:1.8, marginBottom:"16px" }}>
+            <div style={{ fontSize:"14px", color:"rgba(255,255,255,0.75)", lineHeight:1.8, marginBottom:"16px" }}>
               <p>10-N, Model Town Extension</p>
               <p>Lahore 54000, Pakistan</p>
             </div>
             <div style={{ marginBottom:"12px" }}>
               <p style={{ fontSize:"10px", letterSpacing:"0.15em", textTransform:"uppercase", color:"var(--gold)", marginBottom:"3px", fontWeight:700 }}>Phone</p>
-              <p style={{ fontSize:"13px", color:"rgba(255,255,255,0.5)" }}>+92 42 35161424-5</p>
-              <p style={{ fontSize:"12px", color:"rgba(255,255,255,0.3)" }}>UAN: 111-GHANI-1</p>
+              <p style={{ fontSize:"13px", color:"rgba(255,255,255,0.75)" }}>+92 42 35161424-5</p>
+              <p style={{ fontSize:"12px", color:"rgba(255,255,255,0.75)" }}>UAN: 111-GHANI-1</p>
             </div>
             <div>
               <p style={{ fontSize:"10px", letterSpacing:"0.15em", textTransform:"uppercase", color:"var(--gold)", marginBottom:"3px", fontWeight:700 }}>Email</p>
               <a href="mailto:corporate@ghaniglobal.com"
-                style={{ fontSize:"13px", color:"rgba(255,255,255,0.55)", transition:"color 0.2s" }}
+                style={{ fontSize:"13px", color:"rgba(255,255,255,0.75)", transition:"color 0.2s" }}
                 onMouseEnter={e => (e.currentTarget.style.color = "var(--gold)")}
-                onMouseLeave={e => (e.currentTarget.style.color = "rgba(255,255,255,0.55)")}>
+                onMouseLeave={e => (e.currentTarget.style.color = "rgba(255,255,255,0.75)")}>
                 corporate@ghaniglobal.com
               </a>
             </div>
@@ -91,12 +89,12 @@ export default function Footer() {
       {/* ── Bottom bar ── */}
       <div style={{ borderTop:"1px solid rgba(211,184,59,0.15)", marginTop:"40px" }}>
         <div style={{ padding:"20px clamp(32px,6vw,96px)", display:"flex", flexWrap:"wrap", justifyContent:"space-between", alignItems:"center", gap:"12px" }}>
-          <p style={{ fontSize:"12px", color:"rgba(255,255,255,0.5)", letterSpacing:"0.04em" }}>
+          <p style={{ fontSize:"12px", color:"rgba(255,255,255,0.75)", letterSpacing:"0.04em" }}>
             © {new Date().getFullYear()} Ghani Global Group · All rights reserved
           </p>
           <div style={{ display:"flex", alignItems:"center", gap:"20px", flexWrap:"wrap" }}>
             <p style={{ fontSize:"12px", letterSpacing:"0.04em" }}>
-              <span style={{ color:"rgba(255,255,255,0.5)" }}>Last Updated: </span>
+              <span style={{ color:"rgba(255,255,255,0.75)" }}>Last Updated: </span>
               <span style={{ color:"var(--gold)", fontWeight:700 }}>{LAST_UPDATED}</span>
             </p>
           </div>
