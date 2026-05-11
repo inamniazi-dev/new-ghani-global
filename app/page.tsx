@@ -99,13 +99,11 @@ export default function HomePage() {
   return (
     <div style={{ background:"var(--bg)" }}>
 
-      {/* ── HERO — full viewport minus header bars ── */}
+      {/* ── HERO — full viewport ── */}
       <section className="relative" style={{ height:"100vh", minHeight:"580px" }}>
         <div className="absolute inset-0 overflow-hidden">
           <HeroSlider/>
         </div>
-
-        {/* Ticker pinned inside hero at the bottom */}
         <div className="absolute bottom-0 left-0 right-0 z-20" style={{ background:"rgba(1,8,44,0.85)", borderTop:"1px solid rgba(164,199,61,0.25)", overflow:"hidden" }}
           onMouseEnter={e=>(e.currentTarget.querySelector(".ticker-animate") as HTMLElement)?.style.setProperty("animation-play-state","paused")}
           onMouseLeave={e=>(e.currentTarget.querySelector(".ticker-animate") as HTMLElement)?.style.setProperty("animation-play-state","running")}
@@ -127,16 +125,14 @@ export default function HomePage() {
       {/* ── WHO WE ARE ── */}
       <section style={{ padding:"96px clamp(32px,6vw,96px)", background:"var(--bg)", overflow:"hidden" }}>
         <div className="grid lg:grid-cols-2 gap-16 items-center">
-          {/* Left: Text */}
           <div className="reveal">
             <div className="eyebrow-dark mb-5">Who We Are</div>
-            <h2 className="font-display mb-6" style={{ fontSize:"clamp(34px,4.5vw,52px)", fontWeight:300, color:"var(--navy)", lineHeight:1.08 }}>
+            <h2 className="font-display mb-6" style={{ fontSize:"clamp(34px,4.5vw,52px)", fontWeight:500, color:"var(--navy)", lineHeight:1.08 }}>
               A Legacy Built on<br/><em style={{ fontStyle:"italic", color:"var(--gold)" }}>Trust &amp; Innovation</em>
             </h2>
             <p className="mb-8" style={{ fontSize:"15px", lineHeight:1.85, color:"var(--text2)", fontWeight:300 }}>
               With a legacy spanning nearly six decades, we are a leading industrial group operating across the Gases, Glass, Textile, Automobile, and Mining industries, delivering excellence through innovation and reliability.
             </p>
-            {/* Stats bar — moved under left column content */}
             <div style={{ marginTop:"40px", display:"grid", gridTemplateColumns:"repeat(3, 1fr)", borderTop:"1px solid rgba(164,199,61,0.2)", paddingTop:"32px" }}>
               {[
                 { target:4,  suffix:"",  label:"PSX Listed Companies" },
@@ -152,8 +148,6 @@ export default function HomePage() {
               ))}
             </div>
           </div>
-
-          {/* Right: Image with geometric angular background */}
           <div className="reveal-left" style={{ position:"relative", padding:"24px" }}>
             <div style={{ position:"absolute", inset:0, overflow:"hidden", pointerEvents:"none" }}>
               <div style={{ position:"absolute", top:"-10%", right:"-5%", width:"55%", height:"60%", background:"var(--navy)", clipPath:"polygon(20% 0%, 100% 0%, 100% 85%, 0% 100%)", opacity:0.07 }}/>
@@ -209,7 +203,7 @@ export default function HomePage() {
             </div>
             <div className="lg:col-span-3 reveal d1">
               <div className="eyebrow-dark mb-5">Leadership</div>
-              <h2 className="font-display" style={{ fontSize:"clamp(28px,3.5vw,44px)", fontWeight:300, color:"var(--navy)", lineHeight:1.1, marginBottom:"8px" }}>
+              <h2 className="font-display" style={{ fontSize:"clamp(28px,3.5vw,44px)", fontWeight:500, color:"var(--navy)", lineHeight:1.1, marginBottom:"8px" }}>
                 Message from<br/>
                 <em style={{ fontStyle:"italic", color:"var(--gold)" }}>the Founders</em>
               </h2>
@@ -229,29 +223,28 @@ export default function HomePage() {
       {/* ── WHAT WE DO — Sticky Scroll Story ── */}
       <WhatWeDoStory industries={industries}/>
 
-      {/* ── CONSTELLATION NETWORK — Particle Animation (Option 3) ── */}
+      {/* ── CONSTELLATION NETWORK ── */}
       <ConstellationNetwork/>
 
-      {/* ── OUR JOURNEY — Horizontal Auto-scroll Timeline ── */}
+      {/* ── OUR JOURNEY ── */}
       <section style={{ background:"#F0F7EE", padding:"96px clamp(32px,6vw,96px)", overflow:"hidden" }}>
         <div className="max-w-6xl mx-auto">
           <div className="grid lg:grid-cols-2 gap-12 items-end mb-16 reveal">
             <div>
               <div className="eyebrow-dark mb-5">Our Journey</div>
-              <h2 className="font-display" style={{ fontSize:"clamp(36px,5vw,64px)", fontWeight:300, color:"var(--navy)", lineHeight:1.0, letterSpacing:"-0.02em" }}>
+              <h2 className="font-display" style={{ fontSize:"clamp(36px,5vw,64px)", fontWeight:500, color:"var(--navy)", lineHeight:1.0, letterSpacing:"-0.02em" }}>
                 A Legacy Built<br/>
                 <em style={{ fontStyle:"italic", color:"var(--green)" }}>Year on Year</em>
               </h2>
             </div>
             <div>
               <p style={{ fontSize:"16px", lineHeight:1.85, color:"var(--text2)", fontWeight:300 }}>
-                From a single industrial gas company founded by three brothers in 2007 to a diversified conglomerate operating across multiple sectors of Pakistan’s economy.
+                From a single industrial gas company founded by three brothers in 2007 to a diversified conglomerate operating across multiple sectors of Pakistan's economy.
               </p>
             </div>
           </div>
         </div>
 
-        {/* Auto-scroll container */}
         <div
           className="journey-scroll-outer"
           style={{ position:"relative", overflow:"hidden", paddingBottom:"20px" }}
@@ -264,14 +257,9 @@ export default function HomePage() {
             if (track) track.style.animationPlayState = 'running';
           }}
         >
-          {/* Left fade */}
           <div style={{ position:"absolute", top:0, left:0, bottom:0, width:"120px", background:"linear-gradient(90deg, #F0F7EE 0%, transparent 100%)", zIndex:10, pointerEvents:"none" }}/>
-          {/* Right fade */}
           <div style={{ position:"absolute", top:0, right:0, bottom:0, width:"120px", background:"linear-gradient(270deg, #F0F7EE 0%, transparent 100%)", zIndex:10, pointerEvents:"none" }}/>
-
           <div className="journey-scroll-track" style={{ display:"flex", flexDirection:"column", width:"max-content" }}>
-
-            {/* ROW 1 — all content (year + label) in fixed height boxes */}
             <div style={{ display:"flex", flexDirection:"row" }}>
               {[...milestones, ...milestones].map((m, i) => (
                 <div key={i} style={{ width:"clamp(220px, 22vw, 320px)", flexShrink:0, padding:"0 clamp(24px,3vw,48px)", height:"200px" }}>
@@ -280,13 +268,8 @@ export default function HomePage() {
                 </div>
               ))}
             </div>
-
-            {/* GAP between content and dots */}
             <div style={{ height:"32px" }}/>
-
-            {/* ROW 2 — line with dots, always same height, perfectly aligned */}
             <div style={{ display:"flex", flexDirection:"row", alignItems:"center", position:"relative", height:"28px" }}>
-              {/* The continuous line behind all dots */}
               <div style={{ position:"absolute", top:"50%", left:0, right:0, height:"1px", background:"rgba(1,8,44,0.2)", transform:"translateY(-50%)", zIndex:0 }}/>
               {[...milestones, ...milestones].map((m, i) => (
                 <div key={i} style={{ width:"clamp(220px, 22vw, 320px)", flexShrink:0, padding:"0 clamp(24px,3vw,48px)", display:"flex", alignItems:"center" }}>
@@ -294,7 +277,6 @@ export default function HomePage() {
                 </div>
               ))}
             </div>
-
           </div>
         </div>
       </section>
@@ -308,7 +290,7 @@ export default function HomePage() {
             <div>
               <div className="eyebrow mb-4 reveal">Corporate Social Responsibility</div>
               <div className="section-divider reveal"/>
-              <h2 className="font-display reveal d1" style={{ fontSize:"clamp(28px,3.5vw,46px)", fontWeight:300, color:"var(--navy)", lineHeight:1.1, marginBottom:"20px" }}>
+              <h2 className="font-display reveal d1" style={{ fontSize:"clamp(28px,3.5vw,46px)", fontWeight:500, color:"var(--navy)", lineHeight:1.1, marginBottom:"20px" }}>
                 Committed to <em style={{ fontStyle:"italic", color:"var(--blue)" }}>People &amp; Community</em>
               </h2>
               <p className="reveal d2" style={{ fontSize:"16px", color:"var(--text2)", lineHeight:1.85, fontWeight:300, marginBottom:"28px" }}>
@@ -322,7 +304,7 @@ export default function HomePage() {
               <div style={{ background:"linear-gradient(135deg, var(--navy) 0%, #050e3a 100%)", padding:"48px", position:"relative", overflow:"hidden" }}>
                 <div style={{ position:"absolute", top:0, left:0, right:0, height:"3px", background:"linear-gradient(90deg, var(--green) 0%, var(--gold) 100%)" }}/>
                 <p style={{ fontSize:"clamp(48px,5vw,72px)", fontWeight:700, color:"var(--green)", lineHeight:1, marginBottom:"12px" }}>CSR</p>
-                <p className="font-display" style={{ fontSize:"clamp(18px,2vw,26px)", fontWeight:300, color:"white", lineHeight:1.3, marginBottom:"16px" }}>
+                <p className="font-display" style={{ fontSize:"clamp(18px,2vw,26px)", fontWeight:500, color:"white", lineHeight:1.3, marginBottom:"16px" }}>
                   A responsibility we take seriously — every year, every project, every community.
                 </p>
                 <p style={{ fontSize:"13px", color:"rgba(255,255,255,0.5)", lineHeight:1.75, fontStyle:"italic", marginBottom:"24px" }}>
@@ -345,7 +327,7 @@ export default function HomePage() {
         <div className="max-w-7xl mx-auto relative z-10">
           <div style={{ textAlign:"center", marginBottom:"72px" }} className="reveal">
             <div className="eyebrow mb-4" style={{ color:"rgba(255,255,255,0.5)" }}>Sustainability & HSE</div>
-            <h2 className="font-display" style={{ fontSize:"clamp(32px,4vw,56px)", fontWeight:300, color:"white", lineHeight:1.1, marginBottom:"20px" }}>
+            <h2 className="font-display" style={{ fontSize:"clamp(32px,4vw,56px)", fontWeight:500, color:"white", lineHeight:1.1, marginBottom:"20px" }}>
               Building a <em style={{ fontStyle:"italic", color:"var(--green)" }}>Greener Tomorrow</em>
             </h2>
             <p style={{ fontSize:"16px", color:"rgba(255,255,255,0.55)", lineHeight:1.85, fontWeight:300, maxWidth:"680px", margin:"0 auto" }}>
@@ -373,7 +355,7 @@ export default function HomePage() {
         <div className="flex flex-col md:flex-row md:items-end justify-between gap-6 mb-12 reveal">
           <div>
             <div className="eyebrow-dark mb-4">Latest Updates</div>
-            <h2 className="font-display" style={{ fontSize:"clamp(30px,4vw,48px)", fontWeight:300, color:"var(--navy)" }}>
+            <h2 className="font-display" style={{ fontSize:"clamp(30px,4vw,48px)", fontWeight:500, color:"var(--navy)" }}>
               News &amp; <em style={{ fontStyle:"italic", color:"var(--blue)" }}>Announcements</em>
             </h2>
           </div>
