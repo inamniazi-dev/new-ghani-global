@@ -93,7 +93,7 @@ export default function Footer() {
             © {new Date().getFullYear()} Ghani Global Group · All rights reserved
           </p>
           <div style={{ display:"flex", alignItems:"center", gap:"20px", flexWrap:"wrap" }}>
-            <a href="/sitemap.xml" target="_blank" rel="noopener noreferrer"
+            <a href="/sitemap-page" target="_blank" rel="noopener noreferrer"
             style={{ fontSize:"13px", color:"rgba(255,255,255,0.75)", letterSpacing:"0.04em", textDecoration:"none", transition:"color 0.2s" }}
             onMouseEnter={e=>(e.currentTarget.style.color="var(--gold)")}
             onMouseLeave={e=>(e.currentTarget.style.color="rgba(255,255,255,0.75)")}>
