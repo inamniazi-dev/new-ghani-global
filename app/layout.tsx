@@ -2,7 +2,6 @@ import type { Metadata } from "next";
 import "./globals.css";
 import ConditionalLayout from "@/components/layout/ConditionalLayout";
 import LoadingScreen from "@/components/ui/LoadingScreen";
-import Script from "next/script";
 
 export const metadata: Metadata = {
   title: { default: "Ghani Global Group", template: "%s | Ghani Global Group" },
@@ -13,27 +12,8 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
   return (
     <html lang="en">
       <body>
-        <div id="google_translate_element" style={{ display:"none" }}/>
         <LoadingScreen />
         <ConditionalLayout>{children}</ConditionalLayout>
-        <Script
-          id="google-translate-init"
-          strategy="afterInteractive"
-          dangerouslySetInnerHTML={{ __html:`
-            function googleTranslateElementInit() {
-              new google.translate.TranslateElement({
-                pageLanguage: 'en',
-                includedLanguages: 'ur,en,ar,zh-CN,nl,fr,de,it,pt,ru,es,tr',
-                autoDisplay: false,
-                layout: google.translate.TranslateElement.InlineLayout.SIMPLE
-              }, 'google_translate_element');
-            }
-          `}}
-        />
-        <Script
-          src="//translate.google.com/translate_a/element.js?cb=googleTranslateElementInit"
-          strategy="afterInteractive"
-        />
       </body>
     </html>
   );
