@@ -46,7 +46,7 @@ const milestones = [
   { year:"2007", label:"", tag:"", desc:"Ghani Global Holdings Limited" },
   { year:"2007", label:"", tag:"", desc:"Ghani Global Glass Limited" },
   { year:"2015", label:"", tag:"", desc:"Ghani Chemical Industries Limited" },
-  { year:"2020", label:"", tag:"", desc:"Long Term agreement signed with Engro Polymer & Chemicals for Oxygen & Nitrogen Gases" },
+  { year:"2020", label:"", tag:"", desc:"Long-term Agreement signed with Engro Polymer & Chemicals for Oxygen & Nitrogen Gases" },
   { year:"2024", label:"", tag:"", desc:"Ghani ChemWorld Limited" },
   { year:"2025", label:"", tag:"", desc:"JV with Mari Energies, as the first operator of LNG & CO2 production in Pakistan (Daharki, Sindh)" },
   { year:"2025", label:"", tag:"", desc:"GHG Emissions Mitigation Limited" },
