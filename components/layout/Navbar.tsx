@@ -84,16 +84,13 @@ export default function Navbar() {
     setLang(l);
     if (l === "en") {
       localStorage.removeItem("ghani_lang");
-      // Redirect back to original URL without translate proxy
-      const url = window.location.href;
-      const cleanUrl = url.replace(/https?:\/\/[^/]*\.translate\.goog/, window.location.origin).replace(/[?&]_x_tr_[^&]*/g, "");
-      window.location.href = cleanUrl;
+      window.location.href = "https://ghani-global-new.vercel.app";
       return;
     }
     localStorage.setItem("ghani_lang", l);
-    // Use Google Translate proxy — most reliable method for Next.js
-    const pageUrl = encodeURIComponent(window.location.href);
-    window.location.href = `https://translate.google.com/translate?sl=en&tl=${l}&u=${pageUrl}`;
+    // Always use the clean base URL — never the current (possibly translated) URL
+    const cleanUrl = encodeURIComponent("https://ghani-global-new.vercel.app");
+    window.location.href = `https://translate.google.com/translate?sl=en&tl=${l}&u=${cleanUrl}`;
   }
 
   const filtered = searchQuery.length > 1
