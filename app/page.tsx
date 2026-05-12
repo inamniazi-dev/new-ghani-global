@@ -42,11 +42,14 @@ const industries = [
 ];
 
 const milestones = [
-  { year:"2007", label:"Incorporated",   tag:"Foundation",     desc:"Ghani Gases (Pvt.) Ltd. founded" },
-  { year:"2010", label:"PSX Listing",    tag:"Capital Markets", desc:"Listed on Pakistan Stock Exchange" },
-  { year:"2019", label:"Restructured",   tag:"Corporate",      desc:"Became Ghani Global Holdings Limited" },
-  { year:"2024", label:"ChemWorld",      tag:"New Venture",    desc:"New subsidiary for Hattar SEZ" },
-  { year:"2025", label:"Joint Ventures", tag:"Milestone",      desc:"Strategic Engro contract — expanding into new industrial frontiers." },
+  { year:"2007", label:"", tag:"", desc:"Ghani Global Group" },
+  { year:"2007", label:"", tag:"", desc:"Ghani Global Holdings Limited" },
+  { year:"2007", label:"", tag:"", desc:"Ghani Global Glass Limited" },
+  { year:"2015", label:"", tag:"", desc:"Ghani Chemical Industries Limited" },
+  { year:"2020", label:"", tag:"", desc:"Long Term agreement signed with Enro Polymer & Chemicals for Oxygen & Nitrogen Gases" },
+  { year:"2024", label:"", tag:"", desc:"Ghani ChemWorld Limited" },
+  { year:"2025", label:"", tag:"", desc:"JV with Mari Energies, as the first operator of LNG & CO2 production in Pakistan (Daharki, Sindh)" },
+  { year:"2025", label:"", tag:"", desc:"GHG Emissions Mitigation Limited" },
 ];
 
 const newsItems = [
