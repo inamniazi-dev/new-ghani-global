@@ -46,7 +46,7 @@ export default function Footer() {
 
           {/* Col 2: Corporate Office */}
           <div>
-            <p style={{ fontSize:"11px", letterSpacing:"0.15em", textTransform:"uppercase", fontWeight:700, color:"var(--gold)", marginBottom:"20px" }}>Corporate Office</p>
+            <p style={{ fontSize:"11px", letterSpacing:"0.08em", textTransform:"uppercase", fontWeight:700, color:"var(--gold)", marginBottom:"20px" }}>Corporate Office</p>
             <div style={{ fontSize:"15px", color:"rgba(255,255,255,0.75)", lineHeight:1.4, marginBottom:"16px" }}>
               <p>10-N, Model Town Extension</p>
               <p>Lahore 54000, Pakistan</p>
@@ -69,7 +69,7 @@ export default function Footer() {
 
           {/* Col 3: Google Map */}
           <div>
-            <p style={{ fontSize:"11px", letterSpacing:"0.25em", textTransform:"uppercase", fontWeight:700, color:"var(--gold)", marginBottom:"20px" }}>Find Us</p>
+            <p style={{ fontSize:"11px", letterSpacing:"0.08em", textTransform:"uppercase", fontWeight:700, color:"var(--gold)", marginBottom:"20px" }}>Find Us</p>
             <div style={{ width:"100%", height:"260px", borderRadius:"6px", overflow:"hidden", border:"1px solid rgba(211,184,59,0.2)" }}>
               <iframe
                 src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3401.1!2d74.3436!3d31.5204!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x0%3A0x0!2s10-N%20Model%20Town%20Extension%2C%20Lahore%2C%20Pakistan!5e0!3m2!1sen!2s!4v1"
