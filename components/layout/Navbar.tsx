@@ -63,12 +63,7 @@ export default function Navbar() {
 
   useEffect(() => {
     const saved = localStorage.getItem("ghani_lang");
-    if (saved && saved !== "en") {
-      setLang(saved);
-      document.cookie = `googtrans=/auto/${saved}; path=/`;
-      document.cookie = `googtrans=/auto/${saved}; path=/; domain=` + window.location.hostname;
-      document.cookie = `googtrans=/auto/${saved}; path=/; domain=.` + window.location.hostname;
-    }
+    if (saved && saved !== "en") setLang(saved);
   }, []);
 
   useEffect(() => {
@@ -87,19 +82,18 @@ export default function Navbar() {
 
   function switchLanguage(l: string) {
     setLang(l);
-    localStorage.setItem("ghani_lang", l);
     if (l === "en") {
       localStorage.removeItem("ghani_lang");
-      document.cookie = "googtrans=; expires=Thu, 01 Jan 1970 00:00:00 UTC; path=/;";
-      document.cookie = "googtrans=; expires=Thu, 01 Jan 1970 00:00:00 UTC; path=/; domain=" + window.location.hostname;
-      document.cookie = "googtrans=; expires=Thu, 01 Jan 1970 00:00:00 UTC; path=/; domain=." + window.location.hostname;
-      window.location.reload();
+      // Redirect back to original URL without translate proxy
+      const url = window.location.href;
+      const cleanUrl = url.replace(/https?:\/\/[^/]*\.translate\.goog/, window.location.origin).replace(/[?&]_x_tr_[^&]*/g, "");
+      window.location.href = cleanUrl;
       return;
     }
-    document.cookie = `googtrans=/auto/${l}; path=/`;
-    document.cookie = `googtrans=/auto/${l}; path=/; domain=` + window.location.hostname;
-    document.cookie = `googtrans=/auto/${l}; path=/; domain=.` + window.location.hostname;
-    window.location.reload();
+    localStorage.setItem("ghani_lang", l);
+    // Use Google Translate proxy — most reliable method for Next.js
+    const pageUrl = encodeURIComponent(window.location.href);
+    window.location.href = `https://translate.google.com/translate?sl=en&tl=${l}&u=${pageUrl}`;
   }
 
   const filtered = searchQuery.length > 1
