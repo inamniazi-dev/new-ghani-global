@@ -85,23 +85,13 @@ export default function Navbar() {
     setLang(l);
     if (l === "en") {
       localStorage.removeItem("ghani_lang");
-      destroyCookie(null, "googtrans", { path: "/" });
+      setCookie(null, "googtrans", "/auto/en", { path: "/" });
       window.location.reload();
       return;
     }
     localStorage.setItem("ghani_lang", l);
-    setCookie(null, "googtrans", `/en/${l}`, {
-      path: "/",
-      maxAge: 30 * 24 * 60 * 60,
-    });
-    // Try triggering Google Translate directly first
-    const sel = document.querySelector("select.goog-te-combo") as HTMLSelectElement;
-    if (sel) {
-      sel.value = l;
-      sel.dispatchEvent(new Event("change", { bubbles: true }));
-    } else {
-      window.location.reload();
-    }
+    setCookie(null, "googtrans", `/auto/${l}`, { path: "/" });
+    window.location.reload();
   }
 
   const filtered = searchQuery.length > 1
