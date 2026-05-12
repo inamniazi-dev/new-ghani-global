@@ -3,6 +3,7 @@ import { useState, useEffect, useRef } from "react";
 import Link from "next/link";
 import { Menu, X, ChevronDown, Search } from "lucide-react";
 import { usePathname } from "next/navigation";
+import { setCookie, destroyCookie } from "nookies";
 
 const nav: any[] = [
   { label:"About Us",           href:"/about" },
@@ -84,13 +85,23 @@ export default function Navbar() {
     setLang(l);
     if (l === "en") {
       localStorage.removeItem("ghani_lang");
-      window.location.href = "https://ghani-global-new.vercel.app";
+      destroyCookie(null, "googtrans", { path: "/" });
+      window.location.reload();
       return;
     }
     localStorage.setItem("ghani_lang", l);
-    // Always use the clean base URL — never the current (possibly translated) URL
-    const cleanUrl = encodeURIComponent("https://ghani-global-new.vercel.app");
-    window.location.href = `https://translate.google.com/translate?sl=en&tl=${l}&u=${cleanUrl}`;
+    setCookie(null, "googtrans", `/en/${l}`, {
+      path: "/",
+      maxAge: 30 * 24 * 60 * 60,
+    });
+    // Try triggering Google Translate directly first
+    const sel = document.querySelector("select.goog-te-combo") as HTMLSelectElement;
+    if (sel) {
+      sel.value = l;
+      sel.dispatchEvent(new Event("change", { bubbles: true }));
+    } else {
+      window.location.reload();
+    }
   }
 
   const filtered = searchQuery.length > 1
