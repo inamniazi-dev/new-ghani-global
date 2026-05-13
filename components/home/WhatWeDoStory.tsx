@@ -68,13 +68,13 @@ export default function WhatWeDoStory({ industries }: { industries: Industry[] }
     return (
       <>
         {/* Header */}
-        <section style={{ background:"var(--bg2)", padding:"clamp(40px,6vw,72px) clamp(20px,5vw,64px) 24px" }}>
+        <section style={{ background:"var(--bg2)", padding:"clamp(40px,6vw,72px) clamp(20px,5vw,64px) 24px", textAlign:"center" }}>
           <div className="eyebrow-dark mb-4">What We Do</div>
           <h2 className="font-display" style={{ fontSize:"clamp(26px,5vw,42px)", fontWeight:500, color:"var(--navy)", lineHeight:1.05, letterSpacing:"-0.01em" }}>
-            Diverse Industries,<br/><em style={{ fontStyle:"italic", color:"var(--blue)" }}>Singular Excellence</em>
+          Diverse Industries,<br/><em style={{ fontStyle:"italic", color:"var(--blue)" }}>Singular Excellence</em>
           </h2>
           <p style={{ fontSize:"clamp(13px,1.5vw,15px)", lineHeight:1.75, color:"var(--text2)", fontWeight:300, marginTop:"16px" }}>
-            Four companies. One vision. Explore the story of the Ghani Global Group.
+          Four companies. One vision. Explore the story of the Ghani Global Group.
           </p>
         </section>
 
@@ -111,10 +111,10 @@ export default function WhatWeDoStory({ industries }: { industries: Industry[] }
             {/* Stats */}
             <div style={{ display:"grid", gridTemplateColumns:"repeat(3,1fr)", gap:"8px", paddingTop:"16px", borderTop:"1px solid var(--line)", marginBottom:"20px" }}>
               {statsMap[ind.id]?.map(s => (
-                <div key={s.lbl}>
-                  <p className="font-display" style={{ fontSize:"clamp(14px,3vw,18px)", fontWeight:500, color:"var(--navy)", lineHeight:1, marginBottom:"4px" }}>{s.num}</p>
-                  <p style={{ fontSize:"clamp(8px,1.2vw,9px)", letterSpacing:"0.15em", textTransform:"uppercase", fontWeight:600, color:"var(--text2)" }}>{s.lbl}</p>
-                </div>
+              <div key={s.lbl} style={{ textAlign:"center" }}>
+              <p className="font-display" style={{ fontSize:"clamp(14px,3vw,18px)", fontWeight:500, color:"var(--navy)", lineHeight:1, marginBottom:"4px" }}>{s.num}</p>
+              <p style={{ fontSize:"clamp(8px,1.2vw,9px)", letterSpacing:"0.15em", textTransform:"uppercase", fontWeight:600, color:"var(--text2)" }}>{s.lbl}</p>
+              </div>
               ))}
             </div>
 
