@@ -63,65 +63,86 @@ export default function WhatWeDoStory({ industries }: { industries: Industry[] }
     return () => window.removeEventListener("scroll", onScroll);
   }, [industries.length, isDesktop]);
 
+  // Wire up IntersectionObserver for mobile card animations
+  useEffect(() => {
+    if (isDesktop) return;
+    const cards = document.querySelectorAll(".story-mobile-card");
+    const io = new IntersectionObserver(
+      (entries) => entries.forEach(en => {
+        if (en.isIntersecting) en.target.classList.add("in-view");
+      }),
+      { threshold: 0.12 }
+    );
+    cards.forEach(c => io.observe(c));
+    return () => io.disconnect();
+  }, [isDesktop]);
+
   // ─── Mobile / Tablet fallback ───
   if (!isDesktop) {
     return (
       <>
         {/* Header */}
         <section style={{ background:"var(--bg2)", padding:"clamp(40px,6vw,72px) clamp(20px,5vw,64px) 24px", textAlign:"center" }}>
-          <div className="eyebrow-dark mb-4">What We Do</div>
-          <h2 className="font-display" style={{ fontSize:"clamp(26px,5vw,42px)", fontWeight:500, color:"var(--navy)", lineHeight:1.05, letterSpacing:"-0.01em" }}>
-          Diverse Industries,<br/><em style={{ fontStyle:"italic", color:"var(--blue)" }}>Singular Excellence</em>
+          <div className="eyebrow-dark mb-4 reveal">What We Do</div>
+          <h2 className="font-display reveal d1" style={{ fontSize:"clamp(26px,5vw,42px)", fontWeight:500, color:"var(--navy)", lineHeight:1.05, letterSpacing:"-0.01em" }}>
+            Diverse Industries,<br/><em style={{ fontStyle:"italic", color:"var(--blue)" }}>Singular Excellence</em>
           </h2>
-          <p style={{ fontSize:"clamp(13px,1.5vw,15px)", lineHeight:1.75, color:"var(--text2)", fontWeight:300, marginTop:"16px" }}>
-          Four companies. One vision. Explore the story of the Ghani Global Group.
+          <p className="reveal d2" style={{ fontSize:"clamp(13px,1.5vw,15px)", lineHeight:1.75, color:"var(--text2)", fontWeight:300, marginTop:"16px" }}>
+            Four companies. One vision. Explore the story of the Ghani Global Group.
           </p>
         </section>
 
         {/* Industry cards */}
         {industries.map((ind, i) => (
-          <section key={ind.id} style={{
+          <section key={ind.id} className="story-mobile-card" style={{
             background: i % 2 === 0 ? "var(--bg2)" : "var(--bg)",
             padding:"clamp(32px,5vw,48px) clamp(20px,5vw,64px)",
             borderBottom:"1px solid var(--line)"
           }}>
+            {/* Accent line */}
+            <span className="story-mobile-accent-line" style={{ marginBottom:"20px" }}/>
+
             {/* Image */}
-            <img
-              src={ind.img}
-              alt={ind.title}
-              style={{ width:"100%", aspectRatio:"16/9", objectFit:"cover", marginBottom:"24px", borderRadius:"8px" }}
-            />
+            <div className="story-mobile-img" style={{ marginBottom:"24px" }}>
+              <img
+                src={ind.img}
+                alt={ind.title}
+                style={{ width:"100%", aspectRatio:"16/9", objectFit:"cover", borderRadius:"8px", display:"block" }}
+              />
+            </div>
 
             {/* Company tag */}
-            <div style={{ display:"flex", alignItems:"center", gap:"12px", marginBottom:"12px" }}>
+            <div className="story-mobile-tag" style={{ display:"flex", alignItems:"center", gap:"12px", marginBottom:"12px" }}>
               <span style={{ width:"24px", height:"1px", background:"var(--green)", flexShrink:0 }}/>
               <span style={{ fontSize:"10px", letterSpacing:"0.2em", textTransform:"uppercase", fontWeight:700, color:"var(--green2)" }}>{ind.tab}</span>
             </div>
 
             {/* Title */}
-            <h3 className="font-display" style={{ fontSize:"clamp(20px,4vw,28px)", fontWeight:500, color:"var(--navy)", lineHeight:1.15, marginBottom:"12px" }}>
+            <h3 className="font-display story-mobile-title" style={{ fontSize:"clamp(20px,4vw,28px)", fontWeight:500, color:"var(--navy)", lineHeight:1.15, marginBottom:"12px" }}>
               {ind.title}
             </h3>
 
             {/* Description */}
-            <p style={{ fontSize:"clamp(13px,1.5vw,15px)", lineHeight:1.75, color:"var(--text2)", fontWeight:300, marginBottom:"20px" }}>
+            <p className="story-mobile-desc" style={{ fontSize:"clamp(13px,1.5vw,15px)", lineHeight:1.75, color:"var(--text2)", fontWeight:300, marginBottom:"20px" }}>
               {ind.desc}
             </p>
 
             {/* Stats */}
-            <div style={{ display:"grid", gridTemplateColumns:"repeat(3,1fr)", gap:"8px", paddingTop:"16px", borderTop:"1px solid var(--line)", marginBottom:"20px" }}>
+            <div className="story-mobile-stats" style={{ display:"grid", gridTemplateColumns:"repeat(3,1fr)", gap:"8px", paddingTop:"16px", borderTop:"1px solid var(--line)", marginBottom:"20px" }}>
               {statsMap[ind.id]?.map(s => (
-              <div key={s.lbl} style={{ textAlign:"center" }}>
-              <p className="font-display" style={{ fontSize:"clamp(14px,3vw,18px)", fontWeight:500, color:"var(--navy)", lineHeight:1, marginBottom:"4px" }}>{s.num}</p>
-              <p style={{ fontSize:"clamp(8px,1.2vw,9px)", letterSpacing:"0.15em", textTransform:"uppercase", fontWeight:600, color:"var(--text2)" }}>{s.lbl}</p>
-              </div>
+                <div key={s.lbl} style={{ textAlign:"center" }}>
+                  <p className="font-display" style={{ fontSize:"clamp(14px,3vw,18px)", fontWeight:500, color:"var(--navy)", lineHeight:1, marginBottom:"4px" }}>{s.num}</p>
+                  <p style={{ fontSize:"clamp(8px,1.2vw,9px)", letterSpacing:"0.15em", textTransform:"uppercase", fontWeight:600, color:"var(--text2)" }}>{s.lbl}</p>
+                </div>
               ))}
             </div>
 
             {/* CTA */}
-            <a href={ind.link} target={ind.ext ? "_blank" : "_self"} rel="noopener noreferrer" className="btn-gold">
-              <span>Visit Website</span> <ExternalLink size={12}/>
-            </a>
+            <div className="story-mobile-cta" style={{ textAlign:"center" }}>
+              <a href={ind.link} target={ind.ext ? "_blank" : "_self"} rel="noopener noreferrer" className="btn-gold">
+                <span>Visit Website</span> <ExternalLink size={12}/>
+              </a>
+            </div>
           </section>
         ))}
       </>
