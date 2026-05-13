@@ -18,13 +18,13 @@ const heroSlides = [
 ];
 
 const mobileSlides = [
-  { src:"/hero-mobile-1.jpeg", position:"center 40%", ...SLIDE_CONTENT },
-  { src:"/hero-mobile-2.jpeg", position:"center 50%", ...SLIDE_CONTENT },
-  { src:"/hero-mobile-3.jpeg", position:"center 60%", ...SLIDE_CONTENT },
-  { src:"/hero-mobile-4.jpeg", position:"center 50%", ...SLIDE_CONTENT },
-  { src:"/hero-mobile-5.jpeg", position:"center 50%", ...SLIDE_CONTENT },
-  { src:"/hero-mobile-6.jpeg", position:"center 55%", ...SLIDE_CONTENT },
-  { src:"/hero-mobile-7.jpeg", position:"center 50%", ...SLIDE_CONTENT },
+  { src:"/hero-mobile-1.jpeg", position:"center 40%", fit:"cover",    ...SLIDE_CONTENT },
+  { src:"/hero-mobile-2.jpeg", position:"center 50%", fit:"cover",    ...SLIDE_CONTENT },
+  { src:"/hero-mobile-3.jpeg", position:"center 60%", fit:"cover",    ...SLIDE_CONTENT },
+  { src:"/hero-mobile-4.jpeg", position:"center 50%", fit:"cover",    ...SLIDE_CONTENT },
+  { src:"/hero-mobile-5.jpeg", position:"center 50%", fit:"contain",  ...SLIDE_CONTENT },
+  { src:"/hero-mobile-6.jpeg", position:"center 55%", fit:"cover",    ...SLIDE_CONTENT },
+  { src:"/hero-mobile-7.jpeg", position:"center 50%", fit:"cover",    ...SLIDE_CONTENT },
 ];
 
 export default function HeroSlider() {
@@ -71,7 +71,7 @@ export default function HeroSlider() {
           alt={`Ghani Global Group — Slide ${i + 1}`}
           className="absolute inset-0 w-full h-full"
           style={{
-            objectFit: "cover",
+            objectFit: (s as any).fit ?? "cover",
             objectPosition: s.position,
             opacity: i === current ? 1 : 0,
             transition: "opacity 0.9s ease-in-out",
