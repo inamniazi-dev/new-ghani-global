@@ -53,6 +53,7 @@ export default function Navbar() {
   const [searchQuery, setSearchQuery] = useState("");
   const [langOpen,    setLangOpen]    = useState(false);
   const [lang,        setLang]        = useState("en");
+  const [mobileSearch, setMobileSearch] = useState("");
   const searchRef   = useRef<HTMLInputElement>(null);
   const pathname    = usePathname();
 
@@ -98,6 +99,10 @@ export default function Navbar() {
     ? pages.filter(p => p.label.toLowerCase().includes(searchQuery.toLowerCase()))
     : [];
 
+  const mobileFiltered = mobileSearch.length > 1
+    ? pages.filter(p => p.label.toLowerCase().includes(mobileSearch.toLowerCase()))
+    : [];
+
   return (
     <>
       <header
@@ -112,7 +117,7 @@ export default function Navbar() {
       >
         <div style={{ display:"grid", gridTemplateColumns:"1fr auto 1fr", alignItems:"center", gap:"12px", position:"relative" }}>
 
-          {/* Full-width search overlay */}
+          {/* Full-width search overlay — desktop only */}
           {searchOpen && (
             <div style={{
               position:"absolute", top:"50%", left:0, right:0,
@@ -160,7 +165,7 @@ export default function Navbar() {
             <img src="/logo-header.png" alt="Ghani Global Group" style={{ height:"38px", width:"auto", display:"block" }}/>
           </Link>
 
-          {/* Nav links — desktop */}
+          {/* Nav links — desktop only */}
           <div style={{
             alignItems:"center", flex:"0 1 auto",
             gap:"2px", zIndex:1,
@@ -233,7 +238,7 @@ export default function Navbar() {
             })}
           </div>
 
-          {/* Right controls */}
+          {/* Right controls — desktop */}
           <div style={{ alignItems:"center", gap:"8px", flexShrink:0, zIndex:1, justifyContent:"flex-end" }} className="lg-flex">
             <button onClick={()=>setSearchOpen(true)}
               style={{ width:"36px", height:"36px", display:"flex", alignItems:"center", justifyContent:"center", background:"rgba(255,255,255,0.1)", backdropFilter:"blur(20px)", border:"1px solid rgba(255,255,255,0.2)", borderRadius:"50%", color:"rgba(255,255,255,0.8)", cursor:"pointer", transition:"all 0.2s", flexShrink:0 }}
@@ -274,16 +279,72 @@ export default function Navbar() {
             </Link>
           </div>
 
-          {/* Mobile hamburger */}
-          <button onClick={()=>setMobileOpen(!mobileOpen)} className="lg:hidden p-1.5"
-            style={{ color:"rgba(255,255,255,0.9)", background:"rgba(255,255,255,0.1)", backdropFilter:"blur(20px)", border:"1px solid rgba(255,255,255,0.2)", borderRadius:"8px", cursor:"pointer", flexShrink:0, zIndex:1, justifySelf:"end" }}>
-            {mobileOpen ? <X size={20}/> : <Menu size={20}/>}
-          </button>
+          {/* Mobile right side — Language + Hamburger */}
+          <div className="lg:hidden" style={{ display:"flex", alignItems:"center", gap:"8px", justifyContent:"flex-end", zIndex:1 }}>
+
+            {/* Language button — mobile */}
+            <div style={{ position:"relative" }} className="lang-dropdown-wrap">
+              <button onClick={()=>setLangOpen(!langOpen)}
+                style={{ display:"flex", alignItems:"center", gap:"4px", padding:"6px 10px", background:"rgba(255,255,255,0.1)", backdropFilter:"blur(20px)", border:"1px solid rgba(255,255,255,0.2)", borderRadius:"8px", color:"rgba(255,255,255,0.85)", cursor:"pointer", fontSize:"11px", fontWeight:700, fontFamily:"Maven Pro, sans-serif", transition:"all 0.2s", whiteSpace:"nowrap" }}>
+                <span style={{ fontSize:"14px" }}>{LANGUAGES.find(l=>l.code===lang)?.flag ?? "🌐"}</span>
+                <ChevronDown size={10} style={{ opacity:0.6, transform:langOpen?"rotate(180deg)":"rotate(0deg)", transition:"transform 0.2s" }}/>
+              </button>
+              {langOpen && (
+                <div style={{ position:"absolute", top:"calc(100% + 8px)", right:0, background:"rgba(1,8,44,0.98)", backdropFilter:"blur(40px)", border:"1px solid rgba(255,255,255,0.12)", boxShadow:"0 24px 64px rgba(1,8,44,0.8)", borderRadius:"16px", overflow:"hidden", minWidth:"180px", zIndex:200, padding:"6px", maxHeight:"320px", overflowY:"auto" }}>
+                  {LANGUAGES.map(l => (
+                    <button key={l.code} onClick={()=>{ switchLanguage(l.code); setLangOpen(false); }}
+                      style={{ display:"flex", alignItems:"center", gap:"8px", width:"100%", padding:"9px 12px", borderRadius:"10px", background: lang===l.code ? "rgba(211,184,59,0.15)" : "transparent", border:"none", color: lang===l.code ? "var(--gold)" : "rgba(255,255,255,0.8)", fontSize:"13px", cursor:"pointer", fontFamily:"Maven Pro, sans-serif", textAlign:"left", transition:"background 0.2s", marginBottom:"2px" }}
+                      onMouseEnter={e=>(e.currentTarget.style.background="rgba(255,255,255,0.1)")}
+                      onMouseLeave={e=>(e.currentTarget.style.background=lang===l.code?"rgba(211,184,59,0.15)":"transparent")}>
+                      <span style={{ fontSize:"16px" }}>{l.flag}</span>
+                      <span>{l.label}</span>
+                    </button>
+                  ))}
+                </div>
+              )}
+            </div>
+
+            {/* Hamburger */}
+            <button onClick={()=>setMobileOpen(!mobileOpen)}
+              style={{ color:"rgba(255,255,255,0.9)", background:"rgba(255,255,255,0.1)", backdropFilter:"blur(20px)", border:"1px solid rgba(255,255,255,0.2)", borderRadius:"8px", cursor:"pointer", padding:"6px 8px", display:"flex", alignItems:"center", justifyContent:"center" }}>
+              {mobileOpen ? <X size={20}/> : <Menu size={20}/>}
+            </button>
+          </div>
         </div>
 
-        {/* Mobile slide-down */}
-        <div style={{ overflow:"hidden", maxHeight:mobileOpen?"600px":"0", transition:"max-height 0.4s cubic-bezier(0.22,1,0.36,1)", background:"rgba(1,8,44,0.95)", backdropFilter:"blur(40px) saturate(2)", WebkitBackdropFilter:"blur(40px) saturate(2)", border:mobileOpen?"1px solid rgba(255,255,255,0.12)":"none", borderRadius:"16px", marginTop:mobileOpen?"10px":"0" }}>
+        {/* Mobile slide-down menu */}
+        <div style={{ overflow:"hidden", maxHeight:mobileOpen?"70vh":"0", transition:"max-height 0.4s cubic-bezier(0.22,1,0.36,1)", background:"rgba(1,8,44,0.97)", backdropFilter:"blur(40px) saturate(2)", WebkitBackdropFilter:"blur(40px) saturate(2)", border:mobileOpen?"1px solid rgba(255,255,255,0.12)":"none", borderRadius:"16px", marginTop:mobileOpen?"10px":"0", overflowY:"auto" }}>
           <div style={{ padding:"16px 20px 20px" }}>
+
+            {/* Search inside mobile menu */}
+            <div style={{ position:"relative", marginBottom:"16px" }}>
+              <div style={{ display:"flex", alignItems:"center", gap:"10px", background:"rgba(255,255,255,0.08)", border:"1px solid rgba(255,255,255,0.15)", borderRadius:"10px", padding:"10px 14px" }}>
+                <Search size={14} style={{ color:"var(--gold)", flexShrink:0 }}/>
+                <input
+                  value={mobileSearch}
+                  onChange={e=>setMobileSearch(e.target.value)}
+                  placeholder="Search pages..."
+                  style={{ flex:1, background:"none", border:"none", outline:"none", color:"white", fontSize:"13px", fontFamily:"Maven Pro, sans-serif" }}
+                />
+                {mobileSearch && (
+                  <button onClick={()=>setMobileSearch("")} style={{ background:"none", border:"none", color:"rgba(255,255,255,0.5)", cursor:"pointer", padding:0 }}>
+                    <X size={12}/>
+                  </button>
+                )}
+              </div>
+              {mobileFiltered.length > 0 && (
+                <div style={{ position:"absolute", top:"calc(100% + 4px)", left:0, right:0, background:"rgba(1,8,44,0.98)", border:"1px solid rgba(255,255,255,0.1)", borderRadius:"12px", overflow:"hidden", zIndex:100 }}>
+                  {mobileFiltered.map(p=>(
+                    <Link key={p.label} href={p.href} onClick={()=>{ setMobileOpen(false); setMobileSearch(""); }}
+                      style={{ display:"block", padding:"10px 16px", fontSize:"13px", color:"rgba(255,255,255,0.75)", borderBottom:"1px solid rgba(255,255,255,0.05)" }}>
+                      {p.label}
+                    </Link>
+                  ))}
+                </div>
+              )}
+            </div>
+
+            {/* Nav links */}
             {nav.map((item:any) => {
               if (item.children) {
                 const open = mobileSub === item.label;
@@ -314,19 +375,10 @@ export default function Navbar() {
                 </Link>
               );
             })}
-            <div style={{ paddingTop:"14px" }}>
-              <p style={{ fontSize:"9px", letterSpacing:"0.18em", textTransform:"uppercase", color:"rgba(255,255,255,0.35)", marginBottom:"8px", fontWeight:700 }}>Language</p>
-              <div style={{ display:"flex", flexWrap:"wrap", gap:"6px" }}>
-                {LANGUAGES.map(l => (
-                  <button key={l.code} onClick={()=>{ switchLanguage(l.code); setMobileOpen(false); }}
-                    style={{ padding:"5px 10px", fontSize:"11px", fontWeight:600, border:"1px solid rgba(255,255,255,0.15)", background:lang===l.code?"var(--gold)":"transparent", color:lang===l.code?"var(--navy)":"rgba(255,255,255,0.6)", cursor:"pointer", fontFamily:"Maven Pro, sans-serif", borderRadius:"6px", display:"flex", alignItems:"center", gap:"4px" }}>
-                    <span>{l.flag}</span><span>{l.label}</span>
-                  </button>
-                ))}
-              </div>
-            </div>
+
+            {/* Get In Touch */}
             <Link href="/contact" onClick={()=>setMobileOpen(false)}
-              style={{ display:"block", textAlign:"center", padding:"11px", fontSize:"11px", letterSpacing:"0.15em", textTransform:"uppercase", background:"var(--gold)", color:"var(--navy)", fontWeight:700, borderRadius:"10px", marginTop:"12px", textDecoration:"none" }}>
+              style={{ display:"block", textAlign:"center", padding:"11px", fontSize:"11px", letterSpacing:"0.15em", textTransform:"uppercase", background:"var(--gold)", color:"var(--navy)", fontWeight:700, borderRadius:"10px", marginTop:"16px", textDecoration:"none" }}>
               Get In Touch
             </Link>
           </div>
@@ -339,6 +391,7 @@ export default function Navbar() {
         @media (min-width: 1024px) {
           .lg-nav { display: flex !important; }
           .lg-flex { display: flex !important; }
+          header .lg\\:hidden { display: none !important; }
         }
       `}</style>
     </>
