@@ -18,13 +18,13 @@ const heroSlides = [
 ];
 
 const mobileSlides = [
-  { src:"/hero-mobile-1.jpeg", position:"center 40%", fit:"cover",    ...SLIDE_CONTENT },
-  { src:"/hero-mobile-2.jpeg", position:"center 50%", fit:"cover",    ...SLIDE_CONTENT },
-  { src:"/hero-mobile-3.jpeg", position:"center 60%", fit:"cover",    ...SLIDE_CONTENT },
-  { src:"/hero-mobile-4.jpeg", position:"left bottom", fit:"cover", ...SLIDE_CONTENT },
-  { src:"/hero-mobile-5.jpeg", position:"center 50%", fit:"contain",  ...SLIDE_CONTENT },
-  { src:"/hero-mobile-6.jpeg", position:"center 55%", fit:"cover",    ...SLIDE_CONTENT },
-  { src:"/hero-mobile-7.jpeg", position:"center 50%", fit:"cover",    ...SLIDE_CONTENT },
+  { src:"/hero-mobile-1.jpeg", position:"center bottom", fit:"cover", ...SLIDE_CONTENT },
+  { src:"/hero-mobile-2.jpeg", position:"center bottom", fit:"cover", ...SLIDE_CONTENT },
+  { src:"/hero-mobile-3.jpeg", position:"center bottom", fit:"cover", ...SLIDE_CONTENT },
+  { src:"/hero-mobile-4.jpeg", position:"left bottom",   fit:"cover", ...SLIDE_CONTENT },
+  { src:"/hero-mobile-5.jpeg", position:"right center",  fit:"cover", ...SLIDE_CONTENT },
+  { src:"/hero-mobile-6.jpeg", position:"center bottom", fit:"cover", ...SLIDE_CONTENT },
+  { src:"/hero-mobile-7.jpeg", position:"center bottom", fit:"cover", ...SLIDE_CONTENT },
 ];
 
 export default function HeroSlider() {
