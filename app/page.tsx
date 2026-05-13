@@ -101,7 +101,7 @@ export default function HomePage() {
     <div style={{ background:"var(--bg)" }}>
 
       {/* ── HERO ── */}
-      <section className="relative" style={{ height:"100vh", minHeight:"580px" }}>
+      <section className="relative" style={{ height:"100dvh", minHeight:"600px" }}>
         <div className="absolute inset-0 overflow-hidden">
           <HeroSlider/>
         </div>
