@@ -2,6 +2,7 @@ import type { Metadata } from "next";
 import "./globals.css";
 import ConditionalLayout from "@/components/layout/ConditionalLayout";
 import LoadingScreen from "@/components/ui/LoadingScreen";
+import SocialSidebar from "@/components/ui/SocialSidebar";
 import Script from "next/script";
 
 export const metadata: Metadata = {
@@ -15,6 +16,7 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
       <body>
         <div id="google_translate_element" style={{ display:"none" }}/>
         <LoadingScreen />
+        <SocialSidebar />
         <ConditionalLayout>{children}</ConditionalLayout>
         <Script src="/assets/scripts/lang-config.js" strategy="beforeInteractive"/>
         <Script
