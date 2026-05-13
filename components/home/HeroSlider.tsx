@@ -90,7 +90,7 @@ export default function HeroSlider() {
         style={{
           height: "100%",
           padding: isMobile
-            ? "80px 24px 100px"
+            ? "120px 24px 100px"
             : "0 clamp(32px,6vw,96px) 80px",
           zIndex: 10,
           justifyContent: isMobile ? "flex-start" : "center",
