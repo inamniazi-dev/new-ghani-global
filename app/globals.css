@@ -645,3 +645,11 @@ img[src*="-white.png"], img[src*="-blue.jpeg"] { border-radius: 0 !important; }
     transition-duration: 0.01ms !important;
   }
 }
+@media (max-width: 767px) {
+  .footer-bottom {
+    flex-direction: column;
+    align-items: center !important;
+    justify-content: center !important;
+    text-align: center;
+  }
+}

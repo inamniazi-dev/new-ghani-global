@@ -88,7 +88,7 @@ export default function Footer() {
 
       {/* ── Bottom bar ── */}
       <div style={{ borderTop:"1px solid rgba(211,184,59,0.15)", marginTop:"40px" }}>
-        <div style={{ padding:"20px clamp(32px,6vw,96px)", display:"flex", flexWrap:"wrap", justifyContent:"space-between", alignItems:"center", gap:"12px" }}>
+        <div style={{ padding:"20px clamp(32px,6vw,96px)", display:"flex", flexWrap:"wrap", justifyContent:"space-between", alignItems:"center", gap:"12px", textAlign:"center" }} className="footer-bottom">
           <p style={{ fontSize:"13px", color:"rgba(255,255,255,0.75)", letterSpacing:"0.04em" }}>
             © {new Date().getFullYear()} Ghani Global Group · All rights reserved
           </p>
