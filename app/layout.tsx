@@ -2,7 +2,7 @@ import type { Metadata } from "next";
 import "./globals.css";
 import ConditionalLayout from "@/components/layout/ConditionalLayout";
 import LoadingScreen from "@/components/ui/LoadingScreen";
-import SocialSidebar from "@/components/ui/SocialSidebar";
+import SocialSidebar from "@/components/layout/SocialSidebar";
 import Script from "next/script";
 
 export const metadata: Metadata = {
