@@ -40,7 +40,7 @@ export default function ConstellationNetwork() {
   const [hovered,    setHovered]    = useState<{ name:string; sector:string; ticker?:string; isPsx:boolean }|null>(null);
   const [tipPos,     setTipPos]     = useState({ x:0, y:0 });
   const [activeTab,  setActiveTab]  = useState<"psx"|"assoc">("psx");
-  const [activeCard, setActiveCard] = useState<string|null>(null);
+
 
   useEffect(() => {
     const img = new Image();
@@ -418,12 +418,11 @@ export default function ConstellationNetwork() {
             {PSX.map((c, i) => (
               <div
                 key={c.id}
-                className={`mobile-card mobile-card-psx ${activeCard === c.id ? "card-active" : ""}`}
-                onClick={() => setActiveCard(activeCard === c.id ? null : c.id)}
+                className="mobile-card mobile-card-psx"
                 style={{
                   animationDelay: `${i * 60}ms`,
-                  borderColor: activeCard === c.id ? "rgba(211,184,59,0.5)" : "rgba(211,184,59,0.15)",
-                  background:  activeCard === c.id ? "rgba(211,184,59,0.1)" : "rgba(211,184,59,0.04)",
+                  borderColor: "rgba(211,184,59,0.15)",
+                  background:  "rgba(211,184,59,0.04)",
                 }}
               >
                 <div className="card-row">
@@ -435,19 +434,8 @@ export default function ConstellationNetwork() {
                       <span className="card-psx-badge">PSX</span>
                     </div>
                     <p className="card-name">{c.name}</p>
-                    <p className="card-sector" style={{ color:"rgba(255,255,255,0.4)" }}>{c.sector}</p>
-                  </div>
-                  <div className="card-chevron" style={{ color: activeCard === c.id ? GOLD : "rgba(255,255,255,0.2)" }}>
-                    {activeCard === c.id ? "−" : "+"}
                   </div>
                 </div>
-                {activeCard === c.id && (
-                  <div className="card-expanded" style={{ borderTopColor:"rgba(211,184,59,0.15)" }}>
-                    <p style={{ fontSize:"11px", color:"rgba(255,255,255,0.45)", lineHeight:1.6 }}>
-                      A publicly listed company on the Pakistan Stock Exchange operating in the <strong style={{ color:"rgba(255,255,255,0.7)" }}>{c.sector}</strong> sector under the Ghani Global Group umbrella.
-                    </p>
-                  </div>
-                )}
               </div>
             ))}
           </div>
@@ -459,52 +447,24 @@ export default function ConstellationNetwork() {
             {ASSOC.map((c, i) => (
               <div
                 key={c.id}
-                className={`mobile-card mobile-card-assoc ${activeCard === c.id ? "card-active" : ""}`}
-                onClick={() => setActiveCard(activeCard === c.id ? null : c.id)}
+                className="mobile-card mobile-card-assoc"
                 style={{
                   animationDelay: `${i * 45}ms`,
-                  borderColor: activeCard === c.id ? "rgba(164,199,61,0.45)" : "rgba(164,199,61,0.12)",
-                  background:  activeCard === c.id ? "rgba(164,199,61,0.08)" : "rgba(164,199,61,0.03)",
+                  borderColor: "rgba(164,199,61,0.12)",
+                  background:  "rgba(164,199,61,0.03)",
                 }}
               >
                 <div className="card-row">
                   <div className="card-body">
                     <p className="card-name">{c.name}</p>
-                    <p className="card-sector" style={{ color:"rgba(255,255,255,0.35)" }}>{c.sector}</p>
-                  </div>
-                  <div className="card-chevron" style={{ color: activeCard === c.id ? GREEN : "rgba(255,255,255,0.2)" }}>
-                    {activeCard === c.id ? "−" : "+"}
                   </div>
                 </div>
-                {activeCard === c.id && (
-                  <div className="card-expanded" style={{ borderTopColor:"rgba(164,199,61,0.12)" }}>
-                    <p style={{ fontSize:"11px", color:"rgba(255,255,255,0.45)", lineHeight:1.6 }}>
-                      An associated company operating in the <strong style={{ color:"rgba(255,255,255,0.7)" }}>{c.sector}</strong> sector, part of the broader Ghani Global Group network.
-                    </p>
-                  </div>
-                )}
               </div>
             ))}
           </div>
         )}
 
-        {/* Summary bar */}
-        <div className="mobile-summary">
-          <div className="summary-stat">
-            <span className="summary-num" style={{ color: GOLD }}>{PSX.length}</span>
-            <span className="summary-label">PSX Listed</span>
-          </div>
-          <div className="summary-divider"/>
-          <div className="summary-stat">
-            <span className="summary-num" style={{ color: GREEN }}>{ASSOC.length}</span>
-            <span className="summary-label">Associated</span>
-          </div>
-          <div className="summary-divider"/>
-          <div className="summary-stat">
-            <span className="summary-num" style={{ color:"white" }}>{PSX.length + ASSOC.length}</span>
-            <span className="summary-label">Total Companies</span>
-          </div>
-        </div>
+
       </div>
 
       <style>{`
@@ -690,17 +650,12 @@ export default function ConstellationNetwork() {
         .mobile-card {
           border: 1px solid;
           border-radius: 10px;
-          cursor: pointer;
-          transition: all 0.2s ease;
           overflow: hidden;
           animation: cardIn 0.3s ease both;
         }
         @keyframes cardIn {
           from { opacity:0; transform: translateY(8px); }
           to   { opacity:1; transform: translateY(0); }
-        }
-        .mobile-card:active {
-          transform: scale(0.99);
         }
         .card-row {
           display: flex;
@@ -748,59 +703,8 @@ export default function ConstellationNetwork() {
           margin: 0;
           font-weight: 500;
         }
-        .card-chevron {
-          font-size: 18px;
-          font-weight: 300;
-          flex-shrink: 0;
-          line-height: 1;
-          transition: color 0.2s;
-        }
-        .card-expanded {
-          padding: 10px 14px 14px;
-          border-top: 1px solid;
-          animation: expandIn 0.2s ease;
-        }
-        @keyframes expandIn {
-          from { opacity:0; max-height:0; }
-          to   { opacity:1; max-height:100px; }
-        }
 
-        /* Summary bar */
-        .mobile-summary {
-          display: flex;
-          align-items: center;
-          justify-content: center;
-          gap: 0;
-          background: rgba(255,255,255,0.04);
-          border: 1px solid rgba(255,255,255,0.08);
-          border-radius: 12px;
-          padding: 14px 0;
-        }
-        .summary-stat {
-          flex: 1;
-          display: flex;
-          flex-direction: column;
-          align-items: center;
-          gap: 3px;
-        }
-        .summary-num {
-          font-size: 22px;
-          font-weight: 800;
-          line-height: 1;
-          font-family: Maven Pro, sans-serif;
-        }
-        .summary-label {
-          font-size: 9px;
-          font-weight: 600;
-          letter-spacing: 0.1em;
-          text-transform: uppercase;
-          color: rgba(255,255,255,0.35);
-        }
-        .summary-divider {
-          width: 1px;
-          height: 32px;
-          background: rgba(255,255,255,0.1);
-        }
+
 
         /* ── RESPONSIVE BREAKPOINTS ── */
 
@@ -809,8 +713,10 @@ export default function ConstellationNetwork() {
           .ecosystem-section { min-height: auto; }
           .ecosystem-canvas-wrap { display: none !important; }
           .ecosystem-mobile { display: flex; }
-          .ecosystem-legend { display: flex; } /* show legend on mobile too */
+          .ecosystem-legend { display: flex; justify-content: center; }
           .ecosystem-header { padding-bottom: 16px; }
+          .ecosystem-header-inner { flex-direction: column; align-items: center; text-align: center; }
+          .reveal { display: flex; flex-direction: column; align-items: center; }
         }
 
         /* Tablet (768px – 1023px): show canvas, hide mobile list */
