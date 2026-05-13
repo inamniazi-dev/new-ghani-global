@@ -655,7 +655,9 @@ img[src*="-white.png"], img[src*="-blue.jpeg"] { border-radius: 0 !important; }
 }
 @media (max-width: 767px) {
   .social-sidebar {
-    top: 72% !important;
-    transform: translateY(-50%) !important;
+    position: fixed !important;
+    top: auto !important;
+    bottom: 120px !important;
+    transform: none !important;
   }
 }
