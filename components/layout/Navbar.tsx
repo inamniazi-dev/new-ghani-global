@@ -135,13 +135,7 @@ export default function Navbar() {
           boxShadow: scrolled ? "0 4px 24px rgba(1,8,44,0.4)" : "none",
         }}
       >
-        <div style={{
-          display:"grid",
-          gridTemplateColumns:"1fr auto 1fr",
-          alignItems:"center",
-          gap:"12px",
-          position:"relative",
-        }}>
+        <div className="nav-grid" style={{ alignItems:"center", gap:"12px", position:"relative" }}>
 
           {/* Full-width search overlay — desktop only */}
           {searchOpen && (
@@ -413,10 +407,15 @@ export default function Navbar() {
       </header>
 
       <style>{`
+        .nav-grid {
+          display: grid;
+          grid-template-columns: 1fr 1fr;
+        }
         .lg-nav { display: none; }
         .lg-flex { display: none; }
         .mobile-controls { display: flex; }
         @media (min-width: 1024px) {
+          .nav-grid { grid-template-columns: 1fr auto 1fr; }
           .lg-nav { display: flex !important; }
           .lg-flex { display: flex !important; }
           .mobile-controls { display: none !important; }
