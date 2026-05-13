@@ -3,7 +3,7 @@ import { useState, useEffect, useRef } from "react";
 import Link from "next/link";
 import { Menu, X, ChevronDown, Search } from "lucide-react";
 import { usePathname } from "next/navigation";
-import { setCookie, destroyCookie } from "nookies";
+import { setCookie } from "nookies";
 
 const nav: any[] = [
   { label:"About Us",           href:"/about" },
@@ -45,17 +45,21 @@ const LANGUAGES = [
 ];
 
 export default function Navbar() {
-  const [mobileOpen,  setMobileOpen]  = useState(false);
-  const [activeMenu,  setActiveMenu]  = useState<string|null>(null);
-  const [mobileSub,   setMobileSub]   = useState<string|null>(null);
-  const [scrolled,    setScrolled]    = useState(false);
-  const [searchOpen,  setSearchOpen]  = useState(false);
-  const [searchQuery, setSearchQuery] = useState("");
-  const [langOpen,    setLangOpen]    = useState(false);
-  const [lang,        setLang]        = useState("en");
-  const [mobileSearch, setMobileSearch] = useState("");
-  const searchRef   = useRef<HTMLInputElement>(null);
-  const pathname    = usePathname();
+  const [mobileOpen,    setMobileOpen]    = useState(false);
+  const [activeMenu,    setActiveMenu]    = useState<string|null>(null);
+  const [mobileSub,     setMobileSub]     = useState<string|null>(null);
+  const [scrolled,      setScrolled]      = useState(false);
+  const [searchOpen,    setSearchOpen]    = useState(false);
+  const [searchQuery,   setSearchQuery]   = useState("");
+  const [desktopLangOpen, setDesktopLangOpen] = useState(false); // ← split into two
+  const [mobileLangOpen,  setMobileLangOpen]  = useState(false); // ← separate state
+  const [lang,          setLang]          = useState("en");
+  const [mobileSearch,  setMobileSearch]  = useState("");
+
+  const searchRef       = useRef<HTMLInputElement>(null);
+  const desktopLangRef  = useRef<HTMLDivElement>(null);
+  const mobileLangRef   = useRef<HTMLDivElement>(null);
+  const pathname        = usePathname();
 
   useEffect(() => {
     const fn = () => setScrolled(window.scrollY > 40);
@@ -72,18 +76,34 @@ export default function Navbar() {
     if (searchOpen) setTimeout(() => searchRef.current?.focus(), 50);
   }, [searchOpen]);
 
+  // Outside-click handler for DESKTOP language dropdown
   useEffect(() => {
-    if (!langOpen) return;
+    if (!desktopLangOpen) return;
     const handler = (e: MouseEvent) => {
-      const wrap = document.querySelector(".lang-dropdown-wrap");
-      if (wrap && !wrap.contains(e.target as Node)) setLangOpen(false);
+      if (desktopLangRef.current && !desktopLangRef.current.contains(e.target as Node)) {
+        setDesktopLangOpen(false);
+      }
     };
     document.addEventListener("mousedown", handler);
     return () => document.removeEventListener("mousedown", handler);
-  }, [langOpen]);
+  }, [desktopLangOpen]);
+
+  // Outside-click handler for MOBILE language dropdown
+  useEffect(() => {
+    if (!mobileLangOpen) return;
+    const handler = (e: MouseEvent) => {
+      if (mobileLangRef.current && !mobileLangRef.current.contains(e.target as Node)) {
+        setMobileLangOpen(false);
+      }
+    };
+    document.addEventListener("mousedown", handler);
+    return () => document.removeEventListener("mousedown", handler);
+  }, [mobileLangOpen]);
 
   function switchLanguage(l: string) {
     setLang(l);
+    setDesktopLangOpen(false);
+    setMobileLangOpen(false);
     if (l === "en") {
       localStorage.removeItem("ghani_lang");
       setCookie(null, "googtrans", "/auto/en", { path: "/" });
@@ -115,7 +135,13 @@ export default function Navbar() {
           boxShadow: scrolled ? "0 4px 24px rgba(1,8,44,0.4)" : "none",
         }}
       >
-        <div style={{ display:"grid", gridTemplateColumns:"1fr auto 1fr", alignItems:"center", gap:"12px", position:"relative" }}>
+        <div style={{
+          display:"grid",
+          gridTemplateColumns:"1fr auto 1fr",
+          alignItems:"center",
+          gap:"12px",
+          position:"relative",
+        }}>
 
           {/* Full-width search overlay — desktop only */}
           {searchOpen && (
@@ -247,19 +273,20 @@ export default function Navbar() {
               <Search size={14}/>
             </button>
 
-            <div style={{ position:"relative", flexShrink:0 }} className="lang-dropdown-wrap">
-              <button onClick={()=>setLangOpen(!langOpen)}
+            {/* Desktop language dropdown — uses desktopLangRef + desktopLangOpen */}
+            <div ref={desktopLangRef} style={{ position:"relative", flexShrink:0 }}>
+              <button onClick={()=>setDesktopLangOpen(!desktopLangOpen)}
                 style={{ display:"flex", alignItems:"center", gap:"6px", padding:"7px 12px", background:"rgba(255,255,255,0.1)", backdropFilter:"blur(20px)", border:"1px solid rgba(255,255,255,0.2)", borderRadius:"10px", color:"rgba(255,255,255,0.85)", cursor:"pointer", fontSize:"11px", fontWeight:700, letterSpacing:"0.08em", fontFamily:"Maven Pro, sans-serif", transition:"all 0.2s", whiteSpace:"nowrap" }}
                 onMouseEnter={e=>{const el=e.currentTarget; el.style.borderColor="var(--gold)"; el.style.color="var(--gold)";}}
                 onMouseLeave={e=>{const el=e.currentTarget; el.style.borderColor="rgba(255,255,255,0.2)"; el.style.color="rgba(255,255,255,0.85)";}}>
                 <span>🌐</span>
                 <span>{LANGUAGES.find(l=>l.code===lang)?.label ?? "English"}</span>
-                <ChevronDown size={10} style={{ opacity:0.6, transform:langOpen?"rotate(180deg)":"rotate(0deg)", transition:"transform 0.2s" }}/>
+                <ChevronDown size={10} style={{ opacity:0.6, transform:desktopLangOpen?"rotate(180deg)":"rotate(0deg)", transition:"transform 0.2s" }}/>
               </button>
-              {langOpen && (
+              {desktopLangOpen && (
                 <div style={{ position:"absolute", top:"calc(100% + 8px)", right:0, background:"rgba(1,8,44,0.95)", backdropFilter:"blur(40px) saturate(2)", WebkitBackdropFilter:"blur(40px) saturate(2)", border:"1px solid rgba(255,255,255,0.12)", boxShadow:"0 24px 64px rgba(1,8,44,0.6)", borderRadius:"16px", overflow:"hidden", minWidth:"160px", zIndex:100, padding:"6px" }}>
                   {LANGUAGES.map(l => (
-                    <button key={l.code} onClick={()=>{ switchLanguage(l.code); setLangOpen(false); }}
+                    <button key={l.code} onClick={()=>switchLanguage(l.code)}
                       style={{ display:"flex", alignItems:"center", gap:"8px", width:"100%", padding:"8px 12px", borderRadius:"10px", background: lang===l.code ? "rgba(211,184,59,0.15)" : "transparent", border:"none", color: lang===l.code ? "var(--gold)" : "rgba(255,255,255,0.8)", fontSize:"12px", cursor:"pointer", fontFamily:"Maven Pro, sans-serif", textAlign:"left", transition:"background 0.2s", marginBottom:"2px" }}
                       onMouseEnter={e=>(e.currentTarget.style.background="rgba(255,255,255,0.1)")}
                       onMouseLeave={e=>(e.currentTarget.style.background=lang===l.code?"rgba(211,184,59,0.15)":"transparent")}>
@@ -280,19 +307,19 @@ export default function Navbar() {
           </div>
 
           {/* Mobile right side — Language + Hamburger */}
-          <div className="lg:hidden" style={{ display:"flex", alignItems:"center", gap:"8px", justifyContent:"flex-end", zIndex:1 }}>
+          <div className="mobile-controls" style={{ display:"flex", alignItems:"center", gap:"8px", justifyContent:"flex-end", zIndex:1 }}>
 
-            {/* Language button — mobile */}
-            <div style={{ position:"relative" }} className="lang-dropdown-wrap">
-              <button onClick={()=>setLangOpen(!langOpen)}
+            {/* Mobile language dropdown — uses mobileLangRef + mobileLangOpen */}
+            <div ref={mobileLangRef} style={{ position:"relative" }}>
+              <button onClick={()=>setMobileLangOpen(!mobileLangOpen)}
                 style={{ display:"flex", alignItems:"center", gap:"4px", padding:"6px 10px", background:"rgba(255,255,255,0.1)", backdropFilter:"blur(20px)", border:"1px solid rgba(255,255,255,0.2)", borderRadius:"8px", color:"rgba(255,255,255,0.85)", cursor:"pointer", fontSize:"11px", fontWeight:700, fontFamily:"Maven Pro, sans-serif", transition:"all 0.2s", whiteSpace:"nowrap" }}>
                 <span style={{ fontSize:"14px" }}>{LANGUAGES.find(l=>l.code===lang)?.flag ?? "🌐"}</span>
-                <ChevronDown size={10} style={{ opacity:0.6, transform:langOpen?"rotate(180deg)":"rotate(0deg)", transition:"transform 0.2s" }}/>
+                <ChevronDown size={10} style={{ opacity:0.6, transform:mobileLangOpen?"rotate(180deg)":"rotate(0deg)", transition:"transform 0.2s" }}/>
               </button>
-              {langOpen && (
+              {mobileLangOpen && (
                 <div style={{ position:"absolute", top:"calc(100% + 8px)", right:0, background:"rgba(1,8,44,0.98)", backdropFilter:"blur(40px)", border:"1px solid rgba(255,255,255,0.12)", boxShadow:"0 24px 64px rgba(1,8,44,0.8)", borderRadius:"16px", overflow:"hidden", minWidth:"180px", zIndex:200, padding:"6px", maxHeight:"320px", overflowY:"auto" }}>
                   {LANGUAGES.map(l => (
-                    <button key={l.code} onClick={()=>{ switchLanguage(l.code); setLangOpen(false); }}
+                    <button key={l.code} onClick={()=>switchLanguage(l.code)}
                       style={{ display:"flex", alignItems:"center", gap:"8px", width:"100%", padding:"9px 12px", borderRadius:"10px", background: lang===l.code ? "rgba(211,184,59,0.15)" : "transparent", border:"none", color: lang===l.code ? "var(--gold)" : "rgba(255,255,255,0.8)", fontSize:"13px", cursor:"pointer", fontFamily:"Maven Pro, sans-serif", textAlign:"left", transition:"background 0.2s", marginBottom:"2px" }}
                       onMouseEnter={e=>(e.currentTarget.style.background="rgba(255,255,255,0.1)")}
                       onMouseLeave={e=>(e.currentTarget.style.background=lang===l.code?"rgba(211,184,59,0.15)":"transparent")}>
@@ -388,10 +415,11 @@ export default function Navbar() {
       <style>{`
         .lg-nav { display: none; }
         .lg-flex { display: none; }
+        .mobile-controls { display: flex; }
         @media (min-width: 1024px) {
           .lg-nav { display: flex !important; }
           .lg-flex { display: flex !important; }
-          header .lg\\:hidden { display: none !important; }
+          .mobile-controls { display: none !important; }
         }
       `}</style>
     </>
