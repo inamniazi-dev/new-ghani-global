@@ -20,6 +20,11 @@ const heroSlides = [
 const mobileSlides = [
   { src:"/hero-mobile-1.jpeg", position:"center 40%", ...SLIDE_CONTENT },
   { src:"/hero-mobile-2.jpeg", position:"center 50%", ...SLIDE_CONTENT },
+  { src:"/hero-mobile-3.jpeg", position:"center 60%", ...SLIDE_CONTENT },
+  { src:"/hero-mobile-4.jpeg", position:"center 50%", ...SLIDE_CONTENT },
+  { src:"/hero-mobile-5.jpeg", position:"center 50%", ...SLIDE_CONTENT },
+  { src:"/hero-mobile-6.jpeg", position:"center 55%", ...SLIDE_CONTENT },
+  { src:"/hero-mobile-7.jpeg", position:"center 50%", ...SLIDE_CONTENT },
 ];
 
 export default function HeroSlider() {
