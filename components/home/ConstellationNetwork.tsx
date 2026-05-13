@@ -1,5 +1,5 @@
 "use client";
-import { useEffect, useRef, useState } from "react";
+import { useEffect, useRef, useState, useCallback } from "react";
 
 const PSX = [
   { id:"GGHL", name:"Ghani Global Holdings Limited",     ticker:"GGHL", sector:"Principal Holding"   },
@@ -9,33 +9,38 @@ const PSX = [
 ];
 
 const ASSOC = [
-  { id:"ag",   name:"Air Ghani (Pvt) Limited",             sector:"Aviation & Gases"  },
-  { id:"gl",   name:"Ghani Logistics (Pvt) Limited",       sector:"Logistics"         },
-  { id:"ge",   name:"Ghani Energies Limited",              sector:"Energy"            },
-  { id:"gg",   name:"Ghani Gases (Pvt) Limited",           sector:"Industrial Gases"  },
-  { id:"g3",   name:"G3 Properties (Pvt) Limited",         sector:"Real Estate"       },
-  { id:"geng", name:"Ghani Engineering (Pvt) Limited",     sector:"Engineering"       },
-  { id:"gf",   name:"Ghani Global Foods (Pvt) Limited",    sector:"Food & Agriculture"},
-  { id:"gi",   name:"Ghani Industrial Complex (Pvt) Ltd",  sector:"Infrastructure"    },
-  { id:"kp",   name:"Kaya Projects (Pvt) Limited",         sector:"Projects"          },
-  { id:"kl",   name:"Killowatt Labs Technologies Limited",  sector:"Technology"        },
-  { id:"rl",   name:"Reit Limited",                        sector:"Real Estate"       },
+  { id:"ag",   name:"Air Ghani (Pvt) Limited",             sector:"Aviation & Gases"   },
+  { id:"gl",   name:"Ghani Logistics (Pvt) Limited",       sector:"Logistics"          },
+  { id:"ge",   name:"Ghani Energies Limited",              sector:"Energy"             },
+  { id:"gg",   name:"Ghani Gases (Pvt) Limited",           sector:"Industrial Gases"   },
+  { id:"g3",   name:"G3 Properties (Pvt) Limited",         sector:"Real Estate"        },
+  { id:"geng", name:"Ghani Engineering (Pvt) Limited",     sector:"Engineering"        },
+  { id:"gf",   name:"Ghani Global Foods (Pvt) Limited",    sector:"Food & Agriculture" },
+  { id:"gi",   name:"Ghani Industrial Complex (Pvt) Ltd",  sector:"Infrastructure"     },
+  { id:"kp",   name:"Kaya Projects (Pvt) Limited",         sector:"Projects"           },
+  { id:"kl",   name:"Killowatt Labs Technologies Limited",  sector:"Technology"         },
+  { id:"rl",   name:"Reit Limited",                        sector:"Real Estate"        },
 ];
 
 const GOLD  = "#d3b83b";
 const GREEN = "#a4c73d";
 const NAVY  = "#01082c";
 
+
+
 export default function ConstellationNetwork() {
-  const canvasRef = useRef<HTMLCanvasElement>(null);
-  const logoRef   = useRef<HTMLImageElement|null>(null);
-  const rafRef    = useRef<number>(0);
-  const hovRef    = useRef<{ ring:"psx"|"assoc"|null; idx:number }>({ ring:null, idx:-1 });
-  const rotRef    = useRef<number>(0);
-  const pauseRef  = useRef<boolean>(false);
-  const dimsRef   = useRef({ W:0, H:0, cx:0, cy:0, coreR:0, psxInner:0, psxOuter:0, assocInner:0, assocOuter:0 });
-  const [hovered, setHovered] = useState<{ name:string; sector:string; ticker?:string; isPsx:boolean }|null>(null);
-  const [tipPos,  setTipPos]  = useState({ x:0, y:0 });
+  const canvasRef  = useRef<HTMLCanvasElement>(null);
+  const logoRef    = useRef<HTMLImageElement|null>(null);
+  const rafRef     = useRef<number>(0);
+  const hovRef     = useRef<{ ring:"psx"|"assoc"|null; idx:number }>({ ring:null, idx:-1 });
+  const rotRef     = useRef<number>(0);
+  const pauseRef   = useRef<boolean>(false);
+  const dimsRef    = useRef({ W:0, H:0, cx:0, cy:0, coreR:0, psxInner:0, psxOuter:0, assocInner:0, assocOuter:0 });
+
+  const [hovered,    setHovered]    = useState<{ name:string; sector:string; ticker?:string; isPsx:boolean }|null>(null);
+  const [tipPos,     setTipPos]     = useState({ x:0, y:0 });
+  const [activeTab,  setActiveTab]  = useState<"psx"|"assoc">("psx");
+  const [activeCard, setActiveCard] = useState<string|null>(null);
 
   useEffect(() => {
     const img = new Image();
@@ -44,13 +49,14 @@ export default function ConstellationNetwork() {
   }, []);
 
   useEffect(() => {
-    const canvas = canvasRef.current!;
-    const ctx    = canvas.getContext("2d")!;
+    const canvas = canvasRef.current;
+    if (!canvas) return;
+    const ctx = canvas.getContext("2d")!;
 
     function resize() {
-      const rect = canvas.parentElement!.getBoundingClientRect();
-      const W = canvas.width  = rect.width;
-      const H = canvas.height = rect.height;
+      const rect = canvas!.parentElement!.getBoundingClientRect();
+      const W = canvas!.width  = rect.width;
+      const H = canvas!.height = rect.height;
       const cx = W / 2;
       const cy = H / 2;
       const base = Math.min(W * 0.46, H * 0.46);
@@ -71,12 +77,8 @@ export default function ConstellationNetwork() {
       let cur = "";
       for (const w of words) {
         const test = cur ? cur + " " + w : w;
-        if (ctx.measureText(test).width > maxWidth && cur) {
-          lines.push(cur);
-          cur = w;
-        } else {
-          cur = test;
-        }
+        if (ctx.measureText(test).width > maxWidth && cur) { lines.push(cur); cur = w; }
+        else cur = test;
       }
       if (cur) lines.push(cur);
       return lines;
@@ -110,6 +112,7 @@ export default function ConstellationNetwork() {
       ctx.fillStyle = NAVY;
       ctx.fillRect(0, 0, W, H);
 
+      // Dot grid background
       ctx.fillStyle = "rgba(164,199,61,0.04)";
       for (let gx = 0; gx < W; gx += 60)
         for (let gy = 0; gy < H; gy += 60) {
@@ -118,16 +121,16 @@ export default function ConstellationNetwork() {
 
       if (!pauseRef.current) rotRef.current += 0.0008;
       const rot = rotRef.current;
-
       const hov = hovRef.current;
+
       const psxArc   = (Math.PI * 2) / 4;
-      const assocArc = (Math.PI * 2) / 11;  // Updated to 11
+      const assocArc = (Math.PI * 2) / 11;
 
-      const psxFontSize   = Math.max(8,  Math.min(13, (psxOuter - psxInner) * 0.13));
-      const assocFontSize = Math.max(7,  Math.min(11, (assocOuter - assocInner) * 0.11));
-
-      const psxBandW   = (psxOuter - psxInner) * 0.75;
-      const assocBandW = (assocOuter - assocInner) * 0.72;
+      // Adaptive font sizes based on available band width
+      const psxFontSize   = Math.max(7,  Math.min(13, (psxOuter - psxInner) * 0.13));
+      const assocFontSize = Math.max(6.5, Math.min(11, (assocOuter - assocInner) * 0.11));
+      const psxBandW      = (psxOuter - psxInner) * 0.75;
+      const assocBandW    = (assocOuter - assocInner) * 0.72;
 
       // ── PSX RING ──
       PSX.forEach((p, i) => {
@@ -142,6 +145,7 @@ export default function ConstellationNetwork() {
           isHov ? 2 : 1
         );
 
+        // Outer glow arc on hover
         if (isHov) {
           ctx.beginPath();
           ctx.arc(cx, cy, psxOuter + 4, a1 + 0.02, a2 - 0.02);
@@ -152,10 +156,8 @@ export default function ConstellationNetwork() {
         const labelR = psxInner + (psxOuter - psxInner) * 0.5;
         const lx = cx + labelR * Math.cos(mid);
         const ly = cy + labelR * Math.sin(mid);
-
-        const fontSize = psxFontSize;
-        const lines = wrapText(p.name, psxBandW, fontSize);
-        drawLines(lines, lx, ly, fontSize, isHov ? "white" : "rgba(255,255,255,0.88)", true);
+        const lines = wrapText(p.name, psxBandW, psxFontSize);
+        drawLines(lines, lx, ly, psxFontSize, isHov ? "white" : "rgba(255,255,255,0.88)", true);
       });
 
       // ── ASSOC RING ──
@@ -174,37 +176,40 @@ export default function ConstellationNetwork() {
         const labelR = assocInner + (assocOuter - assocInner) * 0.5;
         const lx = cx + labelR * Math.cos(mid);
         const ly = cy + labelR * Math.sin(mid);
-
-        const fontSize = assocFontSize;
-        const lines = wrapText(a.name, assocBandW, fontSize);
-        drawLines(lines, lx, ly, fontSize, isHov ? "white" : "rgba(164,199,61,0.88)");
+        const lines = wrapText(a.name, assocBandW, assocFontSize);
+        drawLines(lines, lx, ly, assocFontSize, isHov ? "white" : "rgba(164,199,61,0.88)");
       });
 
-      [
+      // Ring borders
+      ([
         [psxInner,   "rgba(211,184,59,0.18)"],
         [psxOuter,   "rgba(211,184,59,0.35)"],
         [assocInner, "rgba(164,199,61,0.18)"],
         [assocOuter, "rgba(164,199,61,0.25)"],
-      ].forEach(([r, color]) => {
-        ctx.beginPath(); ctx.arc(cx, cy, r as number, 0, Math.PI * 2);
-        ctx.strokeStyle = color as string; ctx.lineWidth = 1; ctx.stroke();
+      ] as [number, string][]).forEach(([r, color]) => {
+        ctx.beginPath(); ctx.arc(cx, cy, r, 0, Math.PI * 2);
+        ctx.strokeStyle = color; ctx.lineWidth = 1; ctx.stroke();
       });
 
+      // Gap between rings
       const gapMid = (psxOuter + assocInner) / 2;
       const gapW   = assocInner - psxOuter;
       ctx.beginPath(); ctx.arc(cx, cy, gapMid, 0, Math.PI * 2);
       ctx.strokeStyle = NAVY; ctx.lineWidth = gapW - 2; ctx.stroke();
 
+      // Core glow
       const glow = ctx.createRadialGradient(cx, cy, 0, cx, cy, coreR * 2.2);
       glow.addColorStop(0, "rgba(211,184,59,0.18)");
       glow.addColorStop(1, "rgba(0,0,0,0)");
       ctx.beginPath(); ctx.arc(cx, cy, coreR * 2.2, 0, Math.PI * 2);
       ctx.fillStyle = glow; ctx.fill();
 
+      // Core circle
       ctx.beginPath(); ctx.arc(cx, cy, coreR, 0, Math.PI * 2);
       ctx.fillStyle = "rgba(1,8,44,0.97)"; ctx.fill();
       ctx.strokeStyle = GOLD; ctx.lineWidth = 2.5; ctx.stroke();
 
+      // Logo
       const logo = logoRef.current;
       if (logo && logo.complete) {
         const ls = coreR * 1.65;
@@ -227,115 +232,606 @@ export default function ConstellationNetwork() {
     return () => { cancelAnimationFrame(rafRef.current); window.removeEventListener("resize", resize); };
   }, []);
 
-  function handleMouseMove(e: React.MouseEvent<HTMLCanvasElement>) {
+  // Shared hit-test logic for both mouse and touch
+  const hitTest = useCallback((clientX: number, clientY: number) => {
     const d = dimsRef.current;
-    const rect = canvasRef.current!.getBoundingClientRect();
-    const mx = e.clientX - rect.left;
-    const my = e.clientY - rect.top;
+    const canvas = canvasRef.current;
+    if (!canvas) return null;
+    const rect = canvas.getBoundingClientRect();
+    const mx = clientX - rect.left;
+    const my = clientY - rect.top;
     const dx = mx - d.cx, dy = my - d.cy;
-    const dist = Math.sqrt(dx * dx + dy * dy);
+    const dist  = Math.sqrt(dx * dx + dy * dy);
     const angle = ((Math.atan2(dy, dx) + Math.PI / 2 + Math.PI * 2) % (Math.PI * 2));
 
     if (dist >= d.psxInner && dist <= d.psxOuter) {
       const norm = ((angle - rotRef.current) % (Math.PI*2) + Math.PI*2) % (Math.PI*2);
-      const idx = Math.floor(norm / ((Math.PI * 2) / 4)) % 4;
-      hovRef.current = { ring:"psx", idx };
-      setHovered({ name:PSX[idx].name, sector:PSX[idx].sector, ticker:PSX[idx].ticker, isPsx:true });
-      setTipPos({ x:mx, y:my });
-      canvasRef.current!.style.cursor = "pointer";
+      const idx  = Math.floor(norm / ((Math.PI * 2) / 4)) % 4;
+      return { ring:"psx" as const, idx, mx, my };
     } else if (dist >= d.assocInner && dist <= d.assocOuter) {
       const norm = ((angle - rotRef.current) % (Math.PI*2) + Math.PI*2) % (Math.PI*2);
-      const idx = Math.floor(norm / ((Math.PI * 2) / 11)) % 11;  // Updated to 11
-      hovRef.current = { ring:"assoc", idx };
-      setHovered({ name:ASSOC[idx].name, sector:ASSOC[idx].sector, isPsx:false });
-      setTipPos({ x:mx, y:my });
+      const idx  = Math.floor(norm / ((Math.PI * 2) / 11)) % 11;
+      return { ring:"assoc" as const, idx, mx, my };
+    }
+    return null;
+  }, []);
+
+  function handleMouseMove(e: React.MouseEvent<HTMLCanvasElement>) {
+    const hit = hitTest(e.clientX, e.clientY);
+    if (hit) {
+      hovRef.current = { ring: hit.ring, idx: hit.idx };
+      if (hit.ring === "psx") {
+        setHovered({ name: PSX[hit.idx].name, sector: PSX[hit.idx].sector, ticker: PSX[hit.idx].ticker, isPsx: true });
+      } else {
+        setHovered({ name: ASSOC[hit.idx].name, sector: ASSOC[hit.idx].sector, isPsx: false });
+      }
+      setTipPos({ x: hit.mx, y: hit.my });
       canvasRef.current!.style.cursor = "pointer";
     } else {
-      hovRef.current = { ring:null, idx:-1 };
+      hovRef.current = { ring: null, idx: -1 };
       setHovered(null);
       canvasRef.current!.style.cursor = "default";
     }
   }
 
+  // Touch support for tablet canvas
+  function handleTouchStart(e: React.TouchEvent<HTMLCanvasElement>) {
+    e.preventDefault();
+    pauseRef.current = true;
+    const touch = e.touches[0];
+    const hit = hitTest(touch.clientX, touch.clientY);
+    if (hit) {
+      hovRef.current = { ring: hit.ring, idx: hit.idx };
+      if (hit.ring === "psx") {
+        setHovered({ name: PSX[hit.idx].name, sector: PSX[hit.idx].sector, ticker: PSX[hit.idx].ticker, isPsx: true });
+      } else {
+        setHovered({ name: ASSOC[hit.idx].name, sector: ASSOC[hit.idx].sector, isPsx: false });
+      }
+      setTipPos({ x: hit.mx, y: hit.my });
+    } else {
+      hovRef.current = { ring: null, idx: -1 };
+      setHovered(null);
+    }
+  }
+
+  function handleTouchEnd() {
+    pauseRef.current = false;
+    setTimeout(() => {
+      hovRef.current = { ring: null, idx: -1 };
+      setHovered(null);
+    }, 1800);
+  }
+
   function handleMouseLeave() { hovRef.current = { ring:null, idx:-1 }; setHovered(null); pauseRef.current = false; }
   function handleMouseEnter() { pauseRef.current = true; }
 
-  return (
-    <section style={{ background:NAVY, position:"relative", overflow:"hidden", height:"100vh", display:"flex", flexDirection:"column" }}>
-      <div style={{ position:"absolute", inset:0, backgroundImage:"linear-gradient(rgba(164,199,61,0.025) 1px,transparent 1px),linear-gradient(90deg,rgba(164,199,61,0.025) 1px,transparent 1px)", backgroundSize:"60px 60px", pointerEvents:"none" }}/>
 
-      {/* Header */}
-      <div className="max-w-7xl mx-auto px-8 xl:px-16 pt-5 pb-2 relative z-10" style={{ flexShrink:0 }}>
-        <div className="flex flex-wrap items-center justify-between gap-4 reveal">
-          <div>
-            <div className="eyebrow mb-2">Group Ecosystem</div>
+
+  return (
+    <section style={{ background: NAVY, position: "relative", overflow: "hidden" }} className="ecosystem-section">
+
+      {/* Grid background */}
+      <div style={{
+        position:"absolute", inset:0,
+        backgroundImage:"linear-gradient(rgba(164,199,61,0.025) 1px,transparent 1px),linear-gradient(90deg,rgba(164,199,61,0.025) 1px,transparent 1px)",
+        backgroundSize:"60px 60px", pointerEvents:"none",
+      }}/>
+
+      {/* ── HEADER ── */}
+      <div className="ecosystem-header">
+        <div className="ecosystem-header-inner">
+          <div className="reveal">
+            <div className="eyebrow" style={{ marginBottom:"8px" }}>Group Ecosystem</div>
             <h2 className="font-display" style={{ fontSize:"clamp(18px,2vw,30px)", fontWeight:300, color:"white", lineHeight:1.05 }}>
               Our Companies, <em style={{ fontStyle:"italic", color:GOLD }}>at a Glance</em>
             </h2>
           </div>
-          <div className="hidden md:flex items-center gap-6">
-            <div className="flex items-center gap-2">
-              <span style={{ width:"10px", height:"10px", borderRadius:"50%", background:GOLD, display:"inline-block", boxShadow:`0 0 8px ${GOLD}` }}/>
-              <span style={{ fontSize:"10px", letterSpacing:"0.12em", textTransform:"uppercase", color:"rgba(255,255,255,0.45)", fontWeight:600 }}>PSX Listed</span>
+          <div className="ecosystem-legend">
+            <div className="legend-item">
+              <span className="legend-dot" style={{ background:GOLD, boxShadow:`0 0 8px ${GOLD}` }}/>
+              <span className="legend-label">PSX Listed</span>
             </div>
-            <div className="flex items-center gap-2">
-              <span style={{ width:"10px", height:"10px", borderRadius:"50%", background:GREEN, display:"inline-block", boxShadow:`0 0 8px ${GREEN}` }}/>
-              <span style={{ fontSize:"10px", letterSpacing:"0.12em", textTransform:"uppercase", color:"rgba(255,255,255,0.45)", fontWeight:600 }}>Associated</span>
+            <div className="legend-item">
+              <span className="legend-dot" style={{ background:GREEN, boxShadow:`0 0 8px ${GREEN}` }}/>
+              <span className="legend-label">Associated</span>
             </div>
           </div>
         </div>
       </div>
 
-      {/* Canvas */}
-      <div className="hidden md:block" style={{ flex:1, minHeight:0, overflow:"hidden", position:"relative" }}>
+      {/* ── DESKTOP / TABLET CANVAS ── */}
+      <div className="ecosystem-canvas-wrap">
         <canvas
           ref={canvasRef}
-          style={{ width:"100%", height:"100%", display:"block" }}
+          style={{ width:"100%", height:"100%", display:"block", touchAction:"none" }}
           onMouseMove={handleMouseMove}
           onMouseLeave={handleMouseLeave}
           onMouseEnter={handleMouseEnter}
+          onTouchStart={handleTouchStart}
+          onTouchEnd={handleTouchEnd}
         />
         {hovered && (
-          <div style={{
-            position:"absolute",
+          <div className="canvas-tooltip" style={{
             left: Math.min(tipPos.x + 20, (canvasRef.current?.offsetWidth ?? 800) - 260),
             top:  Math.max(tipPos.y - 60, 10),
-            background:"rgba(1,8,44,0.97)",
-            border:`1px solid ${hovered.isPsx ? "rgba(211,184,59,0.5)" : "rgba(164,199,61,0.4)"}`,
-            padding:"14px 18px", pointerEvents:"none", zIndex:20, minWidth:"210px", borderRadius:"8px", backdropFilter:"blur(12px)",
+            borderColor: hovered.isPsx ? "rgba(211,184,59,0.5)" : "rgba(164,199,61,0.4)",
           }}>
-            <p style={{ fontSize:"14px", fontWeight:700, color:"white", lineHeight:1.35, marginBottom:"3px" }}>{hovered.name}</p>
-            <p style={{ fontSize:"11px", letterSpacing:"0.1em", textTransform:"uppercase", color:"rgba(255,255,255,0.4)", fontWeight:600 }}>{hovered.sector}</p>
+            {hovered.ticker && (
+              <span className="tooltip-ticker" style={{ color: GOLD }}>{hovered.ticker}</span>
+            )}
+            <p className="tooltip-name">{hovered.name}</p>
+            <p className="tooltip-sector">{hovered.sector}</p>
+            {hovered.isPsx && (
+              <span className="tooltip-badge" style={{ background:"rgba(211,184,59,0.15)", color:GOLD, border:`1px solid rgba(211,184,59,0.3)` }}>
+                PSX Listed
+              </span>
+            )}
           </div>
         )}
+
+        {/* Tap hint for tablet */}
+        <div className="tablet-hint">
+          <span>Tap the rings to explore</span>
+        </div>
       </div>
 
-      {/* Mobile */}
-      <div className="md:hidden max-w-7xl mx-auto px-8 pb-16 mt-4 space-y-6">
-        <div>
-          <p style={{ fontSize:"10px", letterSpacing:"0.22em", textTransform:"uppercase", fontWeight:700, color:GOLD, marginBottom:"10px" }}>PSX Listed Companies</p>
-          <div className="space-y-2">
-            {PSX.map(c => (
-              <div key={c.id} style={{ padding:"12px 16px", background:"rgba(211,184,59,0.06)", border:"1px solid rgba(211,184,59,0.2)", borderRadius:"8px" }}>
-                <p style={{ fontSize:"9px", letterSpacing:"0.2em", textTransform:"uppercase", fontWeight:700, color:GOLD, marginBottom:"3px" }}>{c.ticker}</p>
-                <p style={{ fontSize:"13px", fontWeight:700, color:"white" }}>{c.name}</p>
-                <p style={{ fontSize:"10px", color:"rgba(255,255,255,0.4)" }}>{c.sector}</p>
+      {/* ── MOBILE CARD UI ── */}
+      <div className="ecosystem-mobile">
+
+        {/* Tab switcher */}
+        <div className="mobile-tabs">
+          <button
+            className={`mobile-tab ${activeTab === "psx" ? "active-psx" : ""}`}
+            onClick={() => setActiveTab("psx")}
+            style={{
+              borderColor: activeTab === "psx" ? GOLD : "rgba(255,255,255,0.1)",
+              color:        activeTab === "psx" ? GOLD : "rgba(255,255,255,0.45)",
+              background:   activeTab === "psx" ? "rgba(211,184,59,0.08)" : "transparent",
+            }}
+          >
+            <span className="tab-dot" style={{ background: activeTab === "psx" ? GOLD : "rgba(255,255,255,0.2)", boxShadow: activeTab === "psx" ? `0 0 6px ${GOLD}` : "none" }}/>
+            PSX Listed
+            <span className="tab-count" style={{ background: activeTab === "psx" ? "rgba(211,184,59,0.2)" : "rgba(255,255,255,0.08)", color: activeTab === "psx" ? GOLD : "rgba(255,255,255,0.35)" }}>
+              {PSX.length}
+            </span>
+          </button>
+          <button
+            className={`mobile-tab ${activeTab === "assoc" ? "active-assoc" : ""}`}
+            onClick={() => setActiveTab("assoc")}
+            style={{
+              borderColor: activeTab === "assoc" ? GREEN : "rgba(255,255,255,0.1)",
+              color:        activeTab === "assoc" ? GREEN : "rgba(255,255,255,0.45)",
+              background:   activeTab === "assoc" ? "rgba(164,199,61,0.08)" : "transparent",
+            }}
+          >
+            <span className="tab-dot" style={{ background: activeTab === "assoc" ? GREEN : "rgba(255,255,255,0.2)", boxShadow: activeTab === "assoc" ? `0 0 6px ${GREEN}` : "none" }}/>
+            Associated
+            <span className="tab-count" style={{ background: activeTab === "assoc" ? "rgba(164,199,61,0.2)" : "rgba(255,255,255,0.08)", color: activeTab === "assoc" ? GREEN : "rgba(255,255,255,0.35)" }}>
+              {ASSOC.length}
+            </span>
+          </button>
+        </div>
+
+        {/* PSX Cards */}
+        {activeTab === "psx" && (
+          <div className="mobile-cards">
+            {PSX.map((c, i) => (
+              <div
+                key={c.id}
+                className={`mobile-card mobile-card-psx ${activeCard === c.id ? "card-active" : ""}`}
+                onClick={() => setActiveCard(activeCard === c.id ? null : c.id)}
+                style={{
+                  animationDelay: `${i * 60}ms`,
+                  borderColor: activeCard === c.id ? "rgba(211,184,59,0.5)" : "rgba(211,184,59,0.15)",
+                  background:  activeCard === c.id ? "rgba(211,184,59,0.1)" : "rgba(211,184,59,0.04)",
+                }}
+              >
+                <div className="card-row">
+                  <div className="card-body">
+                    <div className="card-top-row">
+                      <span className="card-ticker" style={{ color: GOLD, background:"rgba(211,184,59,0.12)", border:`1px solid rgba(211,184,59,0.25)` }}>
+                        {c.ticker}
+                      </span>
+                      <span className="card-psx-badge">PSX</span>
+                    </div>
+                    <p className="card-name">{c.name}</p>
+                    <p className="card-sector" style={{ color:"rgba(255,255,255,0.4)" }}>{c.sector}</p>
+                  </div>
+                  <div className="card-chevron" style={{ color: activeCard === c.id ? GOLD : "rgba(255,255,255,0.2)" }}>
+                    {activeCard === c.id ? "−" : "+"}
+                  </div>
+                </div>
+                {activeCard === c.id && (
+                  <div className="card-expanded" style={{ borderTopColor:"rgba(211,184,59,0.15)" }}>
+                    <p style={{ fontSize:"11px", color:"rgba(255,255,255,0.45)", lineHeight:1.6 }}>
+                      A publicly listed company on the Pakistan Stock Exchange operating in the <strong style={{ color:"rgba(255,255,255,0.7)" }}>{c.sector}</strong> sector under the Ghani Global Group umbrella.
+                    </p>
+                  </div>
+                )}
               </div>
             ))}
           </div>
-        </div>
-        <div>
-          <p style={{ fontSize:"10px", letterSpacing:"0.22em", textTransform:"uppercase", fontWeight:700, color:GREEN, marginBottom:"10px" }}>Associated Companies</p>
-          <div className="space-y-2">
-            {ASSOC.map(c => (
-              <div key={c.id} style={{ padding:"10px 16px", background:"rgba(164,199,61,0.04)", border:"1px solid rgba(164,199,61,0.15)", borderRadius:"8px" }}>
-                <p style={{ fontSize:"12px", fontWeight:600, color:"rgba(255,255,255,0.85)" }}>{c.name}</p>
-                <p style={{ fontSize:"10px", color:"rgba(255,255,255,0.35)" }}>{c.sector}</p>
+        )}
+
+        {/* Associated Cards */}
+        {activeTab === "assoc" && (
+          <div className="mobile-cards">
+            {ASSOC.map((c, i) => (
+              <div
+                key={c.id}
+                className={`mobile-card mobile-card-assoc ${activeCard === c.id ? "card-active" : ""}`}
+                onClick={() => setActiveCard(activeCard === c.id ? null : c.id)}
+                style={{
+                  animationDelay: `${i * 45}ms`,
+                  borderColor: activeCard === c.id ? "rgba(164,199,61,0.45)" : "rgba(164,199,61,0.12)",
+                  background:  activeCard === c.id ? "rgba(164,199,61,0.08)" : "rgba(164,199,61,0.03)",
+                }}
+              >
+                <div className="card-row">
+                  <div className="card-body">
+                    <p className="card-name">{c.name}</p>
+                    <p className="card-sector" style={{ color:"rgba(255,255,255,0.35)" }}>{c.sector}</p>
+                  </div>
+                  <div className="card-chevron" style={{ color: activeCard === c.id ? GREEN : "rgba(255,255,255,0.2)" }}>
+                    {activeCard === c.id ? "−" : "+"}
+                  </div>
+                </div>
+                {activeCard === c.id && (
+                  <div className="card-expanded" style={{ borderTopColor:"rgba(164,199,61,0.12)" }}>
+                    <p style={{ fontSize:"11px", color:"rgba(255,255,255,0.45)", lineHeight:1.6 }}>
+                      An associated company operating in the <strong style={{ color:"rgba(255,255,255,0.7)" }}>{c.sector}</strong> sector, part of the broader Ghani Global Group network.
+                    </p>
+                  </div>
+                )}
               </div>
             ))}
+          </div>
+        )}
+
+        {/* Summary bar */}
+        <div className="mobile-summary">
+          <div className="summary-stat">
+            <span className="summary-num" style={{ color: GOLD }}>{PSX.length}</span>
+            <span className="summary-label">PSX Listed</span>
+          </div>
+          <div className="summary-divider"/>
+          <div className="summary-stat">
+            <span className="summary-num" style={{ color: GREEN }}>{ASSOC.length}</span>
+            <span className="summary-label">Associated</span>
+          </div>
+          <div className="summary-divider"/>
+          <div className="summary-stat">
+            <span className="summary-num" style={{ color:"white" }}>{PSX.length + ASSOC.length}</span>
+            <span className="summary-label">Total Companies</span>
           </div>
         </div>
       </div>
+
+      <style>{`
+        /* ── Section layout ── */
+        .ecosystem-section {
+          display: flex;
+          flex-direction: column;
+          min-height: 100svh;
+        }
+
+        /* ── Header ── */
+        .ecosystem-header {
+          position: relative;
+          z-index: 10;
+          flex-shrink: 0;
+          padding: 20px clamp(16px, 4vw, 64px) 12px;
+        }
+        .ecosystem-header-inner {
+          max-width: 1280px;
+          margin: 0 auto;
+          display: flex;
+          flex-wrap: wrap;
+          align-items: center;
+          justify-content: space-between;
+          gap: 12px;
+        }
+
+        /* ── Legend ── */
+        .ecosystem-legend {
+          display: flex;
+          align-items: center;
+          gap: 20px;
+        }
+        .legend-item {
+          display: flex;
+          align-items: center;
+          gap: 7px;
+        }
+        .legend-dot {
+          width: 9px;
+          height: 9px;
+          border-radius: 50%;
+          display: inline-block;
+          flex-shrink: 0;
+        }
+        .legend-label {
+          font-size: 10px;
+          letter-spacing: 0.12em;
+          text-transform: uppercase;
+          color: rgba(255,255,255,0.45);
+          font-weight: 600;
+          white-space: nowrap;
+        }
+
+        /* ── Canvas wrapper ── */
+        .ecosystem-canvas-wrap {
+          display: none;
+          flex: 1;
+          min-height: 0;
+          overflow: hidden;
+          position: relative;
+        }
+
+        /* ── Tablet hint ── */
+        .tablet-hint {
+          display: none;
+          position: absolute;
+          bottom: 16px;
+          left: 50%;
+          transform: translateX(-50%);
+          background: rgba(1,8,44,0.85);
+          border: 1px solid rgba(255,255,255,0.1);
+          border-radius: 20px;
+          padding: 6px 14px;
+          font-size: 11px;
+          color: rgba(255,255,255,0.4);
+          letter-spacing: 0.08em;
+          pointer-events: none;
+          white-space: nowrap;
+        }
+
+        /* ── Canvas tooltip ── */
+        .canvas-tooltip {
+          position: absolute;
+          background: rgba(1,8,44,0.97);
+          border: 1px solid;
+          padding: 14px 18px;
+          pointer-events: none;
+          z-index: 20;
+          min-width: 200px;
+          max-width: 240px;
+          border-radius: 10px;
+          backdrop-filter: blur(12px);
+        }
+        .tooltip-ticker {
+          font-size: 10px;
+          font-weight: 800;
+          letter-spacing: 0.18em;
+          text-transform: uppercase;
+          display: block;
+          margin-bottom: 4px;
+        }
+        .tooltip-name {
+          font-size: 13px;
+          font-weight: 700;
+          color: white;
+          line-height: 1.35;
+          margin: 0 0 3px;
+        }
+        .tooltip-sector {
+          font-size: 10px;
+          letter-spacing: 0.1em;
+          text-transform: uppercase;
+          color: rgba(255,255,255,0.4);
+          font-weight: 600;
+          margin: 0 0 8px;
+        }
+        .tooltip-badge {
+          display: inline-block;
+          font-size: 9px;
+          font-weight: 700;
+          letter-spacing: 0.12em;
+          text-transform: uppercase;
+          padding: 3px 8px;
+          border-radius: 4px;
+        }
+
+        /* ── Mobile UI ── */
+        .ecosystem-mobile {
+          display: flex;
+          flex-direction: column;
+          padding: 0 16px 32px;
+          gap: 0;
+          position: relative;
+          z-index: 10;
+        }
+
+        /* Tab switcher */
+        .mobile-tabs {
+          display: flex;
+          gap: 8px;
+          margin-bottom: 16px;
+        }
+        .mobile-tab {
+          flex: 1;
+          display: flex;
+          align-items: center;
+          justify-content: center;
+          gap: 7px;
+          padding: 10px 12px;
+          border: 1px solid;
+          border-radius: 10px;
+          font-size: 11px;
+          font-weight: 700;
+          letter-spacing: 0.1em;
+          text-transform: uppercase;
+          cursor: pointer;
+          transition: all 0.2s ease;
+          font-family: Maven Pro, sans-serif;
+        }
+        .tab-dot {
+          width: 7px;
+          height: 7px;
+          border-radius: 50%;
+          flex-shrink: 0;
+          transition: all 0.2s;
+        }
+        .tab-count {
+          font-size: 10px;
+          font-weight: 700;
+          padding: 2px 7px;
+          border-radius: 20px;
+          transition: all 0.2s;
+        }
+
+        /* Cards */
+        .mobile-cards {
+          display: flex;
+          flex-direction: column;
+          gap: 8px;
+          margin-bottom: 20px;
+        }
+        .mobile-card {
+          border: 1px solid;
+          border-radius: 10px;
+          cursor: pointer;
+          transition: all 0.2s ease;
+          overflow: hidden;
+          animation: cardIn 0.3s ease both;
+        }
+        @keyframes cardIn {
+          from { opacity:0; transform: translateY(8px); }
+          to   { opacity:1; transform: translateY(0); }
+        }
+        .mobile-card:active {
+          transform: scale(0.99);
+        }
+        .card-row {
+          display: flex;
+          align-items: center;
+          gap: 12px;
+          padding: 12px 14px;
+        }
+        .card-body {
+          flex: 1;
+          min-width: 0;
+        }
+        .card-top-row {
+          display: flex;
+          align-items: center;
+          gap: 6px;
+          margin-bottom: 3px;
+        }
+        .card-ticker {
+          font-size: 9px;
+          font-weight: 800;
+          letter-spacing: 0.18em;
+          text-transform: uppercase;
+          padding: 2px 7px;
+          border-radius: 4px;
+        }
+        .card-psx-badge {
+          font-size: 8px;
+          font-weight: 700;
+          letter-spacing: 0.15em;
+          color: rgba(255,255,255,0.3);
+          text-transform: uppercase;
+        }
+        .card-name {
+          font-size: 13px;
+          font-weight: 700;
+          color: white;
+          margin: 0 0 2px;
+          line-height: 1.3;
+          white-space: nowrap;
+          overflow: hidden;
+          text-overflow: ellipsis;
+        }
+        .card-sector {
+          font-size: 10px;
+          margin: 0;
+          font-weight: 500;
+        }
+        .card-chevron {
+          font-size: 18px;
+          font-weight: 300;
+          flex-shrink: 0;
+          line-height: 1;
+          transition: color 0.2s;
+        }
+        .card-expanded {
+          padding: 10px 14px 14px;
+          border-top: 1px solid;
+          animation: expandIn 0.2s ease;
+        }
+        @keyframes expandIn {
+          from { opacity:0; max-height:0; }
+          to   { opacity:1; max-height:100px; }
+        }
+
+        /* Summary bar */
+        .mobile-summary {
+          display: flex;
+          align-items: center;
+          justify-content: center;
+          gap: 0;
+          background: rgba(255,255,255,0.04);
+          border: 1px solid rgba(255,255,255,0.08);
+          border-radius: 12px;
+          padding: 14px 0;
+        }
+        .summary-stat {
+          flex: 1;
+          display: flex;
+          flex-direction: column;
+          align-items: center;
+          gap: 3px;
+        }
+        .summary-num {
+          font-size: 22px;
+          font-weight: 800;
+          line-height: 1;
+          font-family: Maven Pro, sans-serif;
+        }
+        .summary-label {
+          font-size: 9px;
+          font-weight: 600;
+          letter-spacing: 0.1em;
+          text-transform: uppercase;
+          color: rgba(255,255,255,0.35);
+        }
+        .summary-divider {
+          width: 1px;
+          height: 32px;
+          background: rgba(255,255,255,0.1);
+        }
+
+        /* ── RESPONSIVE BREAKPOINTS ── */
+
+        /* Mobile only (< 768px) */
+        @media (max-width: 767px) {
+          .ecosystem-section { min-height: auto; }
+          .ecosystem-canvas-wrap { display: none !important; }
+          .ecosystem-mobile { display: flex; }
+          .ecosystem-legend { display: flex; } /* show legend on mobile too */
+          .ecosystem-header { padding-bottom: 16px; }
+        }
+
+        /* Tablet (768px – 1023px): show canvas, hide mobile list */
+        @media (min-width: 768px) and (max-width: 1023px) {
+          .ecosystem-section { min-height: 100svh; }
+          .ecosystem-canvas-wrap {
+            display: block !important;
+            min-height: 520px;
+          }
+          .ecosystem-mobile { display: none !important; }
+          .tablet-hint { display: block; }
+          .ecosystem-legend { display: flex; }
+        }
+
+        /* Desktop (≥ 1024px) */
+        @media (min-width: 1024px) {
+          .ecosystem-canvas-wrap { display: block !important; }
+          .ecosystem-mobile { display: none !important; }
+          .tablet-hint { display: none !important; }
+        }
+      `}</style>
     </section>
   );
 }
