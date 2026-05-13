@@ -244,8 +244,19 @@ export default function HomePage() {
           onMouseLeave={e => {
             const track = e.currentTarget.querySelector('.journey-scroll-track') as HTMLElement;
             if (track) track.style.animationPlayState = 'running';
-          }}
-        >
+            }}
+          onTouchStart={e => {
+            const track = e.currentTarget.querySelector('.journey-scroll-track') as HTMLElement;
+            if (track) track.style.animationPlayState = 'paused';
+            }}
+            onTouchEnd={e => {
+            const track = e.currentTarget.querySelector('.journey-scroll-track') as HTMLElement;
+            setTimeout(() => {
+            if (track) track.style.animationPlayState = 'running';
+            }, 1000);
+            }}
+          >
+        
           <div style={{ position:"absolute", top:0, left:0, bottom:0, width:"60px", background:"linear-gradient(90deg, #F0F7EE 0%, transparent 100%)", zIndex:10, pointerEvents:"none" }}/>
           <div style={{ position:"absolute", top:0, right:0, bottom:0, width:"60px", background:"linear-gradient(270deg, #F0F7EE 0%, transparent 100%)", zIndex:10, pointerEvents:"none" }}/>
           <div className="journey-scroll-track" style={{ display:"flex", flexDirection:"column", width:"max-content" }}>
