@@ -44,19 +44,22 @@ export default function SocialSidebar() {
   }, []);
 
   return (
-    <div style={{
-      position:"fixed",
-      right:"20px",
-      top:"50%",
-      transform:"translateY(-50%)",
-      zIndex:40,
-      display:"flex",
-      flexDirection:"column",
-      gap:"10px",
-      opacity: visible ? 1 : 0,
-      translate: visible ? "0" : "40px",
-      transition:"opacity 0.6s ease, translate 0.6s ease",
-    }}>
+    <div
+      className="social-sidebar"
+      style={{
+        position:"fixed",
+        right:"20px",
+        top:"50%",
+        transform:"translateY(-50%)",
+        zIndex:40,
+        display:"flex",
+        flexDirection:"column",
+        gap:"10px",
+        opacity: visible ? 1 : 0,
+        translate: visible ? "0" : "40px",
+        transition:"opacity 0.6s ease, translate 0.6s ease",
+      }}
+    >
       {socials.map((s) => {
         const isHov = hovered === s.id;
         return (
