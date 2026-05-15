@@ -244,19 +244,8 @@ export default function HomePage() {
           onMouseLeave={e => {
             const track = e.currentTarget.querySelector('.journey-scroll-track') as HTMLElement;
             if (track) track.style.animationPlayState = 'running';
-            }}
-          onTouchStart={e => {
-            const track = e.currentTarget.querySelector('.journey-scroll-track') as HTMLElement;
-            if (track) track.style.animationPlayState = 'paused';
-            }}
-            onTouchEnd={e => {
-            const track = e.currentTarget.querySelector('.journey-scroll-track') as HTMLElement;
-            setTimeout(() => {
-            if (track) track.style.animationPlayState = 'running';
-            }, 1000);
-            }}
-          >
-        
+          }}
+        >
           <div style={{ position:"absolute", top:0, left:0, bottom:0, width:"60px", background:"linear-gradient(90deg, #F0F7EE 0%, transparent 100%)", zIndex:10, pointerEvents:"none" }}/>
           <div style={{ position:"absolute", top:0, right:0, bottom:0, width:"60px", background:"linear-gradient(270deg, #F0F7EE 0%, transparent 100%)", zIndex:10, pointerEvents:"none" }}/>
           <div className="journey-scroll-track" style={{ display:"flex", flexDirection:"column", width:"max-content" }}>
@@ -346,6 +335,74 @@ export default function HomePage() {
                 <p style={{ fontSize:"clamp(13px,1.1vw,14px)", lineHeight:1.85, color:"rgba(255,255,255,0.55)", fontWeight:300 }}>{c.text}</p>
               </div>
             ))}
+          </div>
+        </div>
+      </section>
+
+      {/* ── LINKEDIN SECTION ── */}
+      <section style={{ background:"var(--bg2)", padding:"clamp(48px,8vw,96px) clamp(20px,5vw,96px)", position:"relative", overflow:"hidden" }}>
+        <div style={{ position:"absolute", top:"-80px", right:"-80px", width:"400px", height:"400px", borderRadius:"50%", background:"radial-gradient(circle, rgba(0,119,181,0.06) 0%, transparent 70%)", pointerEvents:"none" }}/>
+        <div style={{ position:"absolute", bottom:"-60px", left:"-60px", width:"300px", height:"300px", borderRadius:"50%", background:"radial-gradient(circle, rgba(164,199,61,0.06) 0%, transparent 70%)", pointerEvents:"none" }}/>
+        <div className="max-w-7xl mx-auto relative z-10">
+          <div className="grid lg:grid-cols-2 gap-10 lg:gap-16 items-center">
+            {/* Left: Content */}
+            <div className="reveal">
+              <div className="eyebrow-dark mb-4">Stay Connected</div>
+              <h2 className="font-display mb-5" style={{ fontSize:"clamp(28px,4vw,52px)", fontWeight:500, color:"var(--navy)", lineHeight:1.08 }}>
+                Follow Us on<br/><em style={{ fontStyle:"italic", color:"#0077B5" }}>LinkedIn</em>
+              </h2>
+              <p style={{ fontSize:"clamp(14px,1.5vw,16px)", lineHeight:1.85, color:"var(--text2)", fontWeight:300, marginBottom:"32px" }}>
+                Stay up to date with the latest news, corporate announcements, and strategic developments from Ghani Global Group. Our LinkedIn page is your go-to source for industry insights, career opportunities, and a closer look at the people, projects, and milestones that define our journey. Join our growing community of professionals and stakeholders and be part of the conversation.
+              </p>
+              <a
+                href="https://www.linkedin.com/company/ghaniglobalgroup"
+                target="_blank"
+                rel="noopener noreferrer"
+                style={{
+                  display:"inline-flex", alignItems:"center", gap:"10px",
+                  padding:"13px 28px", background:"#0077B5", color:"white",
+                  fontSize:"11px", letterSpacing:"0.18em", textTransform:"uppercase",
+                  fontWeight:700, textDecoration:"none", borderRadius:"10px",
+                  transition:"background 0.2s, transform 0.2s",
+                }}
+                onMouseEnter={e=>{ const el=e.currentTarget as HTMLElement; el.style.background="#005f94"; el.style.transform="translateY(-2px)"; }}
+                onMouseLeave={e=>{ const el=e.currentTarget as HTMLElement; el.style.background="#0077B5"; el.style.transform="translateY(0)"; }}
+              >
+                <svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor">
+                  <path d="M20.447 20.452h-3.554v-5.569c0-1.328-.027-3.037-1.852-3.037-1.853 0-2.136 1.445-2.136 2.939v5.667H9.351V9h3.414v1.561h.046c.477-.9 1.637-1.85 3.37-1.85 3.601 0 4.267 2.37 4.267 5.455v6.286zM5.337 7.433a2.062 2.062 0 01-2.063-2.065 2.064 2.064 0 112.063 2.065zm1.782 13.019H3.555V9h3.564v11.452zM22.225 0H1.771C.792 0 0 .774 0 1.729v20.542C0 23.227.792 24 1.771 24h20.451C23.2 24 24 23.227 24 22.271V1.729C24 .774 23.2 0 22.222 0h.003z"/>
+                </svg>
+                Follow on LinkedIn
+              </a>
+            </div>
+
+            {/* Right: Stats cards */}
+            <div className="reveal-left">
+              <div className="grid grid-cols-1 gap-4">
+                {[
+                  { icon:"📢", title:"Corporate Announcements", desc:"Be the first to know about key decisions, financial updates, and strategic milestones from our listed companies." },
+                  { icon:"💼", title:"Career Opportunities", desc:"Explore exciting roles across our subsidiaries and associated companies. We are always looking for passionate, driven professionals." },
+                  { icon:"🌍", title:"Industry Insights", desc:"Follow thought leadership content, sector updates, and expert perspectives from the Ghani Global Group leadership team." },
+                ].map((item, i) => (
+                  <div key={i} className="reveal" style={{
+                    animationDelay:`${i*0.12}s`,
+                    display:"flex", alignItems:"flex-start", gap:"16px",
+                    padding:"20px 24px", background:"white",
+                    border:"1px solid var(--line)", borderLeft:"3px solid #0077B5",
+                    borderRadius:"10px",
+                    transition:"box-shadow 0.3s, transform 0.3s",
+                  }}
+                    onMouseEnter={e=>{ const el=e.currentTarget as HTMLElement; el.style.boxShadow="0 8px 24px rgba(0,119,181,0.1)"; el.style.transform="translateY(-2px)"; }}
+                    onMouseLeave={e=>{ const el=e.currentTarget as HTMLElement; el.style.boxShadow="none"; el.style.transform="translateY(0)"; }}
+                  >
+                    <span style={{ fontSize:"28px", flexShrink:0 }}>{item.icon}</span>
+                    <div>
+                      <p style={{ fontSize:"14px", fontWeight:700, color:"var(--navy)", marginBottom:"4px" }}>{item.title}</p>
+                      <p style={{ fontSize:"13px", lineHeight:1.7, color:"var(--text2)", fontWeight:300 }}>{item.desc}</p>
+                    </div>
+                  </div>
+                ))}
+              </div>
+            </div>
           </div>
         </div>
       </section>
