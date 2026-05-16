@@ -8,6 +8,10 @@ import Script from "next/script";
 export const metadata: Metadata = {
   title: { default: "Ghani Global Group", template: "%s | Ghani Global Group" },
   description: "Ghani Global Group — A diversified conglomerate listed on the Pakistan Stock Exchange since 2010.",
+  icons: {
+    icon: "/favicon.png",
+    apple: "/favicon.png",
+  },
 };
 
 export default function RootLayout({ children }: { children: React.ReactNode }) {
